@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="6.2.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ShareDrive.Data\ShareDrive.Data.csproj" />
+    <ProjectReference Include="..\ShareDrive.Models\ShareDrive.Models.csproj" />
+    <ProjectReference Include="..\ShareDrive.ViewModels\ShareDrive.ViewModels.csproj" />
+  </ItemGroup>
+
+</Project>

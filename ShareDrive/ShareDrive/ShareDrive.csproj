@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <UserSecretsId>aspnet-ShareDrive-EC336FAE-506A-4BE0-927B-B1FA754A45CA</UserSecretsId>
+  </PropertyGroup>
+
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="3.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.0" PrivateAssets="All" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.0" />
+    <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="2.0.0" />
+    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ShareDrive.Common\ShareDrive.Common.csproj" />
+    <ProjectReference Include="..\ShareDrive.Data\ShareDrive.Data.csproj" />
+    <ProjectReference Include="..\ShareDrive.Infrastructure\ShareDrive.Infrastructure.csproj" />
+    <ProjectReference Include="..\ShareDrive.Models\ShareDrive.Models.csproj" />
+    <ProjectReference Include="..\ShareDrive.Services\ShareDrive.Services.csproj" />
+    <ProjectReference Include="..\ShareDrive.ViewModels\ShareDrive.ViewModels.csproj" />
+  </ItemGroup>
+
+</Project>

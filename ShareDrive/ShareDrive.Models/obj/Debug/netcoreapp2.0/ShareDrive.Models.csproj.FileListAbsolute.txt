@@ -1,0 +1,11 @@
+D:\Github\ShareDrive\ShareDrive\ShareDrive.Models\obj\Debug\netcoreapp2.0\ShareDrive.Models.csproj.CoreCompileInputs.cache
+D:\Github\ShareDrive\ShareDrive\ShareDrive.Models\obj\Debug\netcoreapp2.0\ShareDrive.Models.AssemblyInfoInputs.cache
+D:\Github\ShareDrive\ShareDrive\ShareDrive.Models\obj\Debug\netcoreapp2.0\ShareDrive.Models.AssemblyInfo.cs
+D:\Github\ShareDrive\ShareDrive\ShareDrive.Models\bin\Debug\netcoreapp2.0\ShareDrive.Models.deps.json
+D:\Github\ShareDrive\ShareDrive\ShareDrive.Models\bin\Debug\netcoreapp2.0\ShareDrive.Models.dll
+D:\Github\ShareDrive\ShareDrive\ShareDrive.Models\bin\Debug\netcoreapp2.0\ShareDrive.Models.pdb
+D:\Github\ShareDrive\ShareDrive\ShareDrive.Models\bin\Debug\netcoreapp2.0\Microsoft.Extensions.Identity.Stores.dll
+D:\Github\ShareDrive\ShareDrive\ShareDrive.Models\bin\Debug\netcoreapp2.0\Microsoft.Extensions.Identity.Stores.xml
+D:\Github\ShareDrive\ShareDrive\ShareDrive.Models\obj\Debug\netcoreapp2.0\ShareDrive.Models.csprojResolveAssemblyReference.cache
+D:\Github\ShareDrive\ShareDrive\ShareDrive.Models\obj\Debug\netcoreapp2.0\ShareDrive.Models.dll
+D:\Github\ShareDrive\ShareDrive\ShareDrive.Models\obj\Debug\netcoreapp2.0\ShareDrive.Models.pdb

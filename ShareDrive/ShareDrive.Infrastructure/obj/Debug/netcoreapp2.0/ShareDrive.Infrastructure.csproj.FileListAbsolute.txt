@@ -1,0 +1,15 @@
+D:\Github\ShareDrive\ShareDrive\ShareDrive.Infrastructure\bin\Debug\netcoreapp2.0\ShareDrive.Infrastructure.deps.json
+D:\Github\ShareDrive\ShareDrive\ShareDrive.Infrastructure\bin\Debug\netcoreapp2.0\ShareDrive.Infrastructure.dll
+D:\Github\ShareDrive\ShareDrive\ShareDrive.Infrastructure\bin\Debug\netcoreapp2.0\ShareDrive.Infrastructure.pdb
+D:\Github\ShareDrive\ShareDrive\ShareDrive.Infrastructure\obj\Debug\netcoreapp2.0\ShareDrive.Infrastructure.csprojResolveAssemblyReference.cache
+D:\Github\ShareDrive\ShareDrive\ShareDrive.Infrastructure\obj\Debug\netcoreapp2.0\ShareDrive.Infrastructure.csproj.CoreCompileInputs.cache
+D:\Github\ShareDrive\ShareDrive\ShareDrive.Infrastructure\obj\Debug\netcoreapp2.0\ShareDrive.Infrastructure.AssemblyInfoInputs.cache
+D:\Github\ShareDrive\ShareDrive\ShareDrive.Infrastructure\obj\Debug\netcoreapp2.0\ShareDrive.Infrastructure.AssemblyInfo.cs
+D:\Github\ShareDrive\ShareDrive\ShareDrive.Infrastructure\obj\Debug\netcoreapp2.0\ShareDrive.Infrastructure.dll
+D:\Github\ShareDrive\ShareDrive\ShareDrive.Infrastructure\obj\Debug\netcoreapp2.0\ShareDrive.Infrastructure.pdb
+D:\Github\ShareDrive\ShareDrive\ShareDrive.Infrastructure\bin\Debug\netcoreapp2.0\ShareDrive.Data.dll
+D:\Github\ShareDrive\ShareDrive\ShareDrive.Infrastructure\bin\Debug\netcoreapp2.0\ShareDrive.Models.dll
+D:\Github\ShareDrive\ShareDrive\ShareDrive.Infrastructure\bin\Debug\netcoreapp2.0\ShareDrive.Data.pdb
+D:\Github\ShareDrive\ShareDrive\ShareDrive.Infrastructure\bin\Debug\netcoreapp2.0\ShareDrive.Models.pdb
+D:\Github\ShareDrive\ShareDrive\ShareDrive.Infrastructure\bin\Debug\netcoreapp2.0\ShareDrive.ViewModels.dll
+D:\Github\ShareDrive\ShareDrive\ShareDrive.Infrastructure\bin\Debug\netcoreapp2.0\ShareDrive.ViewModels.pdb

@@ -1,0 +1,32 @@
+﻿@using ShareDrive.Infrastructure
+
+
+@if (User.IsInRole(GlobalConstants.RoleUser))
+{
+    <ul class="list-unstyled components">
+        <li class="active"><a href="#">All Drives</a></li>
+        <li>
+            <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">My Drives</a>
+            <ul class="collapse list-unstyled" id="homeSubmenu">
+                <li><a href="#">As Passenger</a></li>
+                <li><a href="#">As Driver</a></li>
+            </ul>
+        </li>
+        <li><a href="#">Create Drive</a></li>
+        <li><a asp-area="" asp-controller="Car" asp-action="Index" title="Car">My Cars</a></li>
+    </ul>
+}
+else if (User.IsInRole(GlobalConstants.RoleAdministrator))
+{
+    <ul class="list-unstyled components">
+        <li><a href="#">Drives</a></li>
+        <li><a href="#">Users</a></li>
+        <li><a href="#">Cars</a></li>
+    </ul>
+}
+else
+{
+    <ul class="list-unstyled components">
+        <li><a href="#">All Drives</a></li>
+    </ul>
+}
