@@ -163,35 +163,13 @@ namespace ShareDrive.Data.Migrations
 
                     b.Property<bool>("HasAirConditioner");
 
+                    b.Property<byte[]>("Image");
+
                     b.Property<int>("Year");
 
                     b.HasKey("Id");
 
                     b.ToTable("Cars");
-                });
-
-            modelBuilder.Entity("ShareDrive.Models.Image", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("CarId");
-
-                    b.Property<byte[]>("File");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CarId");
-
-                    b.ToTable("Images");
-                });
-
-            modelBuilder.Entity("ShareDrive.Models.Image", b =>
-                {
-                    b.HasOne("ShareDrive.Models.Car", "Car")
-                        .WithMany("Images")
-                        .HasForeignKey("CarId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

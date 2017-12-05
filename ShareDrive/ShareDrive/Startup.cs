@@ -44,6 +44,7 @@ namespace ShareDrive
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddScoped<IRolesService, RolesService>();
+            services.AddTransient<ICarsService, CarsService>();
             services.AddScoped(typeof(IDbRepository<>), typeof(DbRepository<>));
 
             services.AddAutoMapper();

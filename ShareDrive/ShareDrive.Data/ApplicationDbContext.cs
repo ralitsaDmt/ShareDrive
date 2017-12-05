@@ -8,9 +8,7 @@ namespace ShareDrive.Data
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, int>
     {
         public DbSet<Car> Cars { get; set; }
-
-        public DbSet<Image> Images { get; set; }
-
+        
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
@@ -48,17 +46,6 @@ namespace ShareDrive.Data
                 i.ToTable("UserTokens");
                 i.HasKey(x => x.UserId);
             });
-
-            builder.Entity<Image>(i =>
-            {
-                i.ToTable("Images");
-                i.HasKey(x => x.Id);
-            });
-
-            builder.Entity<Car>()
-                .HasMany(x => x.Images)
-                .WithOne(i => i.Car)
-                .HasForeignKey(x => x.CarId);
         }
     }    
 }

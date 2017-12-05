@@ -1,11 +1,12 @@
 ﻿using ShareDrive.Models;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ShareDrive.Common
 {
     public interface IDbRepository<T> where T : class, IEntity
     {
-        IEnumerable<T> GetAll();
+        IQueryable<T> GetAll();
 
         T GetById(int id);
 

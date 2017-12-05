@@ -6,18 +6,17 @@ namespace ShareDrive.ViewModels.CarViewModels
 {
     public class CreateViewModel
     {
-        //[Required]
-        //public string Brand { get; set; }
+        [Required]
+        public string Brand { get; set; }
 
         [Required]
         public string CarModel { get; set; }
 
-        //[Required]
-        //public int Year { get; set; }
+        [Required]
+        public int Year { get; set; }
 
-        //public bool HasAirConditioner { get; set; }
+        public bool HasAirConditioner { get; set; }
 
-
-        public List<IFormFile> Images { get; set; }
+        public IFormFile Image { get; set; }
     }
 }

@@ -31,9 +31,9 @@ namespace ShareDrive.Common
             throw new NotImplementedException();
         }
 
-        public IEnumerable<T> GetAll()
+        public IQueryable<T> GetAll()
         {
-            return this.entities.ToList();
+            return this.entities;
         }
 
         public T GetById(int id)

@@ -1,0 +1,86 @@
+﻿@using ShareDrive.ViewModels.CarViewModels
+
+@model CreateViewModel
+
+@* Here is the content for the modal*@
+<div id="target">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Add Car</h4>
+    </div>
+    <form asp-action="PostModal" asp-controller="Home" data-ajax="true" data-ajax-method="POST" data-ajax-mode="REPLACE-WITH" data-ajax-update="#target">
+        <div class="modal-body">
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <label asp-for="Brand" class="col-md-4 control-label"></label>
+                    <div class="col-md-8">
+                        <input type="text" class="form-control" asp-for="Brand">
+                        <span asp-validation-for="Brand" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <label asp-for="CarModel" class="col-md-4 control-label"></label>
+                    <div class="col-md-8">
+                        <input type="text" class="form-control" asp-for="CarModel">
+                        <span asp-validation-for="CarModel" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <label asp-for="Year" class="col-md-4 control-label"></label>
+                    <div class="col-md-8">
+                        <input type="number" class="form-control" asp-for="Year">
+                        <span asp-validation-for="Year" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <label asp-for="HasAirConditioner" class="col-md-4 control-label"></label>
+                    <div class="col-md-8">
+                        <input type="checkbox" asp-for="HasAirConditioner">
+                        <span asp-validation-for="HasAirConditioner" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+           
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-md-4 control-label" asp-for="Image">Upload Picture</label>
+                    <div class="col-md-8">
+                        <input type="file" asp-for="Image" />
+                    </div>
+                </div>
+            </div>            
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-info">Submit</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    $(function () {
+
+        // boostrap 4 load modal example from docs
+        $('#modal-container').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget); // Button that triggered the modal
+            var url = button.attr("href");
+            var modal = $(this);
+
+            // note that this will replace the content of modal-content ever time the modal is opened
+            modal.find('.modal-content').load(url);
+        });
+    });
+</script>
+
+

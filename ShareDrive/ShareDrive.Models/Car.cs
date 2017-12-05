@@ -17,6 +17,6 @@ namespace ShareDrive.Models
 
         public bool HasAirConditioner { get; set; }
 
-        public ICollection<Image> Images { get; set; }
+        public byte[] Image { get; set; }
     }
 }

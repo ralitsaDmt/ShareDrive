@@ -12,6 +12,7 @@
     <ProjectReference Include="..\ShareDrive.Common\ShareDrive.Common.csproj" />
     <ProjectReference Include="..\ShareDrive.Infrastructure\ShareDrive.Infrastructure.csproj" />
     <ProjectReference Include="..\ShareDrive.Models\ShareDrive.Models.csproj" />
+    <ProjectReference Include="..\ShareDrive.ViewModels\ShareDrive.ViewModels.csproj" />
   </ItemGroup>
 
 </Project>

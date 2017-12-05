@@ -1,0 +1,19 @@
+﻿div.image {
+    padding-left: 0px;
+}
+
+img {
+    width: 300px;
+}
+
+span.car-text {
+    margin-left: 5px;
+}
+
+div.car-label {
+    padding: 5px;
+}
+
+a.panel-link {
+    margin: 5px;
+}

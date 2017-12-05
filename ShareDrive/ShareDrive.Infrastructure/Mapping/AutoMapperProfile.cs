@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using ShareDrive.Models;
 using ShareDrive.ViewModels.CarViewModels;
+using System;
 
 namespace ShareDrive.Infrastructure.Mapping
 {
@@ -9,6 +10,8 @@ namespace ShareDrive.Infrastructure.Mapping
         public AutoMapperProfile()
         {
             CreateMap<Car, CreateViewModel>();
+
+            CreateMap<Car, IndexViewModel>();
         }
     }
 }
