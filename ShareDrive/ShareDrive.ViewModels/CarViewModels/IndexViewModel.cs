@@ -21,7 +21,7 @@ namespace ShareDrive.ViewModels.CarViewModels
         {
             get
             {
-                string mimeType = "imgage/png";
+                string mimeType = "image/png";
                 string base64 = Convert.ToBase64String(this.Image);
                 return string.Format("data:{0};base64,{1}", mimeType, base64);
             }

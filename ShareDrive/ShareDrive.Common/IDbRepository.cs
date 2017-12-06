@@ -12,7 +12,7 @@ namespace ShareDrive.Common
 
         T Create(T entity);
 
-        T Update(T entity);
+        bool Update(T entity);
 
         bool Delete(T entity);
     }

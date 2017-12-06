@@ -28,7 +28,16 @@ namespace ShareDrive.Common
 
         public bool Delete(T entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                this.entities.Remove(entity);
+                this.Save();
+                return true;
+            }
+            catch(Exception ex)
+            {
+                return false;
+            }
         }
 
         public IQueryable<T> GetAll()
@@ -41,9 +50,21 @@ namespace ShareDrive.Common
             return this.entities.FirstOrDefault(x => x.Id == id);
         }
 
-        public T Update(T entity)
+        public bool Update(T entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                this.entities.Attach(entity);
+                var entry = this.context.Entry(entity);
+                entry.State = EntityState.Modified;
+
+                this.Save();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
 
         private void Save()

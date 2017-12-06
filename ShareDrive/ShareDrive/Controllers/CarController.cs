@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper.QueryableExtensions;
+using Microsoft.AspNetCore.Mvc;
 using ShareDrive.Models;
 using ShareDrive.Services.Contracts;
 using ShareDrive.ViewModels.CarViewModels;
+using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -33,37 +35,59 @@ namespace ShareDrive.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateViewModel model)
         {
-            var tempPath = Path.GetTempPath();
+            this.carsService.Create(model);
 
-            Car car = new Car()
-            {
-                CarModel = model.CarModel,
-                Brand = model.Brand,
-                Year = model.Year,
-                HasAirConditioner = model.HasAirConditioner
-            };
+            var cars = this.carsService.GetAllCarsIndex().ToList();
 
-            using (var ms = new MemoryStream())
-            {
-                await model.Image.CopyToAsync(ms);
-                car.Image = ms.ToArray();
-            }
-
-            this.carsService.Create(car);
-
-            return this.View();
+            return this.View("Index", cars);
         }  
         
         [HttpGet]
-        public IActionResult Delete(int id)
+        public IActionResult Edit(int id)
         {
-            return this.PartialView("_DeleteConfirmation");
+            EditViewModel model = this.carsService.GetEditViewModel(id);
+                        
+            return this.PartialView("_EditModal", model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> DeleteConfirm(int id)
+        public async Task<IActionResult> Edit(int id, EditViewModel model)
         {
-            return null;
+            bool result = await this.carsService.Edit(id, model);
+            
+            if (result)
+            {
+                var cars = this.carsService.GetAllCarsIndex().ToList();
+                return this.View("Index", cars);
+            }
+            else
+            {
+                return this.PartialView("_EditModal", model);
+            }
+        }
+
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            IQueryable<Car> car = this.carsService.GetById(id);
+            DeleteViewModel model = car.ProjectTo<DeleteViewModel>().FirstOrDefault();
+
+            return this.PartialView("_DeleteConfirmation", model);
+        }
+
+        [HttpPost]
+        public IActionResult DeleteConfirm(int id)
+        {
+            bool result = this.carsService.Delete(id);
+            if (result)
+            {
+                var cars = this.carsService.GetAllCarsIndex().ToList();
+                return this.View("Index", cars);
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

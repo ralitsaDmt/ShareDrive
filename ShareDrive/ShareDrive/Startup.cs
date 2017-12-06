@@ -11,6 +11,7 @@ using ShareDrive.Services.Contracts;
 using ShareDrive.Common;
 using ShareDrive.Infrastructure;
 using AutoMapper;
+using ShareDrive.Infrastructure.Mapping;
 
 namespace ShareDrive
 {
@@ -46,10 +47,9 @@ namespace ShareDrive
             services.AddScoped<IRolesService, RolesService>();
             services.AddTransient<ICarsService, CarsService>();
             services.AddScoped(typeof(IDbRepository<>), typeof(DbRepository<>));
-
-            services.AddAutoMapper();
-            
+                        
             services.AddMvc();
+            services.AddAutoMapper(cfg => cfg.AddProfile(typeof(AutoMapperProfile)));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

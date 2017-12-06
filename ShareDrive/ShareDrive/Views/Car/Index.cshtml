@@ -1,12 +1,10 @@
-﻿
-
-@{
+﻿@{
     ViewData["Title"] = "Index";
 }
 @model List<ShareDrive.ViewModels.CarViewModels.IndexViewModel>
 
 <div class="col-md-12">
-    <a asp-action="Create" class="btn btn-block btn-info modal-btn" asp-controller="Car" asp-route-id="1" data-target="#modal-container" data-toggle="modal">Add Vehicle</a>
+    <a asp-action="Create" class="btn btn-block btn-info modal-btn" asp-controller="Car" data-target="#modal-container" data-toggle="modal">Add Vehicle</a>
 </div>
 
 <div id="modal-container" class="modal fade hidden-print" tabindex="-1" role="dialog">
@@ -17,51 +15,53 @@
     </div>
 </div>
 
-<div class="col-md-12">
+<div class="col-md-12" id="car-index">
 
     @foreach (var car in Model)
-    {
-        <div class="panel panel-info">
-            <div class="panel-heading clearfix">
-                <div class="pull-right">
-                    <a asp-action="Delete"
-                       asp-controller="Car" 
-                       asp-route-id="1" 
-                       data-target="#modal-container" 
-                       data-toggle="modal" 
-                       class="panel-link"><i class="fa fa-edit"></i></a>
-                    <a href="#" class="panel-link"><i class="fa fa-close"></i></a>
-                </div>                
-            </div>
-            <div class="panel-body">
-                <div class="col-md-6 image">
-                    <img src="@car.ImageSource" />
+        {
+            <div class="panel panel-info">
+                <div class="panel-heading clearfix">
+                    <div class="pull-right">
+                        <a asp-action="Edit" asp-controller="Car" asp-route-id="@car.Id"
+                           data-target="#modal-container" tabindex="-1" data-toggle="modal" class="panel-link"><i class="fa fa-edit"></i></a>
+                        <a asp-action="Delete" asp-controller="Car" asp-route-id="@car.Id"
+                           data-target="#modal-container" tabindex="-1" data-toggle="modal" class="panel-link"><i class="fa fa-close"></i></a>
+                    </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="car-label">
-                        <label>Brand: </label><span class="car-text">@car.Brand</span>
+                <div class="panel-body">
+                    <div class="col-md-6 image">
+                        <img src="@car.ImageSource" />
                     </div>
-                    <div class="car-label">
-                        <label>Model: </label><span class="car-text">@car.CarModel</span>
-                    </div>
-                    <div class="car-label">
-                        <label>Year: </label><span class="car-text">@car.Year</span>
-                    </div>
-                    @*<div class="car-label">
-                            <label>Air Condition: </label><span class="car-text">Yes/No</span>
+                    <div class="col-md-6">
+                        <div class="car-label">
+                            <label>Brand: </label><span class="car-text">@car.Brand</span>
                         </div>
                         <div class="car-label">
-                            <label>Number of Seats: </label><span class="car-text">Some number</span>
-                        </div>*@
+                            <label>Model: </label><span class="car-text">@car.CarModel</span>
+                        </div>
+                        <div class="car-label">
+                            <label>Year: </label><span class="car-text">@car.Year</span>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
 
-    }
+        }
 
 </div>
 
 
 @section Scripts {
-    @await Html.PartialAsync("_ValidationScriptsPartial")    
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+
+    <script>
+        $(document).ready(function () {
+            $('#modal-container').on('hidden.bs.modal', function () {
+                // remove the bs.modal data attribute from it
+                $(this).removeData('bs.modal');
+                // and empty the modal-content element
+                $('#modal-container .modal-content').empty();
+            });
+        })
+    </script>
 }

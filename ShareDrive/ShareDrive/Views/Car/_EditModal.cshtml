@@ -1,6 +1,6 @@
 ﻿@using ShareDrive.ViewModels.CarViewModels
 
-@model CreateViewModel
+@model EditViewModel
 
 <div id="target">
     <div class="modal-header">
@@ -9,8 +9,12 @@
         </button>
         <h4 class="modal-title">Add Car</h4>
     </div>
-    <form enctype="multipart/form-data" asp-controller="Car" asp-action="Create" data-ajax="true" data-ajax-method="POST" data-ajax-mode="REPLACE-WITH" data-ajax-update="#target">
+    <form enctype="multipart/form-data" asp-controller="Car" asp-action="Edit" asp-route-id="@Model.Id" data-ajax="true" data-ajax-method="POST" data-ajax-mode="REPLACE-WITH" data-ajax-update="#target">
         <div class="modal-body">
+            <div>
+                <img id="Image" src="@Model.ImageSource" style="width: 300px" />
+            </div>
+            
             <div class="form-horizontal">
                 <div class="form-group">
                     <label asp-for="Brand" class="col-md-4 control-label"></label>
@@ -50,15 +54,17 @@
                     </div>
                 </div>
             </div>
-           
+
+
+
             <div class="form-horizontal">
                 <div class="form-group">
-                    <label class="col-md-4 control-label" asp-for="Image">Upload Picture</label>
+                    <label class="col-md-4 control-label" asp-for="NewImage">Upload Picture</label>
                     <div class="col-md-8">
-                        <input type="file" asp-for="Image" />
+                        <input type="file" asp-for="NewImage" onchange="showNewImage(event)" />
                     </div>
                 </div>
-            </div>            
+            </div>
         </div>
         <div class="modal-footer">
             <button type="submit" class="btn btn-info">Submit</button>
@@ -66,3 +72,13 @@
         </div>
     </form>
 </div>
+
+
+<script>            
+    function showNewImage(e) {
+        var imageFile = e.target.files[0];
+        var url = window.URL.createObjectURL(imageFile);
+        $('#Image').attr('src', url);
+    }        
+</script>
+

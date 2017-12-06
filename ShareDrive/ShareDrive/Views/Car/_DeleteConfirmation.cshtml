@@ -1,21 +1,23 @@
-﻿@* Here is the content for the modal*@
+﻿@using ShareDrive.ViewModels.CarViewModels
+
+@model DeleteViewModel
+
 <div id="target">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
-        <h4 class="modal-title">Form Modal</h4>
+        <h4 class="modal-title">Delete Car</h4>
     </div>
-    <form asp-action="PostModal" asp-controller="Home" data-ajax="true" data-ajax-method="POST" data-ajax-mode="REPLACE-WITH" data-ajax-update="#target">
+    <form asp-action="DeleteConfirm" asp-controller="Car" asp-route-id="@Model.Id" data-ajax="true" data-ajax-method="POST" data-ajax-mode="REPLACE-WITH" data-ajax-update="#target">
         <div class="modal-body">
             <div class="form-horizontal">
-                Are you sure you want to delete that shit?
-                @ViewBag.Id
+                Are you sure you want to delete @Model.Brand @Model.CarModel?
             </div>
         </div>
         <div class="modal-footer">
-            <button type="submit" class="btn btn-success">OK</button>
-            <button type="button" class="btn btn-default" data-dismiss="modal">NO</button>
+            <button type="submit" class="btn btn-warning">Delete</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
         </div>
     </form>
 </div>
