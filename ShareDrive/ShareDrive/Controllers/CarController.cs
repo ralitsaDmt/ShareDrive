@@ -1,29 +1,31 @@
 ﻿using AutoMapper.QueryableExtensions;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ShareDrive.Models;
 using ShareDrive.Services.Contracts;
 using ShareDrive.ViewModels.CarViewModels;
-using System;
-using System.IO;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace ShareDrive.Controllers
 {
     public class CarController : Controller
-    {
+    {   
         private readonly ICarsService carsService;
 
-        public CarController(ICarsService carsService)
+        private int userId;
+
+        public CarController(IHttpContextAccessor contextAccessor, ICarsService carsService)
         {
             this.carsService = carsService;
+            this.SetUserId(contextAccessor);
         }
 
         [HttpGet]
         public IActionResult Index()
         {
-            var cars = this.carsService.GetAllCarsIndex().ToList();
-            return this.View(cars);
+            return this.RedirectToIndex();
         }
         
         [HttpGet]
@@ -35,11 +37,15 @@ namespace ShareDrive.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateViewModel model)
         {
-            this.carsService.Create(model);
-
-            var cars = this.carsService.GetAllCarsIndex().ToList();
-
-            return this.View("Index", cars);
+            if (this.ModelState.IsValid)
+            {
+                await this.carsService.Create(model, this.userId);
+                return this.RedirectToIndex();
+            }
+            else
+            {
+                return this.PartialView("_CreateModal", model);
+            }           
         }  
         
         [HttpGet]
@@ -53,12 +59,10 @@ namespace ShareDrive.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(int id, EditViewModel model)
         {
-            bool result = await this.carsService.Edit(id, model);
-            
-            if (result)
+            if (this.ModelState.IsValid)
             {
-                var cars = this.carsService.GetAllCarsIndex().ToList();
-                return this.View("Index", cars);
+                await this.carsService.Edit(id, model);
+                return this.RedirectToIndex();
             }
             else
             {
@@ -78,16 +82,23 @@ namespace ShareDrive.Controllers
         [HttpPost]
         public IActionResult DeleteConfirm(int id)
         {
-            bool result = this.carsService.Delete(id);
-            if (result)
-            {
-                var cars = this.carsService.GetAllCarsIndex().ToList();
-                return this.View("Index", cars);
-            }
-            else
-            {
-                return null;
-            }
+
+            this.carsService.Delete(id);
+            return this.RedirectToIndex();
         }
+
+        private void SetUserId(IHttpContextAccessor contextAccessor)
+        {
+            string userIdAsString = contextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            int.TryParse(userIdAsString, out this.userId);
+        }
+
+        private IActionResult RedirectToIndex()
+        {
+            var cars = this.carsService.GetAllCarsIndex().ToList();
+            return this.View("Index", cars);
+        }
+
+
     }
 }

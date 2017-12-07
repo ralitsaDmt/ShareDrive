@@ -4,7 +4,7 @@
 @if (User.IsInRole(GlobalConstants.RoleUser))
 {
     <ul class="list-unstyled components">
-        <li class="active"><a href="#">All Drives</a></li>
+        <li><a asp-controller="Drive" asp-action="Index">All Drives</a></li>
         <li>
             <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">My Drives</a>
             <ul class="collapse list-unstyled" id="homeSubmenu">

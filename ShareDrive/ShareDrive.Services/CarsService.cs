@@ -7,6 +7,7 @@ using AutoMapper;
 using System.Linq;
 using System.IO;
 using System.Threading.Tasks;
+using System;
 
 namespace ShareDrive.Services
 {
@@ -21,7 +22,7 @@ namespace ShareDrive.Services
             this.mapper = mapper;
         }
 
-        public async void Create(CreateViewModel model)
+        public async Task<bool> Create(CreateViewModel model, int ownerId)
         {
             var tempPath = Path.GetTempPath();
 
@@ -33,7 +34,17 @@ namespace ShareDrive.Services
                 car.Image = ms.ToArray();
             }
 
-            this.cars.Create(car);
+            car.OwnerId = ownerId;
+
+            try
+            {
+                this.cars.Create(car);
+                return true;
+            }
+            catch(Exception ex)
+            {
+                return false;
+            }            
         }
 
         public EditViewModel GetEditViewModel(int id)

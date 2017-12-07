@@ -12,6 +12,7 @@ using ShareDrive.Common;
 using ShareDrive.Infrastructure;
 using AutoMapper;
 using ShareDrive.Infrastructure.Mapping;
+using Microsoft.AspNetCore.Http;
 
 namespace ShareDrive
 {
@@ -43,6 +44,7 @@ namespace ShareDrive
                 .AddDefaultTokenProviders();
 
             // Add application services.
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddScoped<IRolesService, RolesService>();
             services.AddTransient<ICarsService, CarsService>();

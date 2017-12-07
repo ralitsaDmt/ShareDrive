@@ -7,7 +7,7 @@ namespace ShareDrive.Services.Contracts
 {
     public interface ICarsService
     {
-        void Create(CreateViewModel model);
+        Task<bool> Create(CreateViewModel model, int ownerId);
 
         EditViewModel GetEditViewModel(int id);
 

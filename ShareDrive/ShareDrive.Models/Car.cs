@@ -18,5 +18,11 @@ namespace ShareDrive.Models
         public bool HasAirConditioner { get; set; }
 
         public byte[] Image { get; set; }
+
+        public int OwnerId { get; set; }
+
+        public ApplicationUser Owner { get; set; }
+
+        public ICollection<Drive> Drives { get; set; }
     }
 }

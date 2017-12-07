@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using System.Collections.Generic;
 
 namespace ShareDrive.Models
 {
@@ -7,5 +8,9 @@ namespace ShareDrive.Models
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
+
+        public ICollection<Car> Cars { get; set; }
+
+        public ICollection<Drive> Drives { get; set; }
     }
 }
