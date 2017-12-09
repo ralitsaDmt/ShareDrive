@@ -19,7 +19,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ShareDrive.Common\ShareDrive.Common.csproj" />
     <ProjectReference Include="..\ShareDrive.Data\ShareDrive.Data.csproj" />
     <ProjectReference Include="..\ShareDrive.Infrastructure\ShareDrive.Infrastructure.csproj" />
     <ProjectReference Include="..\ShareDrive.Models\ShareDrive.Models.csproj" />

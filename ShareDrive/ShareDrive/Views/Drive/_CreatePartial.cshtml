@@ -1,0 +1,125 @@
+﻿@using ShareDrive.ViewModels.Drive
+
+@model CreateViewModel
+
+<div id="target">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Share Your Drive</h4>
+    </div>
+    <form asp-controller="Drive" asp-action="Create" data-ajax="true" data-ajax-method="POST" data-ajax-mode="REPLACE-WITH" data-ajax-update="#target">
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="From" class="control-label"></label>
+                        <input type="text" class="form-control" asp-for="From">
+                        <span asp-validation-for="From" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="To" class="control-label"></label>
+                        <input type="text" class="form-control" asp-for="To">
+                        <span asp-validation-for="To" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="DateTime" class="control-label"></label>
+                        <div class='input-group date' id='datepicker'>
+                            <input type='text' class="form-control" asp-for="DateTime" />
+                            <span class="input-group-addon">
+                                <span><i class="fa fa-calendar" /></span>
+                            </span>
+                            <span asp-validation-for="DateTime" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                @*<div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Time" class="control-label"></label>
+                        <div class='input-group date' id='timepicker'>
+                            <input type='text' class="form-control" asp-for="Time" />
+                            <span class="input-group-addon">
+                                <span><i class="fa fa-clock-o" /></span>
+                            </span>
+                            <span asp-validation-for="Time" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>*@
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Price" class="control-label"></label>
+                        <input type="number" class="form-control" min="0" asp-for="Price">
+                        <span asp-validation-for="Price" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="AvailableSeats" class="control-label"></label>
+                        <input type="number" class="form-control" min="0" asp-for="AvailableSeats">
+                        <span asp-validation-for="AvailableSeats" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="LocationToPick" class="control-label"></label>
+                        <textarea asp-for="LocationToPick" rows="3" class="form-control"></textarea>
+                        <span asp-validation-for="LocationToPick" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="LocationToArrive" class="control-label"></label>
+                        <textarea asp-for="LocationToArrive" rows="3" class="form-control"></textarea>
+                        <span asp-validation-for="LocationToArrive" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label asp-for="CarId" class="control-label"></label>
+                        <select asp-for="CarId" class="form-control"
+                                asp-items="@(new SelectList(Model.Cars, "Id", "Name"))">
+                        </select>
+                        <span asp-validation-for="CarId" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-info">Submit</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    $(function () {
+        $('#datepicker').datetimepicker({
+            format: "DD MM YYYY - HH:mm",
+
+        });
+        //$('#timepicker').datetimepicker({
+        //    format: "HH:mm"
+        //});
+    })
+</script>

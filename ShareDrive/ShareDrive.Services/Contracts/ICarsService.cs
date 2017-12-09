@@ -1,5 +1,7 @@
 ﻿using ShareDrive.Models;
+using ShareDrive.ViewModels.Car;
 using ShareDrive.ViewModels.CarViewModels;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -18,5 +20,7 @@ namespace ShareDrive.Services.Contracts
         IQueryable<Car> GetById(int id);
         
         bool Delete(int id);
+
+        List<SelectViewModel> GetSelectionList();
     }
 }

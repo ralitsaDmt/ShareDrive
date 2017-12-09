@@ -1,6 +1,7 @@
 ﻿using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ShareDrive.Helpers;
 using ShareDrive.Models;
 using ShareDrive.Services.Contracts;
 using ShareDrive.ViewModels.CarViewModels;
@@ -89,8 +90,7 @@ namespace ShareDrive.Controllers
 
         private void SetUserId(IHttpContextAccessor contextAccessor)
         {
-            string userIdAsString = contextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            int.TryParse(userIdAsString, out this.userId);
+            this.userId = IdentityHelper.GetUserId(contextAccessor);
         }
 
         private IActionResult RedirectToIndex()

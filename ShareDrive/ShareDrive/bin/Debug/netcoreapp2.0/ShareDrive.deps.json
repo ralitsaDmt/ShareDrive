@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.0",
-    "signature": "42df79a99c7627affb3750100fbf78caf67ca3fb"
+    "signature": "1197c6a7503c6b7c5f7b77763b9d8ac4c758ffaa"
   },
   "compilationOptions": {
     "defines": [
@@ -27,7 +27,6 @@
           "Microsoft.AspNetCore.All": "2.0.0",
           "Microsoft.NETCore.App": "2.0.0",
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "2.0.0",
-          "ShareDrive.Common": "1.0.0",
           "ShareDrive.Data": "1.0.0",
           "ShareDrive.Infrastructure": "1.0.0",
           "ShareDrive.Models": "1.0.0",
@@ -75,6 +74,18 @@
           "lib/netstandard2.0/AutoMapper.Extensions.Microsoft.DependencyInjection.dll": {}
         }
       },
+      "bootstrap/3.3.0": {
+        "dependencies": {
+          "jQuery": "1.9.0"
+        }
+      },
+      "Bootstrap.v3.Datetimepicker.CSS/4.17.45": {
+        "dependencies": {
+          "Moment.js": "2.9.0",
+          "bootstrap": "3.3.0"
+        }
+      },
+      "jQuery/1.9.0": {},
       "Libuv/1.10.0": {
         "dependencies": {
           "Microsoft.NETCore.Platforms": "2.0.0"
@@ -2485,6 +2496,7 @@
           "ref/netstandard2.0/Microsoft.Win32.Registry.dll": {}
         }
       },
+      "Moment.js/2.9.0": {},
       "Newtonsoft.Json/10.0.1": {
         "dependencies": {
           "Microsoft.CSharp": "4.4.0",
@@ -4111,6 +4123,7 @@
       "ShareDrive.Data/1.0.0": {
         "dependencies": {
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "3.2.0",
+          "Bootstrap.v3.Datetimepicker.CSS": "4.17.45",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "2.0.1",
           "Microsoft.EntityFrameworkCore": "2.0.1",
           "Microsoft.EntityFrameworkCore.Design": "2.0.1",
@@ -4376,6 +4389,27 @@
       "sha512": "sha512-528nEpAwniNn8Z6Ae9qTiM/kN4f0BxmWE9mDMEkqKKGxbuElmv6Kj9DVvTXECJkIt6ARerb9+vYbOifNpcwvXQ==",
       "path": "automapper.extensions.microsoft.dependencyinjection/3.2.0",
       "hashPath": "automapper.extensions.microsoft.dependencyinjection.3.2.0.nupkg.sha512"
+    },
+    "bootstrap/3.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-8Fn3Tnk23NpT0i1Osj3mydnknbzbFA/rOVk5hoGlqb0XXl/rDn085qanSCcCqsZlIGL2VWSbO4vihOs1hMtZ5A==",
+      "path": "bootstrap/3.3.0",
+      "hashPath": "bootstrap.3.3.0.nupkg.sha512"
+    },
+    "Bootstrap.v3.Datetimepicker.CSS/4.17.45": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-O6uUKSMe4KvfSJ1pON8yI8JzTxpf/InaDChbC3kwfUFG7hjysyIpx8fmgEtb8sojMJcfRRO5NFyLsz+rRX3Fdw==",
+      "path": "bootstrap.v3.datetimepicker.css/4.17.45",
+      "hashPath": "bootstrap.v3.datetimepicker.css.4.17.45.nupkg.sha512"
+    },
+    "jQuery/1.9.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-bS6OGSd/QL39vKKhATpeehgZDCzV6foRJ52EocEGAB29VetwXkQHN6KQIBlBbW9VJzuHr+rQxHYZ13MnPGQ/vw==",
+      "path": "jquery/1.9.0",
+      "hashPath": "jquery.1.9.0.nupkg.sha512"
     },
     "Libuv/1.10.0": {
       "type": "package",
@@ -5580,6 +5614,13 @@
       "sha512": "sha512-dA36TlNVn/XfrZtmf0fiI/z1nd3Wfp2QVzTdj26pqgP9LFWq0i1hYEUAW50xUjGFYn1+/cP3KGuxT2Yn1OUNBQ==",
       "path": "microsoft.win32.registry/4.4.0",
       "hashPath": "microsoft.win32.registry.4.4.0.nupkg.sha512"
+    },
+    "Moment.js/2.9.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-4rhbvFzmgXp/gjvwjxt9Qjmdz+2CD9T99erXEDtZHlYxaI06F9A4628/Vpxklm8D9RmwJjKjp1244FwEh+a5WQ==",
+      "path": "moment.js/2.9.0",
+      "hashPath": "moment.js.2.9.0.nupkg.sha512"
     },
     "Newtonsoft.Json/10.0.1": {
       "type": "package",

@@ -46,12 +46,21 @@ namespace ShareDrive
             // Add application services.
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient<IEmailSender, EmailSender>();
-            services.AddScoped<IRolesService, RolesService>();
+
+            services.AddTransient<IRolesService, RolesService>();
             services.AddTransient<ICarsService, CarsService>();
+            services.AddTransient<IDrivesService, DrivesService>();
+            services.AddTransient<IDriveHelperService, DriveHelperService>();
+            services.AddTransient<ICitiesService, CitiesService>();
+
             services.AddScoped(typeof(IDbRepository<>), typeof(DbRepository<>));
                         
             services.AddMvc();
-            services.AddAutoMapper(cfg => cfg.AddProfile(typeof(AutoMapperProfile)));
+            services.AddAutoMapper(cfg =>
+            {
+                cfg.AddProfile(typeof(CarAutoMapperProfile));
+                cfg.AddProfile(typeof(DriveAutoMapperProfile));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

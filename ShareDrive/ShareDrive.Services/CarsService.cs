@@ -8,6 +8,8 @@ using System.Linq;
 using System.IO;
 using System.Threading.Tasks;
 using System;
+using ShareDrive.ViewModels.Car;
+using System.Collections.Generic;
 
 namespace ShareDrive.Services
 {
@@ -110,6 +112,10 @@ namespace ShareDrive.Services
             }
         }
 
-
+        public List<SelectViewModel> GetSelectionList()
+        {
+            var carsList = this.cars.GetAll().ProjectTo<SelectViewModel>().ToList();
+            return carsList;
+        }
     }
 }

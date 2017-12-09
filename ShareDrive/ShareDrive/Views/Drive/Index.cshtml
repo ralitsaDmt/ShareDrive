@@ -1,7 +1,16 @@
-﻿
-@{
-    ViewData["Title"] = "Index";
+﻿@{
+    ViewData["Title"] = "Drive Index";
 }
 
-<h2>Index</h2>
+<div class="col-md-12">
+    <a asp-controller="Drive" asp-action="Create" class="btn btn-block btn-info modal-btn" data-target="#modal-container" data-toggle="modal">Add Vehicle</a>
+</div>
 
+
+<div id="modal-container" class="modal fade hidden-print" tabindex="-1" role="dialog" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+        </div>
+    </div>
+</div>
