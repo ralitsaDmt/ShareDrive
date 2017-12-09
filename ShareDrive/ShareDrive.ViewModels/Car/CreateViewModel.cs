@@ -16,7 +16,8 @@ namespace ShareDrive.ViewModels.CarViewModels
         public int Year { get; set; }
 
         public bool HasAirConditioner { get; set; }
-
+        
+        [Required]
         public IFormFile Image { get; set; }
     }
 }

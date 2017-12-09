@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace ShareDrive.ViewModels.CarViewModels
@@ -9,14 +10,17 @@ namespace ShareDrive.ViewModels.CarViewModels
     {
         public int Id { get; set; }
 
+        [Required]
         public string Brand { get; set; }
 
+        [Required]
         public string CarModel { get; set; }
 
+        [Required]
         public int Year { get; set; }
 
         public bool HasAirConditioner { get; set; }
-
+        
         public byte[] Image { get; set; }
 
         public IFormFile NewImage { get; set; }

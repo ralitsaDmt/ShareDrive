@@ -19,6 +19,9 @@ namespace ShareDrive.Controllers
         private readonly IDriveHelperService driveHelperService;
         private readonly ICarsService carsService;
 
+        private JsonResult Success(string message) { return Json(new { Success = true, Message = message }); }
+        private JsonResult Error(string message) { return Json(new { Success = false, Message = message }); }
+
         public DriveController(IHttpContextAccessor contextAccessor, IDrivesService drivesService, IDriveHelperService driveHelperService, ICarsService carsService)
         {
             this.drivesService = drivesService;
@@ -59,14 +62,18 @@ namespace ShareDrive.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Create(CreateViewModel model)
         {
             if (this.ModelState.IsValid)
             {
                 this.driveHelperService.ProcessCreateDrive(model, this.userId);
-            }
 
-            return this.RedirectToIndex();
+                ViewData["SuccessMessage"] = "Drive successfully created";
+                return this.RedirectToIndex();
+            }
+            
+            return this.PartialView("_CreatePartial", model);
         }
 
         private void SetUserId(IHttpContextAccessor contextAccessor)

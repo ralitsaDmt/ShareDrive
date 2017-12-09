@@ -145,3 +145,9 @@ ul ul a {
     padding-left: 30px !important;
     background: #5bc0de;
 }
+
+div.alert {
+    margin-top: 15px;
+    margin-bottom: 0px;
+    padding: 10px;
+}

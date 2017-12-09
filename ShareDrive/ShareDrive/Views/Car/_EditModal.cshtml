@@ -9,12 +9,12 @@
         </button>
         <h4 class="modal-title">Add Car</h4>
     </div>
-    <form enctype="multipart/form-data" asp-controller="Car" asp-action="Edit" asp-route-id="@Model.Id" data-ajax="true" data-ajax-method="POST" data-ajax-mode="REPLACE-WITH" data-ajax-update="#target">
+    <form enctype="multipart/form-data" asp-controller="Car" asp-action="Edit" asp-route-id="@Model.Id" id="form">
         <div class="modal-body">
             <div>
                 <img id="Image" src="@Model.ImageSource" style="width: 300px" />
             </div>
-            
+
             <div class="form-horizontal">
                 <div class="form-group">
                     <label asp-for="Brand" class="col-md-4 control-label"></label>
@@ -74,11 +74,15 @@
 </div>
 
 
-<script>            
+<script>
+    $(function () {
+        $.validator.unobtrusive.parse("#form");
+    })
+
     function showNewImage(e) {
         var imageFile = e.target.files[0];
         var url = window.URL.createObjectURL(imageFile);
         $('#Image').attr('src', url);
-    }        
+    }
 </script>
 

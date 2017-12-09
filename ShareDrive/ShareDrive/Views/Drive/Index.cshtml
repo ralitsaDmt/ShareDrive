@@ -1,5 +1,14 @@
 ﻿@{
-    ViewData["Title"] = "Drive Index";
+    ViewData["Title"] = "Drive Index";   
+}
+
+@if (ViewData["SuccessMessage"] != null) {
+    <div class="col-md-12">
+        <div style="margin-top: 10px" class="alert alert-success alert-dismissable">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            @ViewData["SuccessMessage"]
+        </div>
+    </div>
 }
 
 <div class="col-md-12">

@@ -12,5 +12,7 @@ namespace ShareDrive.Infrastructure
         public const string RoleUser = "User";
 
         public const string AdminMail = "admin@mysite.com";
+
+        public const string RequiredMessage = "The field is required.";
     }
 }

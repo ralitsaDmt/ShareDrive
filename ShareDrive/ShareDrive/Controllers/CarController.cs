@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace ShareDrive.Controllers
 {
     public class CarController : Controller
-    {   
+    {
         private readonly ICarsService carsService;
 
         private int userId;
@@ -28,7 +28,7 @@ namespace ShareDrive.Controllers
         {
             return this.RedirectToIndex();
         }
-        
+
         [HttpGet]
         public IActionResult Create()
         {
@@ -41,19 +41,19 @@ namespace ShareDrive.Controllers
             if (this.ModelState.IsValid)
             {
                 await this.carsService.Create(model, this.userId);
+
+                ViewData["SuccessMessage"] = "Car added successfully";
                 return this.RedirectToIndex();
             }
-            else
-            {
-                return this.PartialView("_CreateModal", model);
-            }           
-        }  
-        
+
+            ViewData["ErrorMessage"] = "Please fill all fields properly";
+            return this.PartialView("_CreateModal", model);
+        }
+
         [HttpGet]
         public IActionResult Edit(int id)
         {
             EditViewModel model = this.carsService.GetEditViewModel(id);
-                        
             return this.PartialView("_EditModal", model);
         }
 
@@ -63,12 +63,12 @@ namespace ShareDrive.Controllers
             if (this.ModelState.IsValid)
             {
                 await this.carsService.Edit(id, model);
+                ViewData["SuccessMessage"] = "Car updated successfully";
                 return this.RedirectToIndex();
             }
-            else
-            {
-                return this.PartialView("_EditModal", model);
-            }
+
+            ViewData["ErrorMessage"] = "Please fill all fields properly";
+            return this.PartialView("_EditModal", model);
         }
 
         [HttpGet]
@@ -85,6 +85,7 @@ namespace ShareDrive.Controllers
         {
 
             this.carsService.Delete(id);
+            ViewData["SuccessMessage"] = "Car deleted successfully";
             return this.RedirectToIndex();
         }
 
