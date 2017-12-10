@@ -8,6 +8,18 @@ namespace ShareDrive.Services.Contracts
 {
     public interface IDrivesService
     {
-        void Create(CreateViewModel model, City cityFrom, City cityTo, int userId);
+        List<IndexViewModel> GetAll(string sort, string from = null, string to = null, string date = null);
+
+        void Create(EditViewModel model, City cityFrom, City cityTo, int userId);
+
+        void Update(EditViewModel model, City cityFrom, City cityTo, int id);
+
+        EditViewModel GetEditModelById(int id);
+
+        DeleteViewModel GetDeleteModelById(int id);
+
+        Drive GetById(int id);
+
+        void Delete(int id);
     }
 }

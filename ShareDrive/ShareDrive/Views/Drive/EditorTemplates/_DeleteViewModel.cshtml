@@ -1,0 +1,75 @@
+﻿
+@model ShareDrive.ViewModels.Drive.DeleteViewModel
+
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="From" class="control-label"></label>
+                <input type="text" class="form-control" asp-for="From" disabled />
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="To" class="control-label"></label>
+                <input type="text" class="form-control" asp-for="To" disabled />
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="DateTime" class="control-label"></label>
+                <div class='input-group date' id='datepicker'>
+                    <input type='text' class="form-control" asp-for="DateTime" disabled />
+                    <span class="input-group-addon">
+                        <span><i class="fa fa-calendar" /></span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="Price" class="control-label"></label>
+                <input type="number" class="form-control" asp-for="Price" disabled />
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="AvailableSeats" class="control-label"></label>
+                <input type="number" class="form-control" asp-for="AvailableSeats" disabled />
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="LocationToPick" class="control-label"></label>
+                <textarea asp-for="LocationToPick" rows="3" class="form-control" disabled></textarea>                
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="LocationToArrive" class="control-label"></label>
+                <textarea asp-for="LocationToArrive" rows="3" class="form-control" disabled></textarea>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label asp-for="Car" class="control-label"></label>
+                <input type="text" class="form-control" asp-for="Car" disabled />
+            </div>
+        </div>
+    </div>
+</div>

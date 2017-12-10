@@ -151,3 +151,7 @@ div.alert {
     margin-bottom: 0px;
     padding: 10px;
 }
+
+body a.filter {
+    width: 100%;
+}

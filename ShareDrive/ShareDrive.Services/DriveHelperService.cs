@@ -18,12 +18,20 @@ namespace ShareDrive.Services
             this.citiesService = citiesService;
         }
 
-        public void ProcessCreateDrive(CreateViewModel model, int userId)
+        public void ProcessCreateDrive(EditViewModel model, int userId)
         {
             City cityFrom = this.citiesService.GetOrCreate(model.From);
             City cityTo = this.citiesService.GetOrCreate(model.To);
 
             this.drivesService.Create(model, cityFrom, cityTo, userId);
+        }
+
+        public void ProcessEditDrive(EditViewModel model, int id)
+        {
+            City cityFrom = this.citiesService.GetOrCreate(model.From);
+            City cityTo = this.citiesService.GetOrCreate(model.To);
+
+            this.drivesService.Update(model, cityFrom, cityTo, id);
         }
     }
 }

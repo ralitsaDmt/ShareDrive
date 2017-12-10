@@ -1,0 +1,51 @@
+﻿
+@model ShareDrive.ViewModels.Drive.IndexViewModel
+
+<div class="col-md-12">
+    <div class="panel panel-default">
+        <div class="panel-heading clearfix">
+            <div class="pull-right">
+                <a asp-action="Edit" asp-controller="Drive" asp-route-id="@Model.Id"
+                   data-target="#modal-container" tabindex="-1" data-toggle="modal" 
+                   class="panel-link"><i class="fa fa-edit"></i></a>
+                <a asp-action="Delete" asp-controller="Drive" asp-route-id="@Model.Id"
+                   data-target="#modal-container" tabindex="-1" data-toggle="modal" 
+                   class="panel-link"><i class="fa fa-close"></i></a>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="col-md-4">
+                <div>
+                    <label>From: </label>
+                    <span>@Model.From</span>
+                </div>
+                <div>
+                    <label>To: </label>
+                    <span>@Model.To</span>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div>
+                    <label>Date of Travel: </label>
+                    <span>@Model.Date</span>
+                </div>
+                <div>
+                    <label>Time of Travel: </label>
+                    <span>@Model.Time</span>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div>
+                    <label>Available seats: </label>
+                    <span>@Model.AvailableSeats</span>
+                </div>
+                <div>
+                    <label>Price: </label>
+                    <span>@Model.Price</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

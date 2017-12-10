@@ -9,9 +9,9 @@
         </button>
         <h4 class="modal-title">Share Your Drive</h4>
     </div>
-    <form id="form" asp-controller="Drive" asp-action="Create">
+    <form id="form" asp-controller="Drive" asp-action="Edit" asp-route-id="@Model.Id">
         @Html.EditorFor(x => x, "_EditViewModel");
-                
+
         <div class="modal-footer">
             <button type="submit" class="btn btn-info">Submit</button>
             <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
@@ -19,13 +19,15 @@
     </form>
 </div>
 
+
 <script>
     $(function () {
         $.validator.unobtrusive.parse("#form");
 
         $('#datepicker').datetimepicker({
-            format: "DD MM YYYY - HH:mm",
-
+            format: "DD/MM/YYYY - HH:mm",
         });
+
+        $('#datepicker').data("DateTimePicker").date(new Date('@Model.DateTime' + 'Z'));
     })
 </script>

@@ -21,6 +21,6 @@ namespace ShareDrive.Services.Contracts
         
         bool Delete(int id);
 
-        List<SelectViewModel> GetSelectionList();
+        List<SelectViewModel> GetSelectionListByDriver(int id);
     }
 }

@@ -5,6 +5,8 @@ using System.Text;
 using ShareDrive.Models;
 using ShareDrive.Common;
 using System.Linq;
+using ShareDrive.ViewModels.City;
+using AutoMapper.QueryableExtensions;
 
 namespace ShareDrive.Services
 {
@@ -27,6 +29,11 @@ namespace ShareDrive.Services
             }
 
             return city;
+        }
+
+        public List<SelectViewModel> GetAll()
+        {
+            return this.cities.GetAll().ProjectTo<SelectViewModel>().ToList();
         }
 
         private City Create(string name)

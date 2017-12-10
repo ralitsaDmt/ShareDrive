@@ -60,6 +60,7 @@ namespace ShareDrive
             {
                 cfg.AddProfile(typeof(CarAutoMapperProfile));
                 cfg.AddProfile(typeof(DriveAutoMapperProfile));
+                cfg.AddProfile(typeof(CityAutoMapperProfile));
             });
         }
 

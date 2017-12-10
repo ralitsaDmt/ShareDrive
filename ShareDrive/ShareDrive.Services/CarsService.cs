@@ -112,9 +112,11 @@ namespace ShareDrive.Services
             }
         }
 
-        public List<SelectViewModel> GetSelectionList()
+        public List<SelectViewModel> GetSelectionListByDriver(int id)
         {
-            var carsList = this.cars.GetAll().ProjectTo<SelectViewModel>().ToList();
+            var carsList = this.cars.GetAll()
+                .Where(x => x.OwnerId == id)
+                .ProjectTo<SelectViewModel>().ToList();
             return carsList;
         }
     }

@@ -50,6 +50,11 @@ namespace ShareDrive.Common
             return this.entities.FirstOrDefault(x => x.Id == id);
         }
 
+        public IQueryable<T> GetByIdQueryable(int id)
+        {
+            return this.entities.Where(x => x.Id == id);
+        }
+
         public bool Update(T entity)
         {
             try

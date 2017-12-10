@@ -10,6 +10,8 @@ namespace ShareDrive.Common
 
         T GetById(int id);
 
+        IQueryable<T> GetByIdQueryable(int id);
+
         T Create(T entity);
 
         bool Update(T entity);
