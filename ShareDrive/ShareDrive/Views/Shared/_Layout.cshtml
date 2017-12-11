@@ -17,6 +17,7 @@
         <link rel="stylesheet" href="~/css/site.css" />
         <link rel="stylesheet" href="~/css/panel.css" />
         <link rel="stylesheet" href="~/css/car-index.css" />
+        <link rel="stylesheet" href="~/css/drive-details.css" />
         <link rel="stylesheet" href="~/css/font-awesome-4.7.0/css/font-awesome.css">
     </environment>
     <environment exclude="Development">
@@ -27,40 +28,32 @@
     </environment>
 </head>
 <body>
-    <div class="wrapper">
-        <nav class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">ShareDrive</a>
-                </div>
-                <div class="navbar-collapse collapse">
-                    
-                    @await Html.PartialAsync("_LoginPartial")
-                </div>
-            </div>
-        </nav>
 
-        <nav id="sidebar" class="nav-pills nav-stacked">
-            <div class="sidebar-header">
-                <h3>Share Drive</h3>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">ShareDrive</a>
             </div>
-            @await Html.PartialAsync("_NavigationPartial")            
-        </nav>
+            <div class="navbar-collapse collapse">
+                @await Html.PartialAsync("_NavigationPartial")
+                
 
-        <div class="container body-content">            
-            @RenderBody()
-            <hr />
-            <footer>
-                <p>&copy; 2017 - ShareDrive</p>
-            </footer>
+                @await Html.PartialAsync("_LoginPartial")
+            </div>
         </div>
-
+    </nav>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; 2017 - ShareDrive</p>
+        </footer>
     </div>
 
     <environment include="Development">
@@ -72,8 +65,8 @@
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
         <script src="~/lib/moment/min/moment.min.js"></script>
         <script src="~/lib/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
-        
-        
+
+
     </environment>
     <environment exclude="Development">
         <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
@@ -89,12 +82,10 @@
                 integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
         </script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
-        
-        
+
+
         <script src="~/js/site.js" asp-append-version="true"></script>
     </environment>
-
-
 
     @RenderSection("Scripts", required: false)
 </body>

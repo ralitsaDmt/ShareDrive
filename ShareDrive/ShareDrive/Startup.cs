@@ -13,6 +13,8 @@ using ShareDrive.Infrastructure;
 using AutoMapper;
 using ShareDrive.Infrastructure.Mapping;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
 
 namespace ShareDrive
 {
@@ -54,13 +56,14 @@ namespace ShareDrive
             services.AddTransient<ICitiesService, CitiesService>();
 
             services.AddScoped(typeof(IDbRepository<>), typeof(DbRepository<>));
-                        
+
             services.AddMvc();
             services.AddAutoMapper(cfg =>
             {
                 cfg.AddProfile(typeof(CarAutoMapperProfile));
                 cfg.AddProfile(typeof(DriveAutoMapperProfile));
                 cfg.AddProfile(typeof(CityAutoMapperProfile));
+                cfg.AddProfile(typeof(UserAutoMapperProfile));
             });
         }
 

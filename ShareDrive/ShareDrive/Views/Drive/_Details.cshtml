@@ -1,0 +1,41 @@
+﻿
+@model ShareDrive.ViewModels.Drive.DetailsViewModel
+
+<div id="target">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Share Your Drive</h4>
+    </div>
+
+    <div class="modal-body">
+        <div class="panel-body">
+            <div class="tabs-container">
+                <ul class="nav nav-tabs">
+                    <li class="active">
+                        <a data-toggle="tab" href="#drive" class="tab-link">Drive</a>
+                    </li>
+                    <li>
+                        <a data-toggle="tab" href="#driver" class="tab-link">Driver</a>
+                    </li>
+                    <li>
+                        <a data-toggle="tab" href="#car" class="tab-link">Car</a>
+                    </li>
+                </ul>
+
+                <div class="tab-content">
+                    <div id="drive" class="tab-pane fade in active">
+                        @Html.DisplayFor(x => x.Drive, "_DriveDetailsViewModel")
+                    </div>
+                    <div id="driver" class="tab-pane fade">
+                        @Html.DisplayFor(x => x.Driver, "_DriverDetailsViewModel")
+                    </div>
+                    <div id="car" class="tab-pane fade">
+                        @Html.DisplayFor(x => x.Car, "_CarDetailsViewModel")
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace ShareDrive.ViewModels.Drive
+namespace ShareDrive.ViewModels.Drive.BaseModels
 {
     public abstract class BaseEditViewModel
     {

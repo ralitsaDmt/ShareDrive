@@ -42,7 +42,7 @@ namespace ShareDrive.Controllers
         {
             List<SelectViewModel> carsSelect = this.GetCarsSelectionList();
                         
-            // TODO: Check if there sre cars and if no cars selected, return to index with error message
+            // TODO: Check if there аre cars and if no cars selected, return to index with error message
 
             EditViewModel model = new EditViewModel()
             {
@@ -81,7 +81,7 @@ namespace ShareDrive.Controllers
         {
             if (this.ModelState.IsValid)
             {
-                if (!id.HasValue)
+                if (id == 0)
                 {
                     this.CreateDrive(model);
                 }
@@ -112,6 +112,12 @@ namespace ShareDrive.Controllers
             return this.RedirectToIndex();
         }
 
+        public IActionResult Details(int id)
+        {
+            DetailsViewModel model = this.drivesService.GetDetailsModel(id);
+            return this.PartialView("_Details", model);
+        }
+
         private void UpdateDrive(int id, EditViewModel model)
         {
             this.driveHelperService.ProcessEditDrive(model, id);
@@ -125,7 +131,10 @@ namespace ShareDrive.Controllers
 
         private void SetUserId(IHttpContextAccessor contextAccessor)
         {
-            this.userId = IdentityHelper.GetUserId(contextAccessor);
+            if (this.User != null)
+            {
+                this.userId = IdentityHelper.GetUserId(contextAccessor);
+            }            
         }
 
         private List<SelectViewModel> GetCarsSelectionList()

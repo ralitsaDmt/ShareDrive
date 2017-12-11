@@ -57,9 +57,16 @@ namespace ShareDrive.Services
             return model;
         }
 
-        public IQueryable<IndexViewModel> GetAllCarsIndex()
+        public IQueryable<IndexViewModel> GetAllCarsIndex(int? userId)
         {
-            return this.cars.GetAll().ProjectTo<IndexViewModel>();
+            IQueryable<Car> cars = this.cars.GetAll();
+
+            if (userId != null)
+            {
+                cars = cars.Where(c => c.OwnerId == userId);
+            }
+
+            return cars.ProjectTo<IndexViewModel>();
         }
 
         public IQueryable<Car> GetById(int id)

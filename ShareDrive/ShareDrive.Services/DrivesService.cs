@@ -4,7 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using ShareDrive.Common;
 using ShareDrive.Models;
 using ShareDrive.Services.Contracts;
+using ShareDrive.ViewModels.Car;
 using ShareDrive.ViewModels.Drive;
+using ShareDrive.ViewModels.User;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -68,6 +70,31 @@ namespace ShareDrive.Services
             Drive drive = this.GetMappedDrive(model, cityFrom, cityTo);
             drive.Id = id;
             this.drives.Update(drive);
+        }
+
+        public DetailsViewModel GetDetailsModel(int id)
+        {
+            IQueryable<Drive> driveAsQueryable = this.drives.GetByIdQueryable(id);
+
+            Drive drive = driveAsQueryable
+                .Include(d => d.From)
+                .Include(d => d.To)
+                .Include(d => d.Car)
+                .Include(d => d.Driver)
+                .FirstOrDefault();
+
+            DriveDetailsViewModel driveViewModel = mapper.Map<DriveDetailsViewModel>(drive);
+            DriverDetailsViewModel driverViewModel = mapper.Map<DriverDetailsViewModel>(drive.Driver);
+            CarDetailsViewModel carViewModel = mapper.Map<CarDetailsViewModel>(drive.Car);
+
+            DetailsViewModel model = new DetailsViewModel()
+            {
+                Drive = driveViewModel,
+                Driver = driverViewModel,
+                Car = carViewModel
+            };
+
+            return model;
         }
 
         private Drive GetMappedDrive(EditViewModel model, City cityFrom, City cityTo)

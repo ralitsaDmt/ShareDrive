@@ -1,0 +1,59 @@
+﻿@model ShareDrive.ViewModels.Drive.DriveDetailsViewModel
+
+<div class="col-md-12">
+    <div class="panel panel-info details-panel">
+        <div class="panel-body">
+            <div class="col-md-9">
+                <div>
+                    <label>From: </label>
+                    <span>@Model.From</span>
+                    <hr class="hr-details" />
+                </div>
+
+                <div>
+                    <label>To: </label>
+                    <span>@Model.To</span>
+                    <hr class="hr-details" />
+                </div>
+
+                <div>
+                    <label>Date of Travel: </label>
+                    <span>@Model.Date</span>
+                    <hr class="hr-details" />
+                </div>
+
+                <div>
+                    <label>Time of Travel: </label>
+                    <span>@Model.Time</span>
+                    <hr class="hr-details" />
+                </div>
+
+                <div>
+                    <label>Available seats: </label>
+                    <span>@Model.AvailableSeats</span>
+                    <hr class="hr-details" />
+                </div>
+                <div>
+                    <label>Price: </label>
+                    <span>@Model.Price</span>
+                    <hr class="hr-details" />
+                </div>
+
+                <div>
+                    <label>Location to Pick: </label>
+                    <span>@Model.LocationToPick</span>
+                    <hr class="hr-details" />
+                </div>
+                <div>
+                    <label>Location to Arrive: </label>
+                    <span>@Model.LocationToArrive</span>
+                    <hr class="hr-details" />
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <a href="#" class="btn btn-info">Share Drive</a>
+            </div>
+        </div>
+    </div>
+</div>

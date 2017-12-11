@@ -1,0 +1,32 @@
+﻿@model ShareDrive.ViewModels.User.DriverDetailsViewModel
+
+<div class="col-md-12">
+    <div class="panel panel-info details-panel">
+        <div class="panel-body">
+            <div class="col-md-5">
+                <img class="img-driver" src="~/images/default-user.png" />
+            </div>
+
+            <div class="col-md-7">
+                <div>
+                    <label asp-for="@Model.Name"></label>
+                    <span>@Model.Name</span>
+                    <hr class="hr-details" />
+                </div>
+
+                <div>
+                    <label asp-for="@Model.PhoneNumber"></label>
+                    <span>@Model.PhoneNumber</span>
+                    <hr class="hr-details" />
+                </div>
+
+                <div>
+                    <label asp-for="Email"></label>
+                    <span>@Model.Email</span>
+                    <hr class="hr-details" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

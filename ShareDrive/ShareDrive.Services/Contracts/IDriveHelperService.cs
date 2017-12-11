@@ -8,6 +8,6 @@ namespace ShareDrive.Services.Contracts
     {
         void ProcessCreateDrive(EditViewModel model, int userId);
 
-        void ProcessEditDrive(EditViewModel model, int id);
+        void ProcessEditDrive(EditViewModel model, int id);        
     }
 }

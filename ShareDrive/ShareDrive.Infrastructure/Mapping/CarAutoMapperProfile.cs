@@ -29,6 +29,10 @@ namespace ShareDrive.Infrastructure.Mapping
             CreateMap<Car, SelectViewModel>()
                 .ForMember(dest => dest.Name, 
                     opt => opt.MapFrom(source => source.Brand + " " + source.CarModel + " (" + source.Year + ")"));
+
+            CreateMap<Car, CarDetailsViewModel>()
+                .ForMember(dest => dest.HasAirConditioner, opt => opt.MapFrom(source => source.HasAirConditioner ? "Yes" : "No"))
+                .ForMember(dest => dest.ImageSource, opt => opt.Ignore());
         }        
     }
 }

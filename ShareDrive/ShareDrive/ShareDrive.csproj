@@ -5,6 +5,11 @@
     <UserSecretsId>aspnet-ShareDrive-EC336FAE-506A-4BE0-927B-B1FA754A45CA</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Content Remove="Views\Drive\_CreatePartial.cshtml" />
+    <Content Remove="wwwroot\css\sidebar.css" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="3.2.0" />

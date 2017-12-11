@@ -1,7 +1,17 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Identity
+@using ShareDrive.Models
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@{
     ViewData["Title"] = "Drive Index";
 }
+
 @model List<ShareDrive.ViewModels.Drive.IndexViewModel>
+
+@{ var isSignedIn = SignInManager.IsSignedIn(User); }
+
 @if (ViewData["SuccessMessage"] != null)
 {
     <div class="col-md-12">
@@ -11,11 +21,15 @@
         </div>
     </div>
 }
-<div class="col-md-12">
-    <a asp-controller="Drive" asp-action="Create" 
-       class="btn btn-block btn-info modal-btn" 
-       data-target="#modal-container" data-toggle="modal">Add Vehicle</a>
-</div>
+
+@if (isSignedIn)
+{
+    <div class="col-md-12">
+        <a asp-controller="Drive" asp-action="Create"
+           class="btn btn-block btn-info modal-btn"
+           data-target="#modal-container" data-toggle="modal">Create New Drive</a>
+    </div>
+}
 
 <div id="modal-container" class="modal fade hidden-print" tabindex="-1" role="dialog" data-backdrop="static">
     <div class="modal-dialog">
@@ -29,33 +43,55 @@
 <div class="col-md-12">
     <div class="panel panel-default">
         <div class="panel-body">
-            <div class="col-md-2">
-                <a asp-controller="Drive" asp-action="IndexFilter"
-                   class="btn btn-info filter" data-sort="Date"
-                   data-target="data-container" id="sort">Sort by Date &uarr;</a>
-            </div>
+            <div class="row filter-row">
+                <div class="col-md-2">
+                    <a asp-controller="Drive" asp-action="IndexFilter"
+                       class="btn btn-info filter" data-sort="Date"
+                       data-target="data-container" id="sort">Sort by Date &uarr;</a>
+                </div>
 
-            <div class="col-md-2 col-md-offset-2">
-                <input id="from" class="form-control" data-prev="" placeholder="City from" />
-            </div>
+                <div class="col-md-2 col-md-offset-2">
+                    <input id="from" class="form-control" data-prev="" placeholder="City from" />
+                </div>
 
-            <div class="col-md-2">
-                <input id="to" class="form-control" data-prev="" placeholder="City To" />
-            </div>
+                <div class="col-md-2">
+                    <input id="to" class="form-control" data-prev="" placeholder="City To" />
+                </div>
 
-            <div class="col-md-2">
-                <div class='input-group date' id='datepicker'>
-                    <input type='text' class="form-control" data-prev="" id="date" />
-                    <span class="input-group-addon">
-                        <span><img src="~/images/404-200.png" style="width: 16px" /></span>
-                    </span>
+                <div class="col-md-2">
+                    <div class='input-group date' id='datepicker'>
+                        <input type='text' class="form-control" data-prev="" id="date" placeholder="Pick a Date" />
+                        <span class="input-group-addon">
+                            <span><img src="~/images/404-200.png" style="width: 16px" /></span>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="col-md-2">
+                    <a asp-controller="Drive" asp-action="IndexFilter"
+                       class="btn btn-info filter" data-target="data-container"
+                       id="filter" data-submit="false">Filter</a>
                 </div>
             </div>
 
-            <div class="col-md-2">
-                <a asp-controller="Drive" asp-action="IndexFilter"
-                   class="btn btn-info filter" data-target="data-container"
-                   id="filter" data-submit="false">Filter</a>
+            <div class="row filter-row">
+                <div class="col-md-2 col-md-offset-6">
+                    <a asp-controller="Drive" asp-action="IndexFilter"
+                       class="btn btn-info filter" data-target="data-container"
+                       id="driver">Drives as Driver</a>
+                </div>
+
+                <div class="col-md-2">
+                    <a asp-controller="Drive" asp-action="IndexFilter"
+                       class="btn btn-info filter" data-target="data-container"
+                       id="passenger">Drives as Passenger</a>
+                </div>
+
+                <div class="col-md-2">
+                    <a asp-controller="Drive" asp-action="IndexFilter"
+                       class="btn btn-info filter" data-target="data-container"
+                       id="clear">Clear Filters</a>
+                </div>
             </div>
         </div>
     </div>
@@ -73,9 +109,15 @@
     $(function () {
         $.validator.unobtrusive.parse("#form");
 
+        $('#modal-container').on('hidden.bs.modal', function () {
+            // remove the bs.modal data attribute from it
+            $(this).removeData('bs.modal');
+            // and empty the modal-content element
+            $('#modal-container .modal-content').empty();
+        });
+
         $('#datepicker').datetimepicker({
             format: "DD MM YYYY",
-
         });
 
         $('#sort').click(function (e) {
@@ -88,18 +130,34 @@
         $('#filter').click(function (e) {
             e.preventDefault();
             let values = getValuesOnFilter();
+
+            if (valuesEmpty(values)) {
+                return;
+            }
+
             clearFields();
             filter(this, values);
+            updatePlaceholders(values);
+        })
+
+        $('#clear').click(function (e) {
+            e.preventDefault();
+            filter(this);
+            updatePlaceholders();
         })
     })
 
     function filter(_this, values) {
-        let sort = values.sort;
+        let url = $(_this).attr("href");
 
-        let url = $(_this).attr("href") + "?sort=" + values.sort +
-            "&from=" + values.from +
-            "&to=" + values.to +
-            "&date=" + values.date;
+        if (values !== undefined) {
+            url += "?sort=" + values.sort +
+                "&from=" + values.from +
+                "&to=" + values.to +
+                "&date=" + values.date;
+        }
+
+        console.log(url);
 
         $.get(url, function (res) {
             debugger
@@ -109,7 +167,6 @@
     }
 
     function getValuesOnSort() {
-        debugger
         let dateSort = $("#sort").data("sort");
 
         let from = $('#from').data('prev');
@@ -149,5 +206,21 @@
         let arrow = newSort === "Date" ? " &uarr;" : " &darr;";
         let newValue = "Sort by Date";
         $('#sort').html(newValue + arrow);
+    }
+
+    function updatePlaceholders(values) {
+        if (values) {
+            $('#from').attr('placeholder', values.from);
+            $('#to').attr('placeholder', values.to);
+            $('#date').attr('placeholder', values.date);
+        } else {
+            $('#from').attr('placeholder', 'City From');
+            $('#to').attr('placeholder', 'City To');
+            $('#date').attr('placeholder', 'Pick a Date');
+        }
+    }
+
+    function valuesEmpty(values) {
+        return (values.from === '' && values.to === '' && values.date === '');
     }
 </script>

@@ -21,5 +21,7 @@ namespace ShareDrive.Services.Contracts
         Drive GetById(int id);
 
         void Delete(int id);
+
+        DetailsViewModel GetDetailsModel(int id);
     }
 }

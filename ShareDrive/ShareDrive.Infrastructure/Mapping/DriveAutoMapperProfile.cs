@@ -34,6 +34,15 @@ namespace ShareDrive.Infrastructure.Mapping
             CreateMap<Drive, IndexViewModel>()
                 .ForMember(dest => dest.From, opt => opt.MapFrom(source => source.From.Name))
                 .ForMember(dest => dest.To, opt => opt.MapFrom(source => source.To.Name))
+                .ForMember(dest => dest.Date,
+                    opt => opt.MapFrom(source => source.DateTime.ToString("dd MM yyyy")))
+                .ForMember(dest => dest.Time, opt => opt.MapFrom(source => source.DateTime.ToString("HH:mm")));
+
+            CreateMap<Drive, DetailsViewModel>();
+
+            CreateMap<Drive, DriveDetailsViewModel>()
+                .ForMember(dest => dest.From, opt => opt.MapFrom(source => source.From.Name))
+                .ForMember(dest => dest.To, opt => opt.MapFrom(source => source.To.Name))
                 .ForMember(dest => dest.Date, opt => opt.MapFrom(source => source.DateTime.ToString("dd MM yyyy")))
                 .ForMember(dest => dest.Time, opt => opt.MapFrom(source => source.DateTime.ToString("HH:mm")));
         }

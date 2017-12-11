@@ -1,4 +1,5 @@
 ﻿using ShareDrive.ViewModels.Car;
+using ShareDrive.ViewModels.Drive.BaseModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

@@ -1,18 +1,26 @@
 ﻿
+@inject UserManager<ApplicationUser> UserManager
+
 @model ShareDrive.ViewModels.Drive.IndexViewModel
+
+@{ int userId; }
 
 <div class="col-md-12">
     <div class="panel panel-default">
-        <div class="panel-heading clearfix">
-            <div class="pull-right">
-                <a asp-action="Edit" asp-controller="Drive" asp-route-id="@Model.Id"
-                   data-target="#modal-container" tabindex="-1" data-toggle="modal" 
-                   class="panel-link"><i class="fa fa-edit"></i></a>
-                <a asp-action="Delete" asp-controller="Drive" asp-route-id="@Model.Id"
-                   data-target="#modal-container" tabindex="-1" data-toggle="modal" 
-                   class="panel-link"><i class="fa fa-close"></i></a>
-            </div>
-        </div>
+        @{ if (int.TryParse(UserManager.GetUserId(User), out userId) && userId == Model.DriverId)
+            {
+                <div class="panel-heading clearfix">
+                    <div class="pull-right">
+                        <a asp-action="Edit" asp-controller="Drive" asp-route-id="@Model.Id"
+                           data-target="#modal-container" tabindex="-1" data-toggle="modal"
+                           class="panel-link"><i class="fa fa-edit"></i></a>
+                        <a asp-action="Delete" asp-controller="Drive" asp-route-id="@Model.Id"
+                           data-target="#modal-container" tabindex="-1" data-toggle="modal"
+                           class="panel-link"><i class="fa fa-close"></i></a>
+                    </div>
+                </div>
+            }}
+        
         <div class="panel-body">
             <div class="col-md-4">
                 <div>
@@ -36,7 +44,7 @@
                 </div>
             </div>
             
-            <div class="col-md-4">
+            <div class="col-md-2">
                 <div>
                     <label>Available seats: </label>
                     <span>@Model.AvailableSeats</span>
@@ -45,6 +53,12 @@
                     <label>Price: </label>
                     <span>@Model.Price</span>
                 </div>
+            </div>
+
+            <div class="col-md-2">
+                <a asp-action="Details" asp-controller="Drive" asp-route-id="@Model.Id"
+                   data-target="#modal-container" tabindex="-1" data-toggle="modal"
+                   class="btn btn-info pull-right link-details">View Details</a>
             </div>
         </div>
     </div>

@@ -96,7 +96,7 @@ namespace ShareDrive.Controllers
 
         private IActionResult RedirectToIndex()
         {
-            var cars = this.carsService.GetAllCarsIndex().ToList();
+            var cars = this.carsService.GetAllCarsIndex(this.userId).ToList();
             return this.View("Index", cars);
         }
 
