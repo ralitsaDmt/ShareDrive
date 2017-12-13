@@ -32,6 +32,6 @@ namespace ShareDrive.ViewModels.Drive.BaseModels
 
         [Required]
         [Range(1, 10, ErrorMessage = "Value exceeds max passengers number")]
-        public int AvailableSeats { get; set; }
+        public int DeclaredSeats { get; set; }
     }
 }

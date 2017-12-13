@@ -25,7 +25,7 @@
 @if (isSignedIn)
 {
     <div class="col-md-12">
-        <a asp-controller="Drive" asp-action="Create"
+        <a asp-controller="Drive" asp-action="Edit"
            class="btn btn-block btn-info modal-btn"
            data-target="#modal-container" data-toggle="modal">Create New Drive</a>
     </div>
@@ -97,11 +97,13 @@
     </div>
 </div>
 
-<div id="data-container-initial">
+@*<div id="data-container-initial">
+    @Html.Partial("_Index", Model)
+</div>*@
+
+<div id="data-container">
     @Html.Partial("_Index", Model)
 </div>
-
-<div id="data-container"></div>
 
 
 <script src="~/lib/jquery/dist/jquery.js"></script>
@@ -160,8 +162,7 @@
         console.log(url);
 
         $.get(url, function (res) {
-            debugger
-            $("#data-container-initial").hide();
+            $("#data-container").empty();
             $('#' + $(_this).data("target")).html(res);
         });
     }

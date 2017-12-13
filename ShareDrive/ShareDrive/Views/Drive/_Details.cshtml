@@ -3,7 +3,7 @@
 
 <div id="target">
     <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="doSth()">
             <span aria-hidden="true">&times;</span>
         </button>
         <h4 class="modal-title">Share Your Drive</h4>
@@ -26,6 +26,7 @@
 
                 <div class="tab-content">
                     <div id="drive" class="tab-pane fade in active">
+                        <span id="span-change" data-change="false"></span>
                         @Html.DisplayFor(x => x.Drive, "_DriveDetailsViewModel")
                     </div>
                     <div id="driver" class="tab-pane fade">
@@ -39,3 +40,21 @@
         </div>
     </div>
 </div>
+
+<script>
+    function doSth() {
+        let change = $('#span-change');
+        let value = $(change).data('change');
+
+        if (value) {
+            let url = "Drive/IndexFilter";
+
+            $.get(url, function (data) {
+                $("#data-container").empty();
+                $('#data-container').html(data);
+            }).fail(function (data) {
+
+            });
+        }
+    }    
+</script>

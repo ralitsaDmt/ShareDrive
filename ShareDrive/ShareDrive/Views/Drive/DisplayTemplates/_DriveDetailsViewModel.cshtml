@@ -3,7 +3,7 @@
 <div class="col-md-12">
     <div class="panel panel-info details-panel">
         <div class="panel-body">
-            <div class="col-md-9">
+            <div class="col-md-8">
                 <div>
                     <label>From: </label>
                     <span>@Model.From</span>
@@ -30,7 +30,7 @@
 
                 <div>
                     <label>Available seats: </label>
-                    <span>@Model.AvailableSeats</span>
+                    <span id="seats">@Model.AvailableSeats</span>
                     <hr class="hr-details" />
                 </div>
                 <div>
@@ -51,9 +51,137 @@
                 </div>
             </div>
 
-            <div class="col-md-3">
-                <a href="#" class="btn btn-info">Share Drive</a>
+            <div class="col-md-4">
+                @if (Model.UserIsOwner)
+                {
+                    <div id="reserved">
+                        <label class="label-info">You shared this drive.</label>
+                    </div>
+                }
+                else if (!Model.UserIsOwner && Model.AvailableSeats > 0 && !Model.ReservedByUser)
+                {
+
+                    <a id="btn-take" asp-controller="Drive" asp-action="Reserve" asp-route-id="@Model.Id"
+                       class="btn btn-success btn-details">Take a Seat</a>
+
+                    <div id="reserved" style="display: none"></div>
+
+                    <a id="btn-cancel" asp-controller="Drive" asp-action="Cancel" asp-route-id="@Model.Id"
+                       class="btn btn-danger btn-details cancel">Cancel Reservation</a>
+
+                }
+                else if (Model.ReservedByUser)
+                {
+                    <div id="reserved">
+                        <label class="label-info">You have a reservation.</label>
+                    </div>
+                    <a id="btn-cancel" asp-controller="Drive" asp-action="Cancel" asp-route-id="@Model.Id"
+                       class="btn btn-danger btn-details">Cancel Reservation</a>
+                }
+                else if (Model.AvailableSeats == 0)
+                {
+                    <div id="reserved">
+                        <label class="label-info">All seats are taken.</label>
+                    </div>
+                }
+
+                <div id="notification"></div>
+
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    $(function () {
+        $('#btn-take').click(function (event) {
+            event.preventDefault();
+            takeSeat();
+        })
+
+        $('#btn-cancel').click(function (event) {
+            event.preventDefault();
+            cancelReservation();
+        })
+    })
+
+    function cancelReservation() {
+        let url = $('#btn-cancel').attr('href');
+
+        $.post(url, function (data) {
+            if (data.result) {
+                changeSeats(1);
+                indicateChange(true);
+                showCancelSuccess(data.message);
+            } else {
+                showError(data.message);
+            }
+        }).fail(function (data) {
+            showError("Something went wrong");
+        })
+    }
+
+    function showCancelSuccess(message) {
+        let noty = `<div class="alert alert-success">
+                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                    <p>` + message + `</p>
+                            </div>`;
+        $('#notification').append(noty);
+
+        $('#btn-take').attr('style', 'display: block');
+        $('#reserved>label').empty();
+        $('#reserved').attr('style', 'display: none');
+        $('#btn-cancel').hide();
+    }
+
+    function showError(message) {
+        let noty = `<div class="alert alert-danger alert-dismissable" >
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            <p>` + message + `</p>
+                        </div >`;
+
+        $('#notification').append(noty);
+    }
+
+    function takeSeat() {
+        let url = $('#btn-take').attr('href');
+
+        $.post(url, function (data) {
+            if (data.result) {
+                indicateChange(true);
+                changeSeats(-1);
+                showTakeSuccess(data.message);
+            } else {
+                showError(data.message);
+            }
+        }).fail(function (data) {
+            showError("Something went wrong.");
+        });
+    }
+
+    function showTakeSuccess(message) {
+        let noty = `<div class="alert alert-success alert-dismissable" >
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <p>` + message + `</p>
+                </div >`;
+
+        $('#notification').append(noty);
+        $('#btn-take').attr('style', 'display: none');
+        let label = `<label class="label-info">Seat Reserved</label>`
+        $('#reserved').append(label);
+        $('#reserved').attr('style', 'display: block');
+        $('#btn-cancel').attr('style', 'display: block');
+    }
+
+    function changeSeats(number) {
+        let seats = Number($('#seats').text());
+        seats += number;
+        $('#seats').text(seats);
+    }
+
+    function indicateChange(value) {
+        let change = $('#span-change');
+        $(change).data('change', value);
+    }
+
+</script>

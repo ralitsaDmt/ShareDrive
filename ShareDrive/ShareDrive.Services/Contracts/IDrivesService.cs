@@ -22,6 +22,10 @@ namespace ShareDrive.Services.Contracts
 
         void Delete(int id);
 
-        DetailsViewModel GetDetailsModel(int id);
+        DetailsViewModel GetDetailsModel(int id, int userId);
+
+        KeyValuePair<bool, string> ReserveSeat(int driveId, int userId);
+
+        KeyValuePair<bool, string> CancelReservation(int driveId, int userId);
     }
 }

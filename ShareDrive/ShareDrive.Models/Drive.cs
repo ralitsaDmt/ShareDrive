@@ -22,7 +22,7 @@ namespace ShareDrive.Models
 
         public decimal Price { get; set; }
 
-        public int AvailableSeats { get; set; }
+        public int DeclaredSeats { get; set; }
 
         public int? CarId { get; set; }
 
@@ -31,5 +31,7 @@ namespace ShareDrive.Models
         public int? DriverId { get; set; }
 
         public ApplicationUser Driver { get; set; }
+
+        public ICollection<DrivesPassengers> DrivesPassengers { get; set; }
     }
 }

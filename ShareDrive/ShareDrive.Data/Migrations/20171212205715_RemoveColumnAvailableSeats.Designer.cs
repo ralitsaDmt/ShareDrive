@@ -11,8 +11,8 @@ using System;
 namespace ShareDrive.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20171207044451_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20171212205715_RemoveColumnAvailableSeats")]
+    partial class RemoveColumnAvailableSeats
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -34,9 +34,7 @@ namespace ShareDrive.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("AspNetRoleClaims");
+                    b.ToTable("RoleClaims");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
@@ -52,46 +50,39 @@ namespace ShareDrive.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
-
-                    b.ToTable("AspNetUserClaims");
+                    b.ToTable("UserClaims");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
                 {
-                    b.Property<string>("LoginProvider");
-
                     b.Property<string>("ProviderKey");
+
+                    b.Property<string>("LoginProvider");
 
                     b.Property<string>("ProviderDisplayName");
 
                     b.Property<int>("UserId");
 
-                    b.HasKey("LoginProvider", "ProviderKey");
+                    b.HasKey("ProviderKey", "LoginProvider");
 
-                    b.HasAlternateKey("ProviderKey", "LoginProvider");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("AspNetUserLogins");
+                    b.ToTable("UserLogin");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
                 {
-                    b.Property<int>("UserId");
-
                     b.Property<int>("RoleId");
 
-                    b.HasKey("UserId", "RoleId");
+                    b.Property<int>("UserId");
 
-                    b.HasAlternateKey("RoleId", "UserId");
+                    b.HasKey("RoleId", "UserId");
 
-                    b.ToTable("AspNetUserRoles");
+                    b.ToTable("UserRole");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
                 {
-                    b.Property<int>("UserId");
+                    b.Property<int>("UserId")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("LoginProvider");
 
@@ -99,11 +90,9 @@ namespace ShareDrive.Data.Migrations
 
                     b.Property<string>("Value");
 
-                    b.HasKey("UserId", "LoginProvider", "Name");
+                    b.HasKey("UserId");
 
-                    b.HasAlternateKey("UserId");
-
-                    b.ToTable("AspNetUserTokens");
+                    b.ToTable("UserTokens");
                 });
 
             modelBuilder.Entity("ShareDrive.Models.ApplicationRole", b =>
@@ -111,23 +100,15 @@ namespace ShareDrive.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken();
+                    b.Property<string>("ConcurrencyStamp");
 
-                    b.Property<string>("Name")
-                        .HasMaxLength(256);
+                    b.Property<string>("Name");
 
-                    b.Property<string>("NormalizedName")
-                        .HasMaxLength(256);
+                    b.Property<string>("NormalizedName");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("NormalizedName")
-                        .IsUnique()
-                        .HasName("RoleNameIndex")
-                        .HasFilter("[NormalizedName] IS NOT NULL");
-
-                    b.ToTable("AspNetRoles");
+                    b.ToTable("Role");
                 });
 
             modelBuilder.Entity("ShareDrive.Models.ApplicationUser", b =>
@@ -137,11 +118,9 @@ namespace ShareDrive.Data.Migrations
 
                     b.Property<int>("AccessFailedCount");
 
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken();
+                    b.Property<string>("ConcurrencyStamp");
 
-                    b.Property<string>("Email")
-                        .HasMaxLength(256);
+                    b.Property<string>("Email");
 
                     b.Property<bool>("EmailConfirmed");
 
@@ -153,11 +132,9 @@ namespace ShareDrive.Data.Migrations
 
                     b.Property<DateTimeOffset?>("LockoutEnd");
 
-                    b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(256);
+                    b.Property<string>("NormalizedEmail");
 
-                    b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(256);
+                    b.Property<string>("NormalizedUserName");
 
                     b.Property<string>("PasswordHash");
 
@@ -169,20 +146,11 @@ namespace ShareDrive.Data.Migrations
 
                     b.Property<bool>("TwoFactorEnabled");
 
-                    b.Property<string>("UserName")
-                        .HasMaxLength(256);
+                    b.Property<string>("UserName");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("NormalizedEmail")
-                        .HasName("EmailIndex");
-
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
-
-                    b.ToTable("AspNetUsers");
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("ShareDrive.Models.Car", b =>
@@ -226,11 +194,11 @@ namespace ShareDrive.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("AvailableSeats");
-
                     b.Property<int?>("CarId");
 
                     b.Property<DateTime>("DateTime");
+
+                    b.Property<int>("DeclaredSeats");
 
                     b.Property<int?>("DriverId");
 
@@ -257,49 +225,17 @@ namespace ShareDrive.Data.Migrations
                     b.ToTable("Drives");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
+            modelBuilder.Entity("ShareDrive.Models.DrivesPassengers", b =>
                 {
-                    b.HasOne("ShareDrive.Models.ApplicationRole")
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
+                    b.Property<int>("DriveId");
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
-                {
-                    b.HasOne("ShareDrive.Models.ApplicationUser")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
+                    b.Property<int>("PassengerId");
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
-                {
-                    b.HasOne("ShareDrive.Models.ApplicationUser")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
+                    b.HasKey("DriveId", "PassengerId");
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
-                {
-                    b.HasOne("ShareDrive.Models.ApplicationRole")
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                    b.HasIndex("PassengerId");
 
-                    b.HasOne("ShareDrive.Models.ApplicationUser")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
-                {
-                    b.HasOne("ShareDrive.Models.ApplicationUser")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                    b.ToTable("DrivesPassengers");
                 });
 
             modelBuilder.Entity("ShareDrive.Models.Car", b =>
@@ -330,6 +266,19 @@ namespace ShareDrive.Data.Migrations
                         .WithMany("DrivesTo")
                         .HasForeignKey("ToId")
                         .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("ShareDrive.Models.DrivesPassengers", b =>
+                {
+                    b.HasOne("ShareDrive.Models.Drive", "Drive")
+                        .WithMany("DrivesPassengers")
+                        .HasForeignKey("DriveId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("ShareDrive.Models.ApplicationUser", "Passenger")
+                        .WithMany("DrivesPassengers")
+                        .HasForeignKey("PassengerId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

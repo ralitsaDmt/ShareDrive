@@ -12,5 +12,7 @@ namespace ShareDrive.Models
         public ICollection<Car> Cars { get; set; }
 
         public ICollection<Drive> Drives { get; set; }
+
+        public ICollection<DrivesPassengers> DrivesPassengers { get; set; }
     }
 }

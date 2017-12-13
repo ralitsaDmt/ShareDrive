@@ -35,43 +35,20 @@ namespace ShareDrive.Controllers
             var drives = this.drivesService.GetAll(sort, from, to, date);
             return this.PartialView("_Index", drives);
         }
-
-        [Authorize]
-        [HttpGet]
-        public IActionResult Create()
-        {
-            List<SelectViewModel> carsSelect = this.GetCarsSelectionList();
-                        
-            // TODO: Check if there аre cars and if no cars selected, return to index with error message
-
-            EditViewModel model = new EditViewModel()
-            {
-                Cars = carsSelect
-            };
-
-            return this.PartialView("_EditPartial", model);
-        }
         
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Create(EditViewModel model)
-        {
-            if (this.ModelState.IsValid)
-            {
-                this.driveHelperService.ProcessCreateDrive(model, this.userId);
-
-                ViewData["SuccessMessage"] = "Drive successfully created";
-                return this.RedirectToIndex("");
-            }
-            
-            return this.PartialView("_EditPartial", model);
-        }
-
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            EditViewModel model = this.drivesService.GetEditModelById(id);
-            model.Cars = this.GetCarsSelectionList();
+            List<SelectViewModel> cars = this.GetCarsSelectionList();
+
+            EditViewModel model = new EditViewModel();
+            
+            if (id != 0)
+            {
+                model = this.drivesService.GetEditModelById(id);
+            }
+
+            model.Cars = cars;
 
             return this.PartialView("_EditPartial", model);
         }
@@ -84,13 +61,14 @@ namespace ShareDrive.Controllers
                 if (id == 0)
                 {
                     this.CreateDrive(model);
+                    this.ViewData["SuccessMessage"] = "Drive successfully created.";
                 }
                 else
                 {
                     this.UpdateDrive((int)id, model);
+                    this.ViewData["SuccessMessage"] = "Drive successfully updated.";
                 }
-
-                this.ViewData["SuccessMessage"] = "Drive successfully updated.";
+                
                 return this.RedirectToIndex();
             }
 
@@ -114,8 +92,20 @@ namespace ShareDrive.Controllers
 
         public IActionResult Details(int id)
         {
-            DetailsViewModel model = this.drivesService.GetDetailsModel(id);
+            DetailsViewModel model = this.drivesService.GetDetailsModel(id, this.userId);
             return this.PartialView("_Details", model);
+        }
+
+        public JsonResult Reserve(int id)
+        {
+            KeyValuePair<bool, string> result = this.drivesService.ReserveSeat(id, this.userId);
+            return Json(new { result = result.Key, message = result.Value });            
+        }
+
+        public JsonResult Cancel(int id)
+        {
+            KeyValuePair<bool, string> result = this.drivesService.CancelReservation(id, this.userId);
+            return Json(new { result = result.Key, message = result.Value });
         }
 
         private void UpdateDrive(int id, EditViewModel model)
@@ -131,10 +121,7 @@ namespace ShareDrive.Controllers
 
         private void SetUserId(IHttpContextAccessor contextAccessor)
         {
-            if (this.User != null)
-            {
-                this.userId = IdentityHelper.GetUserId(contextAccessor);
-            }            
+            this.userId = IdentityHelper.GetUserId(contextAccessor);
         }
 
         private List<SelectViewModel> GetCarsSelectionList()

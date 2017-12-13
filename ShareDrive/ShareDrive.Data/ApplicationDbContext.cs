@@ -94,7 +94,18 @@ namespace ShareDrive.Data
                 .HasForeignKey(d => d.DriverId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            base.OnModelCreating(builder);
+            builder.Entity<DrivesPassengers>()
+                .HasKey(x => new { x.DriveId, x.PassengerId });
+
+            builder.Entity<DrivesPassengers>()
+                .HasOne(x => x.Drive)
+                .WithMany(d => d.DrivesPassengers)
+                .HasForeignKey(x => x.DriveId);
+
+            builder.Entity<DrivesPassengers>()
+                .HasOne(x => x.Passenger)
+                .WithMany(p => p.DrivesPassengers)
+                .HasForeignKey(x => x.PassengerId);
         }
     }    
 }

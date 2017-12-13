@@ -72,7 +72,7 @@ namespace ShareDrive.Services
             this.drives.Update(drive);
         }
 
-        public DetailsViewModel GetDetailsModel(int id)
+        public DetailsViewModel GetDetailsModel(int id, int userId)
         {
             IQueryable<Drive> driveAsQueryable = this.drives.GetByIdQueryable(id);
 
@@ -81,9 +81,13 @@ namespace ShareDrive.Services
                 .Include(d => d.To)
                 .Include(d => d.Car)
                 .Include(d => d.Driver)
+                .Include(d => d.DrivesPassengers)
                 .FirstOrDefault();
 
             DriveDetailsViewModel driveViewModel = mapper.Map<DriveDetailsViewModel>(drive);
+            driveViewModel.ReservedByUser = drive.DrivesPassengers.Any(x => x.PassengerId == userId);
+            driveViewModel.UserIsOwner = drive.DriverId == userId;
+
             DriverDetailsViewModel driverViewModel = mapper.Map<DriverDetailsViewModel>(drive.Driver);
             CarDetailsViewModel carViewModel = mapper.Map<CarDetailsViewModel>(drive.Car);
 
@@ -147,6 +151,59 @@ namespace ShareDrive.Services
         {
             Drive drive = this.drives.GetById(id);
             this.drives.Delete(drive);
+        }
+
+        public KeyValuePair<bool, string> ReserveSeat(int driveId, int userId)
+        {
+            // get the drive with the passengers
+            Drive drive = this.drives.GetByIdQueryable(driveId)
+                .Include(d => d.DrivesPassengers)
+                .FirstOrDefault();
+
+            // Check if the user has a reservation for the drive
+            if (drive.DrivesPassengers.Any(x => x.PassengerId == userId))
+            {
+                return new KeyValuePair<bool, string>(false, "You already have a reservation for the drive.");
+            }
+
+            // check if there are seats available
+            // no => return error message that the seat is reserved by another user
+            if (drive.DrivesPassengers.Count == drive.DeclaredSeats)
+            {
+                return new KeyValuePair<bool, string>(false, "The seat is already reserved by another user.");
+            }
+
+            // yes => add current user to the Passengers collection of the drive
+            DrivesPassengers pair = new DrivesPassengers()
+            {
+                DriveId = driveId,
+                PassengerId = userId
+            };
+            drive.DrivesPassengers.Add(pair);
+
+            this.drives.Update(drive);
+
+            return new KeyValuePair<bool, string>(true, "You made a reservation! Have a safe drive.");
+        }
+
+        public KeyValuePair<bool, string> CancelReservation(int driveId, int userId)
+        {
+            Drive drive = this.drives.GetByIdQueryable(driveId)
+                .Include(d => d.DrivesPassengers)
+                .FirstOrDefault();
+
+            if (!drive.DrivesPassengers.Any(d => d.PassengerId == userId))
+            {
+                return new KeyValuePair<bool, string>(false, "You don't have a reservation for that drive.");
+            }
+
+            DrivesPassengers itemToRemove = drive.DrivesPassengers
+                .FirstOrDefault(x => x.DriveId == driveId && x.PassengerId == userId);
+
+            drive.DrivesPassengers.Remove(itemToRemove);
+            this.drives.Update(drive);
+
+            return new KeyValuePair<bool, string>(true, "Your registration has been canceled.");
         }
 
         private DateTime GetDateFromModel(string modelDate)

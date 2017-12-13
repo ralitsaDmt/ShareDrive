@@ -18,3 +18,31 @@ hr.hr-details {
 img.img-driver {
     width: 150px;
 }
+
+a.btn-details {
+    margin: 3px;
+}
+
+#btn-cancel {    
+    white-space: normal;
+}
+
+#notification {
+    margin-top: 10px;
+}
+
+a.cancel {
+    display: none;
+}
+
+div#reserved {
+    text-align: center;
+    background: #e2e2e2;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+body label.label-info {
+    background-color: transparent;
+}

@@ -11,9 +11,10 @@ using System;
 namespace ShareDrive.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20171212201446_AddColumnDeclaredSeats")]
+    partial class AddColumnDeclaredSeats
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -192,6 +193,8 @@ namespace ShareDrive.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<int>("AvailableSeats");
 
                     b.Property<int?>("CarId");
 
