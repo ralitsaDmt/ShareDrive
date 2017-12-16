@@ -37,7 +37,7 @@ namespace ShareDrive.Infrastructure.Mapping
                 .ForMember(dest => dest.AvailableSeats, 
                     opt => opt.MapFrom(source => source.DeclaredSeats - source.DrivesPassengers.Count))
                 .ForMember(dest => dest.Date,
-                    opt => opt.MapFrom(source => source.DateTime.ToString("dd MM yyyy")))
+                    opt => opt.MapFrom(source => source.DateTime.ToString("dd/MM/yyyy")))
                 .ForMember(dest => dest.Time, opt => opt.MapFrom(source => source.DateTime.ToString("HH:mm")));
 
             CreateMap<Drive, DetailsViewModel>();

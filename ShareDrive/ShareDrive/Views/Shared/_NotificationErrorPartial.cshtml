@@ -1,0 +1,9 @@
+﻿@if (ViewData["ErrorMessage"] != null)
+{
+    <div id="error" class="col-md-12">
+        <div style="margin-top: 10px" class="alert alert-danger alert-dismissable">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            @ViewData["ErrorMessage"]
+        </div>
+    </div>
+}

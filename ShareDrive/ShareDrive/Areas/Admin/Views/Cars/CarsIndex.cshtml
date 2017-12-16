@@ -1,0 +1,17 @@
+﻿@model IEnumerable<ShareDrive.ViewModels.Admin.Car.IndexViewModel>
+
+    <h2>Cars</h2>
+
+    <div id="modal-container" class="modal fade hidden-print" tabindex="-1" role="dialog" data-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+            </div>
+        </div>
+    </div>
+
+    <div id="data-container" class="col-md-12">
+        @Html.Partial("_CarsIndexPartial", Model);
+    </div>
+
+

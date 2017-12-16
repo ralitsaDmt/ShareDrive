@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using ShareDrive.ViewModels.Admin.Drive;
 
 namespace ShareDrive.Services
 {
@@ -26,7 +27,7 @@ namespace ShareDrive.Services
             this.mapper = mapper;
         }
 
-        public List<IndexViewModel> GetAll(string sort, string from = null, string to = null, string date = null)
+        public List<ShareDrive.ViewModels.Drive.IndexViewModel> GetAll(string sort, string from = null, string to = null, string date = null)
         {
             IQueryable<Drive> drives = this.drives.GetAll();
 
@@ -54,9 +55,23 @@ namespace ShareDrive.Services
                     break;
             }
 
-            return drives.ProjectTo<IndexViewModel>().ToList();
+            return drives.ProjectTo<ShareDrive.ViewModels.Drive.IndexViewModel>().ToList();
         }
 
+
+        public IEnumerable<ShareDrive.ViewModels.Admin.Drive.IndexViewModel> GetAllAdmin()
+        {
+            var drives = this.drives.GetAll()
+                .Include(d => d.From)
+                .Include(d => d.To)
+                .Include(d => d.Driver)
+                .Include(d => d.Car)
+                .Include(d => d.DrivesPassengers)
+                .ProjectTo<ShareDrive.ViewModels.Admin.Drive.IndexViewModel>()
+                .ToList();
+
+            return drives;
+        }
 
         public void Create (EditViewModel model, City cityFrom, City cityTo, int userId)
         {
@@ -72,7 +87,7 @@ namespace ShareDrive.Services
             this.drives.Update(drive);
         }
 
-        public DetailsViewModel GetDetailsModel(int id, int userId)
+        public ShareDrive.ViewModels.Drive.DetailsViewModel GetDetailsModel(int id, int userId)
         {
             IQueryable<Drive> driveAsQueryable = this.drives.GetByIdQueryable(id);
 
@@ -91,7 +106,7 @@ namespace ShareDrive.Services
             DriverDetailsViewModel driverViewModel = mapper.Map<DriverDetailsViewModel>(drive.Driver);
             CarDetailsViewModel carViewModel = mapper.Map<CarDetailsViewModel>(drive.Car);
 
-            DetailsViewModel model = new DetailsViewModel()
+            ShareDrive.ViewModels.Drive.DetailsViewModel model = new ShareDrive.ViewModels.Drive.DetailsViewModel()
             {
                 Drive = driveViewModel,
                 Driver = driverViewModel,
@@ -147,10 +162,10 @@ namespace ShareDrive.Services
             return this.drives.GetById(id);
         }
 
-        public void Delete(int id)
+        public bool Delete(int id)
         {
             Drive drive = this.drives.GetById(id);
-            this.drives.Delete(drive);
+            return this.drives.Delete(drive);
         }
 
         public KeyValuePair<bool, string> ReserveSeat(int driveId, int userId)
@@ -224,6 +239,20 @@ namespace ShareDrive.Services
                 .ToArray();
 
             return tokens;
+        }
+
+        public ViewModels.Admin.Drive.DetailsViewModel GetDetailsAdminModel(int id)
+        {
+            Drive drive = this.drives.GetByIdQueryable(id)
+                .Include(d => d.From)
+                .Include(d => d.To)
+                .Include(d => d.DrivesPassengers)
+                .Include(d => d.Driver)
+                .Include(d => d.Car)
+                .FirstOrDefault();
+
+            var model = this.mapper.Map<ShareDrive.ViewModels.Admin.Drive.DetailsViewModel>(drive);
+            return model;
         }
     }
 }

@@ -10,6 +10,10 @@ namespace ShareDrive.Services.Contracts
     {
         List<IndexViewModel> GetAll(string sort, string from = null, string to = null, string date = null);
 
+        IEnumerable<ShareDrive.ViewModels.Admin.Drive.IndexViewModel> GetAllAdmin();
+
+        ShareDrive.ViewModels.Admin.Drive.DetailsViewModel GetDetailsAdminModel(int id);
+
         void Create(EditViewModel model, City cityFrom, City cityTo, int userId);
 
         void Update(EditViewModel model, City cityFrom, City cityTo, int id);
@@ -20,7 +24,7 @@ namespace ShareDrive.Services.Contracts
 
         Drive GetById(int id);
 
-        void Delete(int id);
+        bool Delete(int id);
 
         DetailsViewModel GetDetailsModel(int id, int userId);
 

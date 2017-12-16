@@ -18,6 +18,7 @@
         <link rel="stylesheet" href="~/css/panel.css" />
         <link rel="stylesheet" href="~/css/car-index.css" />
         <link rel="stylesheet" href="~/css/drive-details.css" />
+        <link rel="stylesheet" href="~/css/table.css" />
         <link rel="stylesheet" href="~/css/font-awesome-4.7.0/css/font-awesome.css">
     </environment>
     <environment exclude="Development">
@@ -49,6 +50,11 @@
         </div>
     </nav>
     <div class="container body-content">
+        @Html.Partial("_NotificationSuccessPartial")
+        @Html.Partial("_NotificationErrorPartial")
+
+        
+
         @RenderBody()
         <hr />
         <footer>

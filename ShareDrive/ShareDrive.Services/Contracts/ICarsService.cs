@@ -16,7 +16,12 @@ namespace ShareDrive.Services.Contracts
         Task<bool> Edit(int id, EditViewModel model);
 
         IQueryable<IndexViewModel> GetAllCarsIndex(int? userId);
-        
+
+        IEnumerable<ShareDrive.ViewModels.Admin.Car.IndexViewModel> GetAllAdmin();
+
+        ShareDrive.ViewModels.Admin.Car.DetailsViewModel GetDetailsAdmin(int id);
+
+
         IQueryable<Car> GetById(int id);
         
         bool Delete(int id);

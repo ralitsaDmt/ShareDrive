@@ -1,0 +1,29 @@
+﻿@model IEnumerable<ShareDrive.ViewModels.Admin.User.IndexViewModel>
+
+@Html.Partial("_NotificationSuccessPartial")
+@Html.Partial("_NotificationErrorPartial")
+
+<table class="responstable">
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone Number</th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in @Model)
+    {
+        <tr>
+            <td>@item.Id</td>
+            <td>@item.Name</td>
+            <td>@item.Email</td>
+            <td>@item.PhoneNumber</td>
+            <td>
+                <a asp-area="Admin" asp-action="Details" asp-controller="Users" asp-route-id="@item.Id"
+                   data-target="#modal-container" tabindex="-1"
+                   data-toggle="modal" class="btn btn-info">View</a>
+            </td>
+        </tr>
+    }
+</table>

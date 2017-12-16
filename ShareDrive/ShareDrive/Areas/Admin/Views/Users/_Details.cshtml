@@ -1,0 +1,89 @@
+﻿@model ShareDrive.ViewModels.Admin.User.DetailsViewModel
+
+<div id="target">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Share Your Drive</h4>
+    </div>
+
+    <div class="modal-body">
+        <div class="panel-body">
+            <div class="col-md-4">
+                <img class="img-driver" src="~/images/default-user.png" />
+            </div>
+
+            <div class="col-md-4">
+                <div>
+                    <label asp-for="@Model.Name"></label>
+                    <span>@Model.Name</span>
+                    <hr class="hr-details" />
+                </div>
+
+                <div>
+                    <label asp-for="@Model.PhoneNumber"></label>
+                    <span>@Model.PhoneNumber</span>
+                    <hr class="hr-details" />
+                </div>
+
+                <div>
+                    <label asp-for="Email"></label>
+                    <span>@Model.Email</span>
+                    <hr class="hr-details" />
+                </div>
+
+                <div>
+                    <label asp-for="@Model.DrivesAsDriverCount"></label>
+                    <span>@Model.DrivesAsDriverCount</span>
+                    <hr class="hr-details" />
+                </div>
+
+                <div>
+                    <label asp-for="@Model.DrivesAsPassengerCount"></label>
+                    <span>@Model.DrivesAsPassengerCount</span>
+                    <hr class="hr-details" />
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <label asp-for="@Model.Cars"></label>
+                @foreach (var car in Model.Cars)
+                {
+                    <div>                        
+                        <span>@car</span>
+                    </div>
+                }                
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <a id="delete" asp-area="Admin" asp-controller="Users" asp-action="Delete" asp-route-id="@Model.Id"
+           class="btn btn-danger">Delete</a>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('#modal-container').on('hidden.bs.modal', function () {
+            // remove the bs.modal data attribute from it
+            $(this).removeData('bs.modal');
+            // and empty the modal-content element
+            $('#modal-container .modal-content').empty();
+        });
+
+        $('#delete').click(function (event) {
+            event.preventDefault();
+            let url = $(this).attr('href');
+
+            $.post(url, function (data) {
+                debugger
+                $('#data-container').empty();
+                $('#data-container').html(data);
+                $('#modal-container').modal('toggle');
+            })
+        })
+    })
+</script>

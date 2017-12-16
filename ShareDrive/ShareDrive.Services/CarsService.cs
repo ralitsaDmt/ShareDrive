@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System;
 using ShareDrive.ViewModels.Car;
 using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 
 namespace ShareDrive.Services
 {
@@ -22,6 +23,14 @@ namespace ShareDrive.Services
         {
             this.cars = cars;
             this.mapper = mapper;
+        }
+
+        public IEnumerable<ShareDrive.ViewModels.Admin.Car.IndexViewModel> GetAllAdmin()
+        {
+            return this.cars.GetAll()
+                .Include(c => c.Drives)
+                .ProjectTo<ShareDrive.ViewModels.Admin.Car.IndexViewModel>()
+                .ToList();
         }
 
         public async Task<bool> Create(CreateViewModel model, int ownerId)
@@ -125,6 +134,16 @@ namespace ShareDrive.Services
                 .Where(x => x.OwnerId == id)
                 .ProjectTo<SelectViewModel>().ToList();
             return carsList;
+        }
+
+        public ShareDrive.ViewModels.Admin.Car.DetailsViewModel GetDetailsAdmin(int id)
+        {
+            var car = this.cars.GetByIdQueryable(id)
+                .Include(c => c.Drives)
+                .Include(c => c.Owner)
+                .FirstOrDefault();
+            var model = this.mapper.Map<ViewModels.Admin.Car.DetailsViewModel>(car);
+            return model;
         }
     }
 }

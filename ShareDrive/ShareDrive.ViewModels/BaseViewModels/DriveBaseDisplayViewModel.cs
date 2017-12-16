@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ShareDrive.ViewModels.Drive.BaseModels
+namespace ShareDrive.ViewModels.BaseViewModels
 {
-    public abstract class BaseDisplayViewModel
+    public abstract class DriveBaseDisplayViewModel
     {
         public int Id { get; set; }
 

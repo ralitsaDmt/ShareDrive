@@ -1,0 +1,124 @@
+﻿@model ShareDrive.ViewModels.Admin.Drive.DetailsViewModel
+
+<div id="target">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Share Your Drive</h4>
+    </div>
+
+    <div class="modal-body">
+        <div class="panel-body">
+            <div class="col-md-4">
+                <div>
+                    <label asp-for="@Model.From"></label>
+                    <span>@Model.From</span>
+                    <hr class="hr-details" />
+                </div>
+
+                <div>
+                    <label asp-for="@Model.To"></label>
+                    <span>@Model.To</span>
+                    <hr class="hr-details" />
+                </div>
+
+                <div>
+                    <label asp-for="Date"></label>
+                    <span>@Model.Date</span>
+                    <hr class="hr-details" />
+                </div>
+
+                <div>
+                    <label asp-for="@Model.Time"></label>
+                    <span>@Model.Time</span>
+                    <hr class="hr-details" />
+                </div>
+
+                <div>
+                    <label asp-for="@Model.LocationToPick"></label>
+                    <span>@Model.LocationToPick</span>
+                    <hr class="hr-details" />
+                </div>
+
+                <div>
+                    <label asp-for="@Model.LocationToArrive"></label>
+                    <span>@Model.LocationToArrive</span>
+                    <hr class="hr-details" />
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div>
+                    <label asp-for="@Model.DriverName"></label>
+                    <span>@Model.DriverName</span>
+                    <hr class="hr-details" />
+                </div>
+
+                <div>
+                    <label asp-for="@Model.CarIdentifier"></label>
+                    <span>@Model.CarIdentifier</span>
+                    <hr class="hr-details" />
+                </div>
+
+                <div>
+                    <label asp-for="@Model.DeclaredSeats"></label>
+                    <span>@Model.DeclaredSeats</span>
+                    <hr class="hr-details" />
+                </div>
+
+                <div>
+                    <label asp-for="@Model.PassengersCount"></label>
+                    <span>@Model.PassengersCount</span>
+                    <hr class="hr-details" />
+                </div>
+
+                <div>
+                    <label asp-for="@Model.AvailableSeats"></label>
+                    <span>@Model.AvailableSeats</span>
+                    <hr class="hr-details" />
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <label asp-for="@Model.PassengersNames"></label>
+                @foreach (var passenger in Model.PassengersNames)
+                {
+                    <div>
+                        @passenger
+                    </div>
+                }
+                <hr class="hr-details" />
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <a id="delete" asp-area="Admin" asp-controller="Drives" asp-action="Delete" asp-route-id="@Model.Id"
+           class="btn btn-danger">Delete</a>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('#modal-container').on('hidden.bs.modal', function () {
+            // remove the bs.modal data attribute from it
+            $(this).removeData('bs.modal');
+            // and empty the modal-content element
+            $('#modal-container .modal-content').empty();
+        });
+
+        $('#delete').click(function (event) {
+            event.preventDefault();
+            let url = $(this).attr('href');
+
+            $.post(url, function (data) {
+                debugger
+                $('#data-container').empty();
+                $('#data-container').html(data);
+                $('#modal-container').modal('toggle');
+            })
+        })
+    })
+</script>

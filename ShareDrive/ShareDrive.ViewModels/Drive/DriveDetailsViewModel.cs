@@ -1,8 +1,9 @@
-﻿using ShareDrive.ViewModels.Drive.BaseModels;
+﻿using ShareDrive.ViewModels.BaseViewModels;
+using ShareDrive.ViewModels.Drive.BaseModels;
 
 namespace ShareDrive.ViewModels.Drive
 {
-    public class DriveDetailsViewModel : BaseDisplayViewModel
+    public class DriveDetailsViewModel : DriveBaseDisplayViewModel
     {
         public string LocationToPick { get; set; }
 

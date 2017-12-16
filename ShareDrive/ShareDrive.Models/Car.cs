@@ -24,5 +24,10 @@ namespace ShareDrive.Models
         public ApplicationUser Owner { get; set; }
 
         public ICollection<Drive> Drives { get; set; }
+
+        public override string ToString()
+        {
+            return this.Brand + " " + this.CarModel + " " + this.Year;
+        }
     }
 }

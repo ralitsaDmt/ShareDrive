@@ -1,0 +1,87 @@
+﻿@model ShareDrive.ViewModels.Admin.Car.DetailsViewModel
+
+<div id="target">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Car @Model.Id Details</h4>
+    </div>
+
+    <div class="modal-body">
+        <div class="panel-body">
+            <div class="col-md-4">
+                <img class="img-driver" src=@Model.ImageSource />
+            </div>
+
+            <div class="col-md-4">
+                <div>
+                    <label asp-for="@Model.Brand"></label>
+                    <span>@Model.Brand</span>
+                    <hr class="hr-details" />
+                </div>
+
+                <div>
+                    <label asp-for="@Model.CarModel"></label>
+                    <span>@Model.CarModel</span>
+                    <hr class="hr-details" />
+                </div>
+
+                <div>
+                    <label asp-for="Year"></label>
+                    <span>@Model.Year</span>
+                    <hr class="hr-details" />
+                </div>
+
+                <div>
+                    <label asp-for="@Model.AirConditioner"></label>
+                    <span>@Model.AirConditioner</span>
+                    <hr class="hr-details" />
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div>
+                    <label asp-for="@Model.OwnerName"></label>
+                    <span>@Model.OwnerName</span>
+                    <hr class="hr-details" />
+                </div>
+
+                <div>
+                    <label asp-for="@Model.DrivesCount"></label>
+                    <span>@Model.DrivesCount</span>
+                    <hr class="hr-details" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <a id="delete" asp-area="Admin" asp-controller="Cars" asp-action="Delete" asp-route-id="@Model.Id"
+           class="btn btn-danger">Delete</a>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('#modal-container').on('hidden.bs.modal', function () {
+            // remove the bs.modal data attribute from it
+            $(this).removeData('bs.modal');
+            // and empty the modal-content element
+            $('#modal-container .modal-content').empty();
+        });
+
+        $('#delete').click(function (event) {
+            event.preventDefault();
+            let url = $(this).attr('href');
+
+            $.post(url, function (data) {
+                debugger
+                $('#data-container').empty();
+                $('#data-container').html(data);
+                $('#modal-container').modal('toggle');
+            })
+        })
+    })
+</script>

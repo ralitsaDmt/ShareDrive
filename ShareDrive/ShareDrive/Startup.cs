@@ -54,6 +54,7 @@ namespace ShareDrive
             services.AddTransient<IDrivesService, DrivesService>();
             services.AddTransient<IDriveHelperService, DriveHelperService>();
             services.AddTransient<ICitiesService, CitiesService>();
+            services.AddTransient<IUsersService, UsersService>();
 
             services.AddScoped(typeof(IDbRepository<>), typeof(DbRepository<>));
 
@@ -64,6 +65,9 @@ namespace ShareDrive
                 cfg.AddProfile(typeof(DriveAutoMapperProfile));
                 cfg.AddProfile(typeof(CityAutoMapperProfile));
                 cfg.AddProfile(typeof(UserAutoMapperProfile));
+                cfg.AddProfile(typeof(AdminDriveAutoMapperProfile));
+                cfg.AddProfile(typeof(AdminCarAutoMapperProfile));
+                cfg.AddProfile(typeof(AdminUserAutoMapperProfile));
             });
         }
 
@@ -90,8 +94,15 @@ namespace ShareDrive
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
+                     name: "areas",
+                     template: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+                   );
+
+                routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
+
+
             });
         }
     }
