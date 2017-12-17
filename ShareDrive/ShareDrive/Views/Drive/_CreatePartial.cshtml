@@ -7,7 +7,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
-        <h4 class="modal-title">Share Your Drive</h4>
+        <h4 class="modal-title">Create Your Drive</h4>
     </div>
     <form id="form" method="post">
         @Html.EditorFor(x => x, "_DriveCreateEditViewModel");
@@ -71,7 +71,6 @@
 
             $.get(url, function (data) {
                 $('#data-container').empty();
-                debugger
                 $('#data-container').html(data);
             })
         }

@@ -53,9 +53,15 @@ namespace ShareDrive.Services
             if (drive == null)
             {
                 drive = new Drive();
+                drive = this.mapper.Map<Drive>(model);
             }
-
-            drive = this.mapper.Map<Drive>(model);
+            else
+            {
+                drive.DeclaredSeats = model.DeclaredSeats;
+                drive.LocationToPick = model.LocationToPick;
+                drive.LocationToArrive = model.LocationToArrive;
+                drive.Price = model.Price;
+            }            
 
             drive.From = data.From;
             drive.To = data.To;

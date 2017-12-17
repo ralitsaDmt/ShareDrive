@@ -6,7 +6,6 @@ using ShareDrive.ViewModels.Drive;
 using Microsoft.AspNetCore.Http;
 using ShareDrive.Helpers;
 using ShareDrive.Services.Contracts;
-using ShareDrive.ViewModels.Car;
 using ShareDrive.Infrastructure.Filters;
 using Microsoft.AspNetCore.Identity;
 using ShareDrive.Models;
@@ -53,12 +52,11 @@ namespace ShareDrive.Controllers
                     return Json(new { success = "true", message = "Drive successfully created." });
                 }
                 catch (Exception ex)
-                {
+                {                    
                     return Json(new { success = "false", message = "An error has occured." });
                 }               
             }
-
-           
+            
             var cars = carsService.GetSelectionListByDriver(userId);
             model.Cars = cars;
             return this.PartialView("_CreatePartial", model);
@@ -79,26 +77,29 @@ namespace ShareDrive.Controllers
         [HttpPost]
         [Authorize]
         [AjaxOnly]
-        public async Task<IActionResult> Edit(int id, DriveCreateEditViewModel model, [FromServices] IDriveHelperService driveHelperService, [FromServices] IDrivesService drivesService)
+        public async Task<IActionResult> Edit(int id, 
+            DriveCreateEditViewModel model, 
+            [FromServices] IDriveHelperService driveHelperService, 
+            [FromServices] IDrivesService drivesService,
+            [FromServices] UserManager<ApplicationUser> userManager,
+            [FromServices] ICarsService carsService)
         {
+            int userId = int.Parse(userManager.GetUserId(User));
             if (this.ModelState.IsValid)
             {
                 try
                 {
                     await driveHelperService.ProcessEditDriveAsync(model, id);
-                    this.ViewData["SuccessMessage"] = "Drive successfully updated.";                    
+                    return Json(new { success = "true", message = "Drive successfully edited." });
                 }
                 catch(Exception ex)
                 {
-                    this.ViewData["ErrorMessage"] = "An error has occured.";
-                }
-                finally
-                {
-                    this.IndexPartial(drivesService);
+                    return Json(new { success = "false", message = "An error has occured." });
                 }
             }
 
-            this.ViewData["ErrorMessage"] = "Please, fill the form corectly";
+            var cars = carsService.GetSelectionListByDriver(userId);
+            model.Cars = cars;
             return this.PartialView("_EditPartial", model);
         }
 
@@ -112,7 +113,7 @@ namespace ShareDrive.Controllers
             return this.RedirectToIndexPartial(drivesService);
         }
 
-        public IActionResult RedirectToIndexPartial(IDrivesService drivesService)
+        private IActionResult RedirectToIndexPartial(IDrivesService drivesService)
         {
             IEnumerable<DriveIndexViewModel> drives = drivesService.GetAll();
             return this.PartialView("_IndexPartial", drives);

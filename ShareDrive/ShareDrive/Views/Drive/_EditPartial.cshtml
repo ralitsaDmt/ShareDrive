@@ -1,16 +1,16 @@
 ﻿@using ShareDrive.ViewModels.Drive
 
-@model DriveEditViewModel
+@model DriveCreateEditViewModel
 
 <div id="target">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
-        <h4 class="modal-title">Share Your Drive</h4>
+        <h4 class="modal-title">Edit Your Drive</h4>
     </div>
     <form id="form" method="post">
-        @Html.EditorFor(x => x, "_EditViewModel");
+        @Html.EditorFor(x => x, "_DriveCreateEditViewModel");
 
         <div class="modal-footer">
             <a id="submit" class="btn btn-info" asp-controller="Drive" asp-action="Edit" asp-route-id="@Model.Id">Submit</a>
@@ -26,6 +26,9 @@
 
         $('#submit').click(function (event) {
             event.preventDefault();
+
+            // if (!$('#form').valid()) return false;
+
             _this = this;
             submitForm(_this);
         })
@@ -33,15 +36,43 @@
         $('#datepicker').datetimepicker({
             format: "DD/MM/YYYY - HH:mm",
         });
-
-        $('#datepicker').data("DateTimePicker").date(new Date('@Model.DateTime' + 'Z'));
+        
+        $('#datepicker').data("DateTimePicker").date(new Date('@Model.DateTime'));
     })
 
     function submitForm(context) {
+        let formData = $('#form').serialize();
         let url = $(context).attr('href');
-        $.post(url, function (data) {
-            $('#data-container').empty();
-            $('#data-container').html(data);
+
+        $.post(url, formData, function (data) {
+            if (data.success === "true") {
+                $('#modal-container').modal('toggle');
+                showNotification("success", data.message, 'success');
+                loadDrives();
+            } else if (data.success === "false") {
+                $('#modal-container').modal('toggle');
+                showNotification("danger", data.message, 'error');
+            } else {
+                $('#target').empty();
+                $('#target').html(data);
+            }
         })
+
+        function showNotification(type, message, selector) {
+            let noty = `<div style="margin-top: 10px" class="alert alert-` + type + ` alert-dismissable">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>` +
+                message + `</div>`;
+            $('#' + selector).empty();
+            $('#' + selector).html(noty);
+        }
+
+        function loadDrives() {
+            url = 'Drive/IndexPartial';
+
+            $.get(url, function (data) {
+                $('#data-container').empty();
+                $('#data-container').html(data);
+            })
+        }
     }
 </script>
