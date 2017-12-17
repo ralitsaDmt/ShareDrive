@@ -125,6 +125,30 @@ namespace ShareDrive.Controllers
             return this.View("Index", drives);
         }
 
+        [HttpGet]
+        [Authorize]
+        [AjaxOnly]
+        public IActionResult Delete(int id, [FromServices] IDrivesService drivesService)
+        {
+            DriveDeleteViewModel model = drivesService.GetDeleteModelById(id);
+            return this.PartialView("_DeletePartial", model);
+        }
+
+        [HttpPost]
+        [Authorize]
+        [AjaxOnly]
+        public IActionResult DeleteConfirm(int id, [FromServices] IDrivesService drivesService)
+        {
+            try
+            {
+                drivesService.Delete(id);
+                return Json(new { success = "true", message = "Drive successfully deleted." });
+            }
+            catch(Exception ex)
+            {
+                return Json(new { success = "false", message = "An error has occured." });
+            }
+        }
 
 
 
@@ -139,25 +163,9 @@ namespace ShareDrive.Controllers
 
 
 
-        //[HttpGet]
-        //[Authorize]
-        //[AjaxOnly]
-        //public IActionResult Delete(int id, [FromServices] IDrivesService drivesService)
-        //{
-        //    DriveDeleteViewModel model = drivesService.GetDeleteModelById(id);
-        //    return this.PartialView("_DeletePartial", model);
-        //}
 
-        //[HttpPost]
-        //[Authorize]
-        //[AjaxOnly]
-        //public IActionResult DeleteConfirm(int id)
-        //{
-        //    this.drivesService.Delete(id);
 
-        //    this.ViewData["SuccessMessage"] = "Drive successfully deleted";
-        //    return this.RedirectToIndex();
-        //}
+
 
         //[HttpGet]
         //[Authorize]

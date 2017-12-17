@@ -1,19 +1,20 @@
 ﻿@using ShareDrive.ViewModels.Drive
 
-@model DeleteViewModel
+@model DriveDeleteViewModel
 
 <div id="target">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
-        <h4 class="modal-title">Share Your Drive</h4>
+        <h4 class="modal-title">Delete Your Drive</h4>
     </div>
-    <form id="form" asp-controller="Drive" asp-action="DeleteConfirm" asp-route-id="@Model.Id">
-        @Html.EditorFor(x => x, "_DeleteViewModel");
+    <form id="form" method="post">
+        @Html.EditorFor(x => x, "_DriveDeleteViewModel");
 
         <div class="modal-footer">
-            <button type="submit" class="btn btn-danger">Delete</button>
+            <a id="submit" asp-controller="Drive" asp-action="DeleteConfirm" asp-route-id="@Model.Id" 
+               class="btn btn-danger">Delete</a>
             <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
         </div>
     </form>
@@ -29,5 +30,42 @@
         });
 
         $('#datepicker').data("DateTimePicker").date(new Date('@Model.DateTime' + 'Z'));
-    })
+
+        $('#submit').click(function (event) {
+            event.preventDefault();
+            _this = this;
+            submitForm(_this);
+        })
+    });
+
+    function submitForm(context) {
+        let url = $(context).attr('href');
+        $.post(url, function (data) {
+            if (data.success === "true") {
+                $('#modal-container').modal('toggle');
+                showNotification("success", data.message, 'success');
+                loadDrives();
+            } else if (data.success === "false") {
+                $('#modal-container').modal('toggle');
+                showNotification("danger", data.message, 'error');
+            }
+        })
+
+        function showNotification(type, message, selector) {
+            let noty = `<div style="margin-top: 10px" class="alert alert-` + type + ` alert-dismissable">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>` +
+                message + `</div>`;
+            $('#' + selector).empty();
+            $('#' + selector).html(noty);
+        }
+
+        function loadDrives() {
+            url = 'Drive/IndexPartial';
+
+            $.get(url, function (data) {
+                $('#data-container').empty();
+                $('#data-container').html(data);
+            })
+        }    
+    }
 </script>
