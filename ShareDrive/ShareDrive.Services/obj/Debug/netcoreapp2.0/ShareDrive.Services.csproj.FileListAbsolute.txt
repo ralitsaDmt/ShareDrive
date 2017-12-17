@@ -17,3 +17,9 @@ D:\Github\ShareDrive\ShareDrive\ShareDrive.Services\obj\Debug\netcoreapp2.0\Shar
 D:\Github\ShareDrive\ShareDrive\ShareDrive.Services\obj\Debug\netcoreapp2.0\ShareDrive.Services.pdb
 D:\Github\ShareDrive\ShareDrive\ShareDrive.Services\bin\Debug\netcoreapp2.0\ShareDrive.ViewModels.dll
 D:\Github\ShareDrive\ShareDrive\ShareDrive.Services\bin\Debug\netcoreapp2.0\ShareDrive.ViewModels.pdb
+D:\Github\ShareDrive\ShareDrive\ShareDrive.Services\bin\Debug\netcoreapp2.0\Microsoft.AspNetCore.Mvc.Core.dll
+D:\Github\ShareDrive\ShareDrive\ShareDrive.Services\bin\Debug\netcoreapp2.0\Microsoft.AspNetCore.Routing.Abstractions.dll
+D:\Github\ShareDrive\ShareDrive\ShareDrive.Services\bin\Debug\netcoreapp2.0\Microsoft.AspNetCore.Mvc.Abstractions.dll
+D:\Github\ShareDrive\ShareDrive\ShareDrive.Services\bin\Debug\netcoreapp2.0\Microsoft.AspNetCore.Mvc.Core.xml
+D:\Github\ShareDrive\ShareDrive\ShareDrive.Services\bin\Debug\netcoreapp2.0\Microsoft.AspNetCore.Routing.Abstractions.xml
+D:\Github\ShareDrive\ShareDrive\ShareDrive.Services\bin\Debug\netcoreapp2.0\Microsoft.AspNetCore.Mvc.Abstractions.xml

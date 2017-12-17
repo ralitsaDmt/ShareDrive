@@ -7,6 +7,7 @@ using ShareDrive.Common;
 using System.Linq;
 using ShareDrive.ViewModels.City;
 using AutoMapper.QueryableExtensions;
+using System.Threading.Tasks;
 
 namespace ShareDrive.Services
 {
@@ -19,30 +20,30 @@ namespace ShareDrive.Services
             this.cities = cities;
         }
         
-        public City GetOrCreate(string name)
+        public async Task<City> GetOrCreateAsync(string name)
         {
             City city = this.cities.GetAll().Where(c => c.Name == name).FirstOrDefault();
 
             if (city == null)
             {
-                city = this.Create(name);
+                city = await this.CreateAsync(name);
             }
 
             return city;
         }
 
-        public List<SelectViewModel> GetAll()
+        public List<CitySelectViewModel> GetAll()
         {
-            return this.cities.GetAll().ProjectTo<SelectViewModel>().ToList();
+            return this.cities.GetAll().ProjectTo<CitySelectViewModel>().ToList();
         }
 
-        private City Create(string name)
+        private async Task<City> CreateAsync(string name)
         {
             City city = new City()
             {
                 Name = name
             };
-            return this.cities.Create(city);
+            return await this.cities.CreateAsync(city);
         }
     }
 }

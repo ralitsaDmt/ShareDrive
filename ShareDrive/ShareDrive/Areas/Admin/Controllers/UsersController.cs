@@ -19,14 +19,14 @@ namespace ShareDrive.Areas.Admin.Controllers
 
         public IActionResult Index()
         {
-            IEnumerable<ShareDrive.ViewModels.Admin.User.IndexViewModel> users = this.usersService.GetAllAdmin();
+            IEnumerable<ShareDrive.ViewModels.Admin.User.UserAdminIndexViewModel> users = this.usersService.GetAllAdmin();
             return this.View(users);
         }
 
         [HttpGet]
         public IActionResult Details(int id)
         {
-            DetailsViewModel model = this.usersService.GetDetailsModel(id);
+            UserAdminDetailsViewModel model = this.usersService.GetDetailsModel(id);
             return this.PartialView("_Details", model);
         }
 

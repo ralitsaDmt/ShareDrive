@@ -3,13 +3,14 @@ using ShareDrive.ViewModels.City;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ShareDrive.Services.Contracts
 {
     public interface ICitiesService
     {
-        City GetOrCreate(string name);
+        Task<City> GetOrCreateAsync(string name);
 
-        List<SelectViewModel> GetAll();
+        List<CitySelectViewModel> GetAll();
     }
 }

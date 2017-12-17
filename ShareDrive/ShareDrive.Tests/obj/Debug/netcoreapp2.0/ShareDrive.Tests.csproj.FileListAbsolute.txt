@@ -1,0 +1,14 @@
+D:\Github\ShareDrive\ShareDrive\ShareDrive.Tests\bin\Debug\netcoreapp2.0\xunit.runner.visualstudio.dotnetcore.testadapter.dll
+D:\Github\ShareDrive\ShareDrive\ShareDrive.Tests\bin\Debug\netcoreapp2.0\xunit.runner.utility.netstandard15.dll
+D:\Github\ShareDrive\ShareDrive\ShareDrive.Tests\bin\Debug\netcoreapp2.0\xunit.runner.reporters.netstandard15.dll
+D:\Github\ShareDrive\ShareDrive\ShareDrive.Tests\bin\Debug\netcoreapp2.0\ShareDrive.Tests.deps.json
+D:\Github\ShareDrive\ShareDrive\ShareDrive.Tests\bin\Debug\netcoreapp2.0\ShareDrive.Tests.runtimeconfig.json
+D:\Github\ShareDrive\ShareDrive\ShareDrive.Tests\bin\Debug\netcoreapp2.0\ShareDrive.Tests.runtimeconfig.dev.json
+D:\Github\ShareDrive\ShareDrive\ShareDrive.Tests\bin\Debug\netcoreapp2.0\ShareDrive.Tests.dll
+D:\Github\ShareDrive\ShareDrive\ShareDrive.Tests\bin\Debug\netcoreapp2.0\ShareDrive.Tests.pdb
+D:\Github\ShareDrive\ShareDrive\ShareDrive.Tests\obj\Debug\netcoreapp2.0\ShareDrive.Tests.csproj.CoreCompileInputs.cache
+D:\Github\ShareDrive\ShareDrive\ShareDrive.Tests\obj\Debug\netcoreapp2.0\ShareDrive.Tests.AssemblyInfoInputs.cache
+D:\Github\ShareDrive\ShareDrive\ShareDrive.Tests\obj\Debug\netcoreapp2.0\ShareDrive.Tests.AssemblyInfo.cs
+D:\Github\ShareDrive\ShareDrive\ShareDrive.Tests\obj\Debug\netcoreapp2.0\ShareDrive.Tests.dll
+D:\Github\ShareDrive\ShareDrive\ShareDrive.Tests\obj\Debug\netcoreapp2.0\ShareDrive.Tests.pdb
+D:\Github\ShareDrive\ShareDrive\ShareDrive.Tests\obj\Debug\netcoreapp2.0\ShareDrive.Tests.csprojResolveAssemblyReference.cache

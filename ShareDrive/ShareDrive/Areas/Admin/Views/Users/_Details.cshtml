@@ -1,4 +1,6 @@
-﻿@model ShareDrive.ViewModels.Admin.User.DetailsViewModel
+﻿@using ShareDrive.ViewModels.Admin.User
+
+@model UserAdminDetailsViewModel
 
 <div id="target">
     <div class="modal-header">
@@ -79,7 +81,6 @@
             let url = $(this).attr('href');
 
             $.post(url, function (data) {
-                debugger
                 $('#data-container').empty();
                 $('#data-container').html(data);
                 $('#modal-container').modal('toggle');

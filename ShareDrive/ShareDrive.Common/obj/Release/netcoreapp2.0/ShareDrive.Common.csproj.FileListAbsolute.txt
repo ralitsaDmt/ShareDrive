@@ -1,0 +1,13 @@
+D:\Github\ShareDrive\ShareDrive\ShareDrive.Common\bin\Release\netcoreapp2.0\ShareDrive.Common.deps.json
+D:\Github\ShareDrive\ShareDrive\ShareDrive.Common\bin\Release\netcoreapp2.0\ShareDrive.Common.dll
+D:\Github\ShareDrive\ShareDrive\ShareDrive.Common\bin\Release\netcoreapp2.0\ShareDrive.Common.pdb
+D:\Github\ShareDrive\ShareDrive\ShareDrive.Common\bin\Release\netcoreapp2.0\ShareDrive.Data.dll
+D:\Github\ShareDrive\ShareDrive\ShareDrive.Common\bin\Release\netcoreapp2.0\ShareDrive.Models.dll
+D:\Github\ShareDrive\ShareDrive\ShareDrive.Common\bin\Release\netcoreapp2.0\ShareDrive.Data.pdb
+D:\Github\ShareDrive\ShareDrive\ShareDrive.Common\bin\Release\netcoreapp2.0\ShareDrive.Models.pdb
+D:\Github\ShareDrive\ShareDrive\ShareDrive.Common\obj\Release\netcoreapp2.0\ShareDrive.Common.csprojResolveAssemblyReference.cache
+D:\Github\ShareDrive\ShareDrive\ShareDrive.Common\obj\Release\netcoreapp2.0\ShareDrive.Common.csproj.CoreCompileInputs.cache
+D:\Github\ShareDrive\ShareDrive\ShareDrive.Common\obj\Release\netcoreapp2.0\ShareDrive.Common.AssemblyInfoInputs.cache
+D:\Github\ShareDrive\ShareDrive\ShareDrive.Common\obj\Release\netcoreapp2.0\ShareDrive.Common.AssemblyInfo.cs
+D:\Github\ShareDrive\ShareDrive\ShareDrive.Common\obj\Release\netcoreapp2.0\ShareDrive.Common.dll
+D:\Github\ShareDrive\ShareDrive\ShareDrive.Common\obj\Release\netcoreapp2.0\ShareDrive.Common.pdb

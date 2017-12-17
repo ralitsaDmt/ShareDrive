@@ -12,13 +12,13 @@ namespace ShareDrive.Infrastructure.Mapping
     {
         public AdminDriveAutoMapperProfile()
         {
-            CreateMap<Drive, IndexViewModel>()
+            CreateMap<Drive, DriveAdminIndexViewModel>()
                 .ForMember(dest => dest.From, opt => opt.MapFrom(source => source.From.Name))
                 .ForMember(dest => dest.To, opt => opt.MapFrom(source => source.To.Name))
                 .ForMember(dest => dest.Date,
                     opt => opt.MapFrom(source => source.DateTime.ToString("dd/MM/yyyy HH:mm")));
 
-            CreateMap<Drive, DetailsViewModel>()
+            CreateMap<Drive, DriveAdminDetailsViewModel>()
                 .ForMember(dest => dest.From, opt => opt.MapFrom(source => source.From.Name))
                 .ForMember(dest => dest.To, opt => opt.MapFrom(source => source.To.Name))
                 .ForMember(dest => dest.AvailableSeats,

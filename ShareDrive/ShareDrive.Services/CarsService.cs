@@ -25,48 +25,46 @@ namespace ShareDrive.Services
             this.mapper = mapper;
         }
 
-        public IEnumerable<ShareDrive.ViewModels.Admin.Car.IndexViewModel> GetAllAdmin()
+        public IEnumerable<ShareDrive.ViewModels.Admin.Car.CarAdminIndexViewModel> GetAllAdmin()
         {
             return this.cars.GetAll()
                 .Include(c => c.Drives)
-                .ProjectTo<ShareDrive.ViewModels.Admin.Car.IndexViewModel>()
+                .ProjectTo<ShareDrive.ViewModels.Admin.Car.CarAdminIndexViewModel>()
                 .ToList();
         }
 
-        public async Task<bool> Create(CreateViewModel model, int ownerId)
+        public async Task Create(CarCreateViewModel model, int ownerId)
         {
-            var tempPath = Path.GetTempPath();
-
-            Car car = this.mapper.Map<Car>(model);
-
-            using (var ms = new MemoryStream())
-            {
-                await model.Image.CopyToAsync(ms);
-                car.Image = ms.ToArray();
-            }
-
-            car.OwnerId = ownerId;
-
             try
             {
-                this.cars.Create(car);
-                return true;
+                Car car = this.mapper.Map<Car>(model);
+
+                using (var ms = new MemoryStream())
+                {
+                    await model.Image.CopyToAsync(ms);
+                    car.Image = ms.ToArray();
+                }
+
+                car.OwnerId = ownerId;
+
+                await this.cars.CreateAsync(car);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                return false;
-            }            
+                // log
+                throw;
+            }
         }
 
-        public EditViewModel GetEditViewModel(int id)
+        public CarEditViewModel GetEditViewModel(int id)
         {
             Car car = this.cars.GetById(id);
-            EditViewModel model = this.mapper.Map<EditViewModel>(car);
+            CarEditViewModel model = this.mapper.Map<CarEditViewModel>(car);
 
             return model;
         }
 
-        public IQueryable<IndexViewModel> GetAllCarsIndex(int? userId)
+        public IQueryable<CarIndexViewModel> GetAllCarsIndex(int? userId)
         {
             IQueryable<Car> cars = this.cars.GetAll();
 
@@ -75,18 +73,18 @@ namespace ShareDrive.Services
                 cars = cars.Where(c => c.OwnerId == userId);
             }
 
-            return cars.ProjectTo<IndexViewModel>();
+            return cars.ProjectTo<CarIndexViewModel>();
         }
 
-        public IQueryable<Car> GetById(int id)
+        public Car GetById(int id)
         {
-            return this.cars.GetAll().Where(x => x.Id == id);
+            return this.cars.GetAll().FirstOrDefault(x => x.Id == id);
         }
-        
-        public async Task<bool> Edit(int id, EditViewModel model)
+
+        public async Task<bool> Edit(int id, CarEditViewModel model)
         {
             Car car = this.cars.GetById(id);
-            
+
             if (car != null)
             {
                 car.Brand = model.Brand;
@@ -128,22 +126,28 @@ namespace ShareDrive.Services
             }
         }
 
-        public List<SelectViewModel> GetSelectionListByDriver(int id)
+        public List<CarSelectViewModel> GetSelectionListByDriver(int id)
         {
             var carsList = this.cars.GetAll()
                 .Where(x => x.OwnerId == id)
-                .ProjectTo<SelectViewModel>().ToList();
+                .ProjectTo<CarSelectViewModel>().ToList();
             return carsList;
         }
 
-        public ShareDrive.ViewModels.Admin.Car.DetailsViewModel GetDetailsAdmin(int id)
+        public ShareDrive.ViewModels.Admin.Car.CarAdminDetailsViewModel GetDetailsAdmin(int id)
         {
             var car = this.cars.GetByIdQueryable(id)
                 .Include(c => c.Drives)
                 .Include(c => c.Owner)
                 .FirstOrDefault();
-            var model = this.mapper.Map<ViewModels.Admin.Car.DetailsViewModel>(car);
+            var model = this.mapper.Map<ViewModels.Admin.Car.CarAdminDetailsViewModel>(car);
             return model;
+        }
+
+        public CarDeleteViewModel GetDeleteViewModel(int id)
+        {
+            Car car = this.cars.GetById(id);
+            return this.mapper.Map<CarDeleteViewModel>(car);
         }
     }
 }

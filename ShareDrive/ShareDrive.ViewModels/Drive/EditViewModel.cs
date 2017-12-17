@@ -9,7 +9,7 @@ namespace ShareDrive.ViewModels.Drive
 {
     public class EditViewModel : BaseEditViewModel
     {
-        public List<SelectViewModel> Cars { get; set; }
+        public List<CarSelectViewModel> Cars { get; set; }
 
         [Required]
         public int CarId { get; set; }

@@ -15,6 +15,9 @@ using ShareDrive.Infrastructure.Mapping;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.FileProviders;
 using System.IO;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using ShareDrive.Services.Mappings;
 
 namespace ShareDrive
 {
@@ -48,17 +51,20 @@ namespace ShareDrive
             // Add application services.
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient<IEmailSender, EmailSender>();
-
-            services.AddTransient<IRolesService, RolesService>();
-            services.AddTransient<ICarsService, CarsService>();
-            services.AddTransient<IDrivesService, DrivesService>();
-            services.AddTransient<IDriveHelperService, DriveHelperService>();
-            services.AddTransient<ICitiesService, CitiesService>();
-            services.AddTransient<IUsersService, UsersService>();
+            
+            services.AddScoped<ICarsService, CarsService>();
+            services.AddScoped<IDrivesService, DrivesService>();
+            services.AddScoped<IDriveHelperService, DriveHelperService>();
+            services.AddScoped<IDriveCarsHelperService, DriveCarsHelperService>();
+            services.AddScoped<ICitiesService, CitiesService>();
+            services.AddScoped<IUsersService, UsersService>();
 
             services.AddScoped(typeof(IDbRepository<>), typeof(DbRepository<>));
 
-            services.AddMvc();
+            services.AddMvc(optiops =>
+            {
+                optiops.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
+            });
             services.AddAutoMapper(cfg =>
             {
                 cfg.AddProfile(typeof(CarAutoMapperProfile));
@@ -68,6 +74,7 @@ namespace ShareDrive
                 cfg.AddProfile(typeof(AdminDriveAutoMapperProfile));
                 cfg.AddProfile(typeof(AdminCarAutoMapperProfile));
                 cfg.AddProfile(typeof(AdminUserAutoMapperProfile));
+                cfg.AddProfile(typeof(ServicesDriveAutoMapperProfile));
             });
         }
 
@@ -79,6 +86,7 @@ namespace ShareDrive
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseStatusCodePages("text/plain", "Status code page, status code: {0}");
                 app.UseBrowserLink();
                 app.UseDatabaseErrorPage();
             }

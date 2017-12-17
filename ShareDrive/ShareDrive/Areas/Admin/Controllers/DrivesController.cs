@@ -19,14 +19,14 @@ namespace ShareDrive.Areas.Admin.Controllers
 
         public IActionResult Index()
         {
-            IEnumerable<IndexViewModel> drives = this.drivesService.GetAllAdmin();
+            IEnumerable<DriveAdminIndexViewModel> drives = this.drivesService.GetAllAdmin();
             return this.View("DrivesIndex", drives);
         }
 
         [HttpGet]
         public IActionResult Details(int id)
         {
-            DetailsViewModel model = this.drivesService.GetDetailsAdminModel(id);
+            DriveAdminDetailsViewModel model = this.drivesService.GetDetailsAdminModel(id);
             return this.PartialView("_DriveDetails", model);
         }
 
@@ -47,7 +47,7 @@ namespace ShareDrive.Areas.Admin.Controllers
             }
             
 
-            IEnumerable<IndexViewModel> drives = this.drivesService.GetAllAdmin();
+            IEnumerable<DriveAdminIndexViewModel> drives = this.drivesService.GetAllAdmin();
             return this.PartialView("_DrivesIndexPartial", drives);
         }
     }

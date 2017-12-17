@@ -27,11 +27,11 @@ namespace ShareDrive.ViewModels.Drive.BaseModels
         public string DateTime { get; set; }
 
         [Required]
-        [Range(1, double.MaxValue, ErrorMessage = "Value should be a positive number")]
+        [Range(1, double.MaxValue, ErrorMessage = "Value should be a positive number.")]
         public decimal Price { get; set; }
 
         [Required]
-        [Range(1, 10, ErrorMessage = "Value exceeds max passengers number")]
+        [Range(1, 10, ErrorMessage = "Value must be between 1 and 10.")]
         public int DeclaredSeats { get; set; }
     }
 }

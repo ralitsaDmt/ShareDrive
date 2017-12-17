@@ -12,21 +12,21 @@ namespace ShareDrive.Infrastructure.Mapping
     {
         public CarAutoMapperProfile()
         {
-            CreateMap<Car, CreateViewModel>();
+            CreateMap<Car, CarCreateViewModel>();
 
-            CreateMap<CreateViewModel, Car>()
+            CreateMap<CarCreateViewModel, Car>()
                 .ForMember(car => car.Id, opt => opt.Ignore())
                 .ForMember(car => car.Image, opt => opt.Ignore());
 
-            CreateMap<Car, IndexViewModel>();
+            CreateMap<Car, CarIndexViewModel>();
 
-            CreateMap<Car, EditViewModel>()
+            CreateMap<Car, CarEditViewModel>()
                 .ForMember(dest => dest.NewImage, opt => opt.Ignore())
                 .ForMember(dest => dest.ImageSource, opt => opt.Ignore());
 
-            CreateMap<Car, DeleteViewModel>();
+            CreateMap<Car, CarDeleteViewModel>();
 
-            CreateMap<Car, SelectViewModel>()
+            CreateMap<Car, CarSelectViewModel>()
                 .ForMember(dest => dest.Name, 
                     opt => opt.MapFrom(source => source.Brand + " " + source.CarModel + " (" + source.Year + ")"));
 

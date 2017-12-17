@@ -12,11 +12,11 @@ namespace ShareDrive.Infrastructure.Mapping
     {
         public AdminUserAutoMapperProfile()
         {
-            CreateMap<ApplicationUser, IndexViewModel>()
+            CreateMap<ApplicationUser, UserAdminIndexViewModel>()
                 .ForMember(dest => dest.Name,
                     opt => opt.MapFrom(source => source.FirstName + " " + source.LastName));
 
-            CreateMap<ApplicationUser, DetailsViewModel>()
+            CreateMap<ApplicationUser, UserAdminDetailsViewModel>()
                 .ForMember(dest => dest.Name,
                     opt => opt.MapFrom(source => source.FirstName + " " + source.LastName))
                 .ForMember(dest => dest.DrivesAsDriverCount,

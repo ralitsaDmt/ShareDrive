@@ -1,4 +1,5 @@
 ﻿using AutoMapper.QueryableExtensions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ShareDrive.Helpers;
@@ -30,13 +31,15 @@ namespace ShareDrive.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public IActionResult Create()
         {
             return this.PartialView("_CreateModal");
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateViewModel model)
+        [Authorize]
+        public async Task<IActionResult> Create(CarCreateViewModel model)
         {
             if (this.ModelState.IsValid)
             {
@@ -51,14 +54,16 @@ namespace ShareDrive.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public IActionResult Edit(int id)
         {
-            EditViewModel model = this.carsService.GetEditViewModel(id);
+            CarEditViewModel model = this.carsService.GetEditViewModel(id);
             return this.PartialView("_EditModal", model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(int id, EditViewModel model)
+        [Authorize]
+        public async Task<IActionResult> Edit(int id, CarEditViewModel model)
         {
             if (this.ModelState.IsValid)
             {
@@ -72,11 +77,10 @@ namespace ShareDrive.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public IActionResult Delete(int id)
         {
-            IQueryable<Car> car = this.carsService.GetById(id);
-            DeleteViewModel model = car.ProjectTo<DeleteViewModel>().FirstOrDefault();
-
+            CarDeleteViewModel model = this.carsService.GetDeleteViewModel(id);
             return this.PartialView("_DeleteConfirmation", model);
         }
 
@@ -99,7 +103,5 @@ namespace ShareDrive.Controllers
             var cars = this.carsService.GetAllCarsIndex(this.userId).ToList();
             return this.View("Index", cars);
         }
-
-
     }
 }

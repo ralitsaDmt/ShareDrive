@@ -5,6 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="asdHelperService.cs" />
+    <Compile Remove="Contracts\IDrivesHelperService.cs" />
+    <Compile Remove="DriveCitiesHelperService.cs" />
+    <Compile Remove="Mappings\DriveAutMapperProfile.cs" />
+  </ItemGroup>
+
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="3.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.0.1" />
   </ItemGroup>

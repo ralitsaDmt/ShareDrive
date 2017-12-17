@@ -1,0 +1,56 @@
+﻿<div class="col-md-12">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="row filter-row">
+                <div class="col-md-2">
+                    <a asp-controller="Drive" asp-action="IndexFilter"
+                       class="btn btn-info filter" data-sort="Date"
+                       data-target="data-container" id="sort">Sort by Date &uarr;</a>
+                </div>
+
+                <div class="col-md-2 col-md-offset-2">
+                    <input id="from" class="form-control" data-prev="" placeholder="City from" />
+                </div>
+
+                <div class="col-md-2">
+                    <input id="to" class="form-control" data-prev="" placeholder="City To" />
+                </div>
+
+                <div class="col-md-2">
+                    <div class='input-group date' id='datepicker'>
+                        <input type='text' class="form-control" data-prev="" id="date" placeholder="Pick a Date" />
+                        <span class="input-group-addon">
+                            <span><img src="~/images/404-200.png" style="width: 16px" /></span>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="col-md-2">
+                    <a asp-controller="Drive" asp-action="IndexFilter"
+                       class="btn btn-info filter" data-target="data-container"
+                       id="filter" data-submit="false">Filter</a>
+                </div>
+            </div>
+
+            <div class="row filter-row">
+                <div class="col-md-2 col-md-offset-6">
+                    <a asp-controller="Drive" asp-action="IndexFilter"
+                       class="btn btn-info filter" data-target="data-container"
+                       id="driver">Drives as Driver</a>
+                </div>
+
+                <div class="col-md-2">
+                    <a asp-controller="Drive" asp-action="IndexFilter"
+                       class="btn btn-info filter" data-target="data-container"
+                       id="passenger">Drives as Passenger</a>
+                </div>
+
+                <div class="col-md-2">
+                    <a asp-controller="Drive" asp-action="IndexFilter"
+                       class="btn btn-info filter" data-target="data-container"
+                       id="clear">Clear Filters</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

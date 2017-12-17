@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Identity
+@using ShareDrive.ViewModels.Drive
 @using ShareDrive.Models
 
 @inject SignInManager<ApplicationUser> SignInManager
@@ -8,24 +9,18 @@
     ViewData["Title"] = "Drive Index";
 }
 
-@model List<ShareDrive.ViewModels.Drive.IndexViewModel>
+@model IEnumerable<DriveIndexViewModel>
 
-@{ var isSignedIn = SignInManager.IsSignedIn(User); }
+<div id="error" class="col-md-12"></div>
+<div id="success" class="col-md-12"></div>
 
-@if (ViewData["SuccessMessage"] != null)
+@Html.Partial("_NotificationSuccessPartial")
+@Html.Partial("_NotificationErrorPartial")
+
+@if (SignInManager.IsSignedIn(User))
 {
     <div class="col-md-12">
-        <div style="margin-top: 10px" class="alert alert-success alert-dismissable">
-            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            @ViewData["SuccessMessage"]
-        </div>
-    </div>
-}
-
-@if (isSignedIn)
-{
-    <div class="col-md-12">
-        <a asp-controller="Drive" asp-action="Edit"
+        <a asp-controller="Drive" asp-action="Create"
            class="btn btn-block btn-info modal-btn"
            data-target="#modal-container" data-toggle="modal">Create New Drive</a>
     </div>
@@ -39,70 +34,10 @@
     </div>
 </div>
 
-
-<div class="col-md-12">
-    <div class="panel panel-default">
-        <div class="panel-body">
-            <div class="row filter-row">
-                <div class="col-md-2">
-                    <a asp-controller="Drive" asp-action="IndexFilter"
-                       class="btn btn-info filter" data-sort="Date"
-                       data-target="data-container" id="sort">Sort by Date &uarr;</a>
-                </div>
-
-                <div class="col-md-2 col-md-offset-2">
-                    <input id="from" class="form-control" data-prev="" placeholder="City from" />
-                </div>
-
-                <div class="col-md-2">
-                    <input id="to" class="form-control" data-prev="" placeholder="City To" />
-                </div>
-
-                <div class="col-md-2">
-                    <div class='input-group date' id='datepicker'>
-                        <input type='text' class="form-control" data-prev="" id="date" placeholder="Pick a Date" />
-                        <span class="input-group-addon">
-                            <span><img src="~/images/404-200.png" style="width: 16px" /></span>
-                        </span>
-                    </div>
-                </div>
-
-                <div class="col-md-2">
-                    <a asp-controller="Drive" asp-action="IndexFilter"
-                       class="btn btn-info filter" data-target="data-container"
-                       id="filter" data-submit="false">Filter</a>
-                </div>
-            </div>
-
-            <div class="row filter-row">
-                <div class="col-md-2 col-md-offset-6">
-                    <a asp-controller="Drive" asp-action="IndexFilter"
-                       class="btn btn-info filter" data-target="data-container"
-                       id="driver">Drives as Driver</a>
-                </div>
-
-                <div class="col-md-2">
-                    <a asp-controller="Drive" asp-action="IndexFilter"
-                       class="btn btn-info filter" data-target="data-container"
-                       id="passenger">Drives as Passenger</a>
-                </div>
-
-                <div class="col-md-2">
-                    <a asp-controller="Drive" asp-action="IndexFilter"
-                       class="btn btn-info filter" data-target="data-container"
-                       id="clear">Clear Filters</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-@*<div id="data-container-initial">
-    @Html.Partial("_Index", Model)
-</div>*@
+@Html.Partial("_FiltersPartial")
 
 <div id="data-container">
-    @Html.Partial("_Index", Model)
+    @Html.Partial("_IndexPartial", Model)
 </div>
 
 

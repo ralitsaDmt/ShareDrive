@@ -1,0 +1,9 @@
+D:\Github\ShareDrive\ShareDrive\ShareDrive.ViewModels\bin\Release\netcoreapp2.0\ShareDrive.ViewModels.deps.json
+D:\Github\ShareDrive\ShareDrive\ShareDrive.ViewModels\bin\Release\netcoreapp2.0\ShareDrive.ViewModels.dll
+D:\Github\ShareDrive\ShareDrive\ShareDrive.ViewModels\bin\Release\netcoreapp2.0\ShareDrive.ViewModels.pdb
+D:\Github\ShareDrive\ShareDrive\ShareDrive.ViewModels\obj\Release\netcoreapp2.0\ShareDrive.ViewModels.csprojResolveAssemblyReference.cache
+D:\Github\ShareDrive\ShareDrive\ShareDrive.ViewModels\obj\Release\netcoreapp2.0\ShareDrive.ViewModels.csproj.CoreCompileInputs.cache
+D:\Github\ShareDrive\ShareDrive\ShareDrive.ViewModels\obj\Release\netcoreapp2.0\ShareDrive.ViewModels.AssemblyInfoInputs.cache
+D:\Github\ShareDrive\ShareDrive\ShareDrive.ViewModels\obj\Release\netcoreapp2.0\ShareDrive.ViewModels.AssemblyInfo.cs
+D:\Github\ShareDrive\ShareDrive\ShareDrive.ViewModels\obj\Release\netcoreapp2.0\ShareDrive.ViewModels.dll
+D:\Github\ShareDrive\ShareDrive\ShareDrive.ViewModels\obj\Release\netcoreapp2.0\ShareDrive.ViewModels.pdb

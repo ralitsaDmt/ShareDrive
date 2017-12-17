@@ -1,0 +1,8 @@
+﻿@using ShareDrive.ViewModels.Drive
+
+@model List<DriveIndexViewModel>
+
+@foreach (var child in Model)
+{
+    @Html.DisplayFor(m => child, "_IndexViewModel");
+}

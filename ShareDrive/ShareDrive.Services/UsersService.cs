@@ -36,18 +36,23 @@ namespace ShareDrive.Services
             return false;
         }
 
-        public IEnumerable<IndexViewModel> GetAllAdmin()
+        public IEnumerable<UserAdminIndexViewModel> GetAllAdmin()
         {
             return this.users.GetAll()
                 .Include(u => u.Cars)
                 .Include(u => u.Drives)
                 .Include(u => u.DrivesPassengers)
                 .Where(u => u.Email != GlobalConstants.AdminMail)
-                .ProjectTo<ShareDrive.ViewModels.Admin.User.IndexViewModel>()
+                .ProjectTo<ShareDrive.ViewModels.Admin.User.UserAdminIndexViewModel>()
                 .ToList();
         }
 
-        public DetailsViewModel GetDetailsModel(int id)
+        public ApplicationUser GetById(int id)
+        {
+            return this.users.GetById(id);
+        }
+
+        public UserAdminDetailsViewModel GetDetailsModel(int id)
         {
             ApplicationUser user = this.users.GetByIdQueryable(id)
                 .Include(u => u.Cars)
@@ -55,7 +60,7 @@ namespace ShareDrive.Services
                 .Include(u => u.DrivesPassengers)
                 .FirstOrDefault();
 
-            DetailsViewModel model = this.mapper.Map<DetailsViewModel>(user);
+            UserAdminDetailsViewModel model = this.mapper.Map<UserAdminDetailsViewModel>(user);
             return model;
         }
     }

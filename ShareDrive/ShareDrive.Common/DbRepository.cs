@@ -4,6 +4,7 @@ using ShareDrive.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace ShareDrive.Common
 {
@@ -18,9 +19,9 @@ namespace ShareDrive.Common
             this.entities = this.context.Set<T>();
         }
 
-        public T Create(T model)
+        public async Task<T> CreateAsync(T model)
         {
-            T entity = this.entities.Add(model).Entity;
+            T entity = (await this.entities.AddAsync(model)).Entity;
             this.Save();
 
             return entity;

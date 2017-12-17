@@ -11,7 +11,7 @@ namespace ShareDrive.Infrastructure.Mapping
     {
         public CityAutoMapperProfile()
         {
-            CreateMap<City, SelectViewModel>();
+            CreateMap<City, CitySelectViewModel>();
         }
     }
 }

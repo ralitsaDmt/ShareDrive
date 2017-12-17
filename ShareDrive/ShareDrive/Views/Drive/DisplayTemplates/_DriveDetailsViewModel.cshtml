@@ -1,4 +1,8 @@
-﻿@model ShareDrive.ViewModels.Drive.DriveDetailsViewModel
+﻿@using Microsoft.AspNetCore.Identity
+@model ShareDrive.ViewModels.Drive.DriveDetailsViewModel
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
 
 <div class="col-md-12">
     <div class="panel panel-info details-panel">
@@ -51,24 +55,24 @@
                 </div>
             </div>
 
-            <div class="col-md-4">
+            @if (SignInManager.IsSignedIn(User))
+            {
+                <div class="col-md-4">
                 @if (Model.UserIsOwner)
                 {
-                    <div id="reserved">
-                        <label class="label-info">You shared this drive.</label>
-                    </div>
+                        <div id="reserved">
+                            <label class="label-info">You shared this drive.</label>
+                        </div>
                 }
                 else if (!Model.UserIsOwner && Model.AvailableSeats > 0 && !Model.ReservedByUser)
                 {
-
-                    <a id="btn-take" asp-controller="Drive" asp-action="Reserve" asp-route-id="@Model.Id"
+                   <a id="btn-take" asp-controller="Drive" asp-action="Reserve" asp-route-id="@Model.Id"
                        class="btn btn-success btn-details">Take a Seat</a>
 
                     <div id="reserved" style="display: none"></div>
 
                     <a id="btn-cancel" asp-controller="Drive" asp-action="Cancel" asp-route-id="@Model.Id"
-                       class="btn btn-danger btn-details cancel">Cancel Reservation</a>
-
+                           class="btn btn-danger btn-details cancel">Cancel Reservation</a>
                 }
                 else if (Model.ReservedByUser)
                 {
@@ -76,7 +80,7 @@
                         <label class="label-info">You have a reservation.</label>
                     </div>
                     <a id="btn-cancel" asp-controller="Drive" asp-action="Cancel" asp-route-id="@Model.Id"
-                       class="btn btn-danger btn-details">Cancel Reservation</a>
+                           class="btn btn-danger btn-details">Cancel Reservation</a>
                 }
                 else if (Model.AvailableSeats == 0)
                 {
@@ -88,6 +92,7 @@
                 <div id="notification"></div>
 
             </div>
+            }
         </div>
     </div>
 </div>

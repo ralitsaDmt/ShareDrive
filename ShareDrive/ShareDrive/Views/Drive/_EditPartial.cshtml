@@ -1,6 +1,6 @@
 ﻿@using ShareDrive.ViewModels.Drive
 
-@model EditViewModel
+@model DriveEditViewModel
 
 <div id="target">
     <div class="modal-header">
@@ -9,11 +9,11 @@
         </button>
         <h4 class="modal-title">Share Your Drive</h4>
     </div>
-    <form id="form" asp-controller="Drive" asp-action="Edit" asp-route-id="@Model.Id">
+    <form id="form" method="post">
         @Html.EditorFor(x => x, "_EditViewModel");
 
         <div class="modal-footer">
-            <button type="submit" class="btn btn-info">Submit</button>
+            <a id="submit" class="btn btn-info" asp-controller="Drive" asp-action="Edit" asp-route-id="@Model.Id">Submit</a>
             <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
         </div>
     </form>
@@ -24,10 +24,24 @@
     $(function () {
         $.validator.unobtrusive.parse("#form");
 
+        $('#submit').click(function (event) {
+            event.preventDefault();
+            _this = this;
+            submitForm(_this);
+        })
+
         $('#datepicker').datetimepicker({
             format: "DD/MM/YYYY - HH:mm",
         });
 
         $('#datepicker').data("DateTimePicker").date(new Date('@Model.DateTime' + 'Z'));
     })
+
+    function submitForm(context) {
+        let url = $(context).attr('href');
+        $.post(url, function (data) {
+            $('#data-container').empty();
+            $('#data-container').html(data);
+        })
+    }
 </script>

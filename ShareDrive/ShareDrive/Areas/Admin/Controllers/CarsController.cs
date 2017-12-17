@@ -19,7 +19,7 @@ namespace ShareDrive.Areas.Admin.Controllers
 
         public IActionResult Index()
         {
-            IEnumerable<IndexViewModel> cars = this.carsService.GetAllAdmin();
+            IEnumerable<CarAdminIndexViewModel> cars = this.carsService.GetAllAdmin();
             return this.View("CarsIndex", cars);
         }
         
@@ -46,7 +46,7 @@ namespace ShareDrive.Areas.Admin.Controllers
                 this.ViewData["ErrorMessage"] = "Cannot delete this car.";
             }
             
-            IEnumerable<IndexViewModel> cars = this.carsService.GetAllAdmin();
+            IEnumerable<CarAdminIndexViewModel> cars = this.carsService.GetAllAdmin();
             return this.PartialView("_CarsIndexPartial", cars);
         }
     }

@@ -1,6 +1,7 @@
 ﻿using ShareDrive.Models;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace ShareDrive.Common
 {
@@ -12,7 +13,7 @@ namespace ShareDrive.Common
 
         IQueryable<T> GetByIdQueryable(int id);
 
-        T Create(T entity);
+        Task<T> CreateAsync(T entity);
 
         bool Update(T entity);
 

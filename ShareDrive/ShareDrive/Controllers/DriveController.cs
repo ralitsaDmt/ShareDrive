@@ -7,140 +7,186 @@ using Microsoft.AspNetCore.Http;
 using ShareDrive.Helpers;
 using ShareDrive.Services.Contracts;
 using ShareDrive.ViewModels.Car;
+using ShareDrive.Infrastructure.Filters;
+using Microsoft.AspNetCore.Identity;
+using ShareDrive.Models;
+using System.Threading.Tasks;
 
 namespace ShareDrive.Controllers
 {
     public class DriveController : Controller
     {
         private int userId;
-        private readonly IDrivesService drivesService;
-        private readonly IDriveHelperService driveHelperService;
-        private readonly ICarsService carsService;
-        
-        public DriveController(IHttpContextAccessor contextAccessor, IDrivesService drivesService, IDriveHelperService driveHelperService, ICarsService carsService)
+
+        public DriveController(IHttpContextAccessor contextAccessor)
         {
-            this.drivesService = drivesService;
-            this.driveHelperService = driveHelperService;
-            this.SetUserId(contextAccessor);
-            this.carsService = carsService;
+            this.userId = IdentityHelper.GetUserId(contextAccessor);
         }
 
-        public IActionResult Index()
-        {
-            return this.RedirectToIndex();
-        }
-        
-        public IActionResult IndexFilter(string sort, string from, string to, string date)
-        {
-            var drives = this.drivesService.GetAll(sort, from, to, date);
-            return this.PartialView("_Index", drives);
-        }
-        
         [HttpGet]
-        public IActionResult Edit(int id)
+        [Authorize]
+        [AjaxOnly]
+        public IActionResult Create([FromServices] IDriveCarsHelperService driveCarsHelperService,
+            [FromServices] UserManager<ApplicationUser> userManager)
         {
-            List<SelectViewModel> cars = this.GetCarsSelectionList();
+            int userId = int.Parse(userManager.GetUserId(User));
+            DriveCreateEditViewModel model = driveCarsHelperService.GetCreateViewModel(userId);
+            return this.PartialView("_CreatePartial", model);
+        }
 
-            EditViewModel model = new EditViewModel();
-            
-            if (id != 0)
+
+        [HttpPost]
+        [Authorize]
+        [AjaxOnly]
+        public async Task<IActionResult> Create(DriveCreateEditViewModel model, 
+            [FromServices] IDriveHelperService driveHelperService, 
+            [FromServices] UserManager<ApplicationUser> userManager, 
+            [FromServices] IDrivesService drivesService, 
+            [FromServices] ICarsService carsService)
+        {
+            int userId = int.Parse(userManager.GetUserId(User));
+            if (this.ModelState.IsValid)
             {
-                model = this.drivesService.GetEditModelById(id);
+                try
+                {
+                    await driveHelperService.ProcessCreateDriveAsync(model, userId);
+                    return Json(new { success = "true", message = "Drive successfully created." });
+                }
+                catch (Exception ex)
+                {
+                    return Json(new { success = "false", message = "An error has occured." });
+                }               
             }
 
+           
+            var cars = carsService.GetSelectionListByDriver(userId);
             model.Cars = cars;
+            return this.PartialView("_CreatePartial", model);
+        }
+
+        [HttpGet]
+        [Authorize]
+        [AjaxOnly]
+        public IActionResult Edit(int id, [FromServices] IDriveCarsHelperService driveCarsHelperService,
+            [FromServices] UserManager<ApplicationUser> userManager)
+        {
+            int userId = int.Parse(userManager.GetUserId(User));
+            DriveCreateEditViewModel model = driveCarsHelperService.GetEditViewModel(id, userId);
 
             return this.PartialView("_EditPartial", model);
         }
 
         [HttpPost]
-        public IActionResult Edit(int? id, EditViewModel model)
+        [Authorize]
+        [AjaxOnly]
+        public async Task<IActionResult> Edit(int id, DriveCreateEditViewModel model, [FromServices] IDriveHelperService driveHelperService, [FromServices] IDrivesService drivesService)
         {
             if (this.ModelState.IsValid)
             {
-                if (id == 0)
+                try
                 {
-                    this.CreateDrive(model);
-                    this.ViewData["SuccessMessage"] = "Drive successfully created.";
+                    await driveHelperService.ProcessEditDriveAsync(model, id);
+                    this.ViewData["SuccessMessage"] = "Drive successfully updated.";                    
                 }
-                else
+                catch(Exception ex)
                 {
-                    this.UpdateDrive((int)id, model);
-                    this.ViewData["SuccessMessage"] = "Drive successfully updated.";
+                    this.ViewData["ErrorMessage"] = "An error has occured.";
                 }
-                
-                return this.RedirectToIndex();
+                finally
+                {
+                    this.IndexPartial(drivesService);
+                }
             }
 
             this.ViewData["ErrorMessage"] = "Please, fill the form corectly";
             return this.PartialView("_EditPartial", model);
         }
 
-        public IActionResult Delete(int id)
+        public IActionResult Index([FromServices] IDrivesService drivesService)
         {
-            DeleteViewModel model = this.drivesService.GetDeleteModelById(id);
-            return this.PartialView("_DeletePartial", model);
+            return this.RedirectToIndex(drivesService);
         }
 
-        public IActionResult DeleteConfirm(int id)
+        public IActionResult IndexPartial([FromServices] IDrivesService drivesService)
         {
-            this.drivesService.Delete(id);
-
-            this.ViewData["SuccessMessage"] = "Drive successfully deleted";
-            return this.RedirectToIndex();
+            return this.RedirectToIndexPartial(drivesService);
         }
 
-        public IActionResult Details(int id)
+        public IActionResult RedirectToIndexPartial(IDrivesService drivesService)
         {
-            DetailsViewModel model = this.drivesService.GetDetailsModel(id, this.userId);
-            return this.PartialView("_Details", model);
+            IEnumerable<DriveIndexViewModel> drives = drivesService.GetAll();
+            return this.PartialView("_IndexPartial", drives);
         }
 
-        public JsonResult Reserve(int id)
+        private IActionResult RedirectToIndex(IDrivesService drivesService)
         {
-            KeyValuePair<bool, string> result = this.drivesService.ReserveSeat(id, this.userId);
-            return Json(new { result = result.Key, message = result.Value });            
-        }
-
-        public JsonResult Cancel(int id)
-        {
-            KeyValuePair<bool, string> result = this.drivesService.CancelReservation(id, this.userId);
-            return Json(new { result = result.Key, message = result.Value });
-        }
-
-        private void UpdateDrive(int id, EditViewModel model)
-        {
-            this.driveHelperService.ProcessEditDrive(model, id);
-        }
-
-        private void CreateDrive(EditViewModel model)
-        {
-            this.driveHelperService.ProcessCreateDrive(model, this.userId);
-            ViewData["SuccessMessage"] = "Drive successfully created";
-        }
-
-        private void SetUserId(IHttpContextAccessor contextAccessor)
-        {
-            this.userId = IdentityHelper.GetUserId(contextAccessor);
-        }
-
-        private List<SelectViewModel> GetCarsSelectionList()
-        {
-            List<SelectViewModel> carsSelect = this.carsService.GetSelectionListByDriver(this.userId);
-
-            if (carsSelect.Count > 1)
-            {
-                carsSelect.Insert(0, new SelectViewModel(0, "Select"));
-            }
-
-            return carsSelect;
-        }
-
-        private IActionResult RedirectToIndex(string sort = "date_desc")
-        {
-            List<IndexViewModel> drives = this.drivesService.GetAll(sort);
-            
+            IEnumerable<DriveIndexViewModel> drives = drivesService.GetAll();
             return this.View("Index", drives);
         }
+
+
+
+
+        //[Authorize]
+        //[AjaxOnly]
+        //public IActionResult IndexFilter(string sort, string from, string to, string date, [FromServices] IDrivesService drivesService)
+        //{
+        //    var drives = drivesService.GetAll(sort, from, to, date);
+        //    return this.PartialView("_Index", drives);
+        //}
+
+
+
+
+        //[HttpGet]
+        //[Authorize]
+        //[AjaxOnly]
+        //public IActionResult Delete(int id, [FromServices] IDrivesService drivesService)
+        //{
+        //    DriveDeleteViewModel model = drivesService.GetDeleteModelById(id);
+        //    return this.PartialView("_DeletePartial", model);
+        //}
+
+        //[HttpPost]
+        //[Authorize]
+        //[AjaxOnly]
+        //public IActionResult DeleteConfirm(int id)
+        //{
+        //    this.drivesService.Delete(id);
+
+        //    this.ViewData["SuccessMessage"] = "Drive successfully deleted";
+        //    return this.RedirectToIndex();
+        //}
+
+        //[HttpGet]
+        //[Authorize]
+        //[AjaxOnly]
+        //public IActionResult Details(int id)
+        //{
+        //    DriveCollectionsViewModel model = this.drivesService.GetDetailsModel(id, this.userId);
+        //    return this.PartialView("_Details", model);
+        //}
+
+        //[HttpPost]
+        //[Authorize]
+        //[AjaxOnly]
+        //public JsonResult Reserve(int id)
+        //{
+        //    KeyValuePair<bool, string> result = this.drivesService.ReserveSeat(id, this.userId);
+        //    return Json(new { result = result.Key, message = result.Value });
+        //}
+
+        //[HttpPost]
+        //[Authorize]
+        //[AjaxOnly]
+        //public JsonResult Cancel(int id)
+        //{
+        //    KeyValuePair<bool, string> result = this.drivesService.CancelReservation(id, this.userId);
+        //    return Json(new { result = result.Key, message = result.Value });
+        //}
+
+
+
+
     }
 }

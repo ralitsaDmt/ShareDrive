@@ -8,9 +8,13 @@ namespace ShareDrive.Helpers
     {
         public static int GetUserId(IHttpContextAccessor contextAccessor)
         {
-            int userId;
-            string userIdAsString = contextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            int.TryParse(userIdAsString, out userId);
+            int userId = 0;
+            if (contextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier) != null)
+            {
+                string userIdAsString = contextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                int.TryParse(userIdAsString, out userId);
+
+            }
 
             return userId;
         }

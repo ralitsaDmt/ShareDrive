@@ -9,23 +9,25 @@ namespace ShareDrive.Services.Contracts
 {
     public interface ICarsService
     {
-        Task<bool> Create(CreateViewModel model, int ownerId);
+        Task Create(CarCreateViewModel model, int ownerId);
 
-        EditViewModel GetEditViewModel(int id);
+        CarEditViewModel GetEditViewModel(int id);
 
-        Task<bool> Edit(int id, EditViewModel model);
+        Task<bool> Edit(int id, CarEditViewModel model);
 
-        IQueryable<IndexViewModel> GetAllCarsIndex(int? userId);
+        IQueryable<CarIndexViewModel> GetAllCarsIndex(int? userId);
 
-        IEnumerable<ShareDrive.ViewModels.Admin.Car.IndexViewModel> GetAllAdmin();
+        IEnumerable<ShareDrive.ViewModels.Admin.Car.CarAdminIndexViewModel> GetAllAdmin();
 
-        ShareDrive.ViewModels.Admin.Car.DetailsViewModel GetDetailsAdmin(int id);
+        ShareDrive.ViewModels.Admin.Car.CarAdminDetailsViewModel GetDetailsAdmin(int id);
 
 
-        IQueryable<Car> GetById(int id);
+        Car GetById(int id);
         
         bool Delete(int id);
 
-        List<SelectViewModel> GetSelectionListByDriver(int id);
+        List<CarSelectViewModel> GetSelectionListByDriver(int id);
+
+        CarDeleteViewModel GetDeleteViewModel(int id);
     }
 }
