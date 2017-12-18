@@ -1,6 +1,6 @@
 ﻿@using ShareDrive.ViewModels.CarViewModels
 
-@model EditViewModel
+@model CarEditViewModel
 
 <div id="target">
     <div class="modal-header">
@@ -9,7 +9,7 @@
         </button>
         <h4 class="modal-title">Add Car</h4>
     </div>
-    <form enctype="multipart/form-data" asp-controller="Car" asp-action="Edit" asp-route-id="@Model.Id" id="form">
+    <form enctype="multipart/form-data" id="form">
         <div class="modal-body">
             <div>
                 <img id="Image" src="@Model.ImageSource" style="width: 300px" />
@@ -67,7 +67,8 @@
             </div>
         </div>
         <div class="modal-footer">
-            <button type="submit" class="btn btn-info">Submit</button>
+            <a id="submit" asp-controller="Car" asp-action="Edit" asp-route-id="@Model.Id" 
+               class="btn btn-info">Submit</a>
             <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
         </div>
     </form>
@@ -77,7 +78,82 @@
 <script>
     $(function () {
         $.validator.unobtrusive.parse("#form");
+
+        $('#submit').click(function (event) {
+            event.preventDefault();
+
+            if (!$('#form').valid()) return false;
+
+            _this = this;
+            submitForm(_this);
+        })
     })
+
+    function submitForm(context) {
+        var formData = new FormData();
+
+        $('input[name="NewImage"]').each(function (a, b) {
+            var fileInput = $('input[name="NewImage"]')[a];
+            if (fileInput.files.length > 0) {
+                var file = fileInput.files[0];
+                formData.append("NewImage", file);
+            }
+        });
+
+        $("input[type='text'").each(function (x, y) {
+            formData.append($(y).attr("name"), $(y).val());
+        });
+
+        $("input[type='number'").each(function (x, y) {
+            formData.append($(y).attr("name"), $(y).val());
+        });
+
+        let url = $(context).attr('href');
+
+        $.ajax({
+            type: 'post',
+            url: url,
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (e) {
+                success(e);
+            },
+        });
+
+        function success(data) {
+            debugger
+            if (data.success === "true") {
+                $('#modal-container').modal('toggle');
+                showNotification("success", data.message, 'success');
+                loadDrives();
+            } else if (data.success === "false") {
+                $('#modal-container').modal('toggle');
+                showNotification("danger", data.message, 'error');
+            } else {
+                $('#target').empty();
+                $('#target').html(data);
+            }
+        }
+
+        function showNotification(type, message, selector) {
+            let noty = `<div style="margin-top: 10px" class="alert alert-` + type + ` alert-dismissable">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>` +
+                message + `</div>`;
+            $('#' + selector).empty();
+            $('#' + selector).html(noty);
+        }
+
+        function loadDrives() {
+            url = 'Car/IndexPartial';
+
+            $.get(url, function (data) {
+                debugger
+                $('#data-container').empty();
+                $('#data-container').html(data);
+            })
+        }
+    }
 
     function showNewImage(e) {
         var imageFile = e.target.files[0];

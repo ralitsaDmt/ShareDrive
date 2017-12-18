@@ -1,16 +1,17 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.0",
-    "signature": "cad990136385de191014e8a93ef101423e1097d8"
+    "signature": "108da7789c730e4b9977a845a36a0a82b4b7aa07"
   },
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v2.0": {
       "ShareDrive.Services/1.0.0": {
         "dependencies": {
-          "AutoMapper.Extensions.Microsoft.DependencyInjection": "3.2.0",
+          "AutoMapper": "6.2.2",
           "Microsoft.AspNetCore.Identity": "2.0.1",
           "ShareDrive.Common": "1.0.0",
+          "ShareDrive.Core": "1.0.0",
           "ShareDrive.Infrastructure": "1.0.0",
           "ShareDrive.Models": "1.0.0",
           "ShareDrive.ViewModels": "1.0.0"
@@ -19,7 +20,7 @@
           "ShareDrive.Services.dll": {}
         }
       },
-      "AutoMapper/6.2.1": {
+      "AutoMapper/6.2.2": {
         "dependencies": {
           "Microsoft.CSharp": "4.4.0",
           "System.Collections.Concurrent": "4.3.0",
@@ -38,7 +39,7 @@
       },
       "AutoMapper.Extensions.Microsoft.DependencyInjection/3.2.0": {
         "dependencies": {
-          "AutoMapper": "6.2.1",
+          "AutoMapper": "6.2.2",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "2.0.0",
           "Microsoft.Extensions.DependencyModel": "2.0.0"
         },
@@ -1020,6 +1021,14 @@
           "ShareDrive.Common.dll": {}
         }
       },
+      "ShareDrive.Core/1.0.0": {
+        "dependencies": {
+          "ShareDrive.Exceptions": "1.0.0"
+        },
+        "runtime": {
+          "ShareDrive.Core.dll": {}
+        }
+      },
       "ShareDrive.Data/1.0.0": {
         "dependencies": {
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "3.2.0",
@@ -1035,9 +1044,14 @@
           "ShareDrive.Data.dll": {}
         }
       },
+      "ShareDrive.Exceptions/1.0.0": {
+        "runtime": {
+          "ShareDrive.Exceptions.dll": {}
+        }
+      },
       "ShareDrive.Infrastructure/1.0.0": {
         "dependencies": {
-          "AutoMapper": "6.2.1",
+          "AutoMapper": "6.2.2",
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "3.2.0",
           "Microsoft.AspNetCore.Http.Abstractions": "2.0.1",
           "Microsoft.AspNetCore.Identity": "2.0.1",
@@ -1072,12 +1086,12 @@
       "serviceable": false,
       "sha512": ""
     },
-    "AutoMapper/6.2.1": {
+    "AutoMapper/6.2.2": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-ZD9he/2wsNQbfnZJMc7Ijvz0hf2Lc6R8Tk97k8Q741flowTHd/YPxG8d5P0BVOJAPLVXjjX6IZ8l0u0A2l+K2g==",
-      "path": "automapper/6.2.1",
-      "hashPath": "automapper.6.2.1.nupkg.sha512"
+      "sha512": "sha512-eGKcnJdoF5rYMWPUaSPtlWdvua9xw4hnQN5kM/X4AXLGKghrtPIaMv+RYoA3sj0kyZ3X6wZ1Qj67F+u0pCCPaw==",
+      "path": "automapper/6.2.2",
+      "hashPath": "automapper.6.2.2.nupkg.sha512"
     },
     "AutoMapper.Extensions.Microsoft.DependencyInjection/3.2.0": {
       "type": "package",
@@ -1854,7 +1868,17 @@
       "serviceable": false,
       "sha512": ""
     },
+    "ShareDrive.Core/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
     "ShareDrive.Data/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "ShareDrive.Exceptions/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

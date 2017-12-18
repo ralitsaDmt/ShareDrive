@@ -1,0 +1,33 @@
+﻿@using ShareDrive.ViewModels.CarViewModels
+
+@model List<CarIndexViewModel>
+
+@foreach (var car in Model)
+{
+    <div class="panel panel-info">
+        <div class="panel-heading clearfix">
+            <div class="pull-right">
+                <a asp-action="Edit" asp-controller="Car" asp-route-id="@car.Id"
+                   data-target="#modal-container" tabindex="-1" data-toggle="modal" class="panel-link"><i class="fa fa-edit"></i></a>
+                <a asp-action="Delete" asp-controller="Car" asp-route-id="@car.Id"
+                   data-target="#modal-container" tabindex="-1" data-toggle="modal" class="panel-link"><i class="fa fa-close"></i></a>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="col-md-6 image">
+                <img src="@car.ImageSource" />
+            </div>
+            <div class="col-md-6">
+                <div class="car-label">
+                    <label>Brand: </label><span class="car-text">@car.Brand</span>
+                </div>
+                <div class="car-label">
+                    <label>Model: </label><span class="car-text">@car.CarModel</span>
+                </div>
+                <div class="car-label">
+                    <label>Year: </label><span class="car-text">@car.Year</span>
+                </div>
+            </div>
+        </div>
+    </div>
+}

@@ -23,3 +23,7 @@ D:\Github\ShareDrive\ShareDrive\ShareDrive.Services\bin\Debug\netcoreapp2.0\Micr
 D:\Github\ShareDrive\ShareDrive\ShareDrive.Services\bin\Debug\netcoreapp2.0\Microsoft.AspNetCore.Mvc.Core.xml
 D:\Github\ShareDrive\ShareDrive\ShareDrive.Services\bin\Debug\netcoreapp2.0\Microsoft.AspNetCore.Routing.Abstractions.xml
 D:\Github\ShareDrive\ShareDrive\ShareDrive.Services\bin\Debug\netcoreapp2.0\Microsoft.AspNetCore.Mvc.Abstractions.xml
+D:\Github\ShareDrive\ShareDrive\ShareDrive.Services\bin\Debug\netcoreapp2.0\ShareDrive.Core.dll
+D:\Github\ShareDrive\ShareDrive\ShareDrive.Services\bin\Debug\netcoreapp2.0\ShareDrive.Exceptions.dll
+D:\Github\ShareDrive\ShareDrive\ShareDrive.Services\bin\Debug\netcoreapp2.0\ShareDrive.Core.pdb
+D:\Github\ShareDrive\ShareDrive\ShareDrive.Services\bin\Debug\netcoreapp2.0\ShareDrive.Exceptions.pdb

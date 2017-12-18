@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
+﻿
 
 namespace ShareDrive.ViewModels.CarViewModels
 {
+    using Microsoft.AspNetCore.Http;
+    using System;
+    using System.ComponentModel.DataAnnotations;
+
     public class CarEditViewModel
     {
         public int Id { get; set; }

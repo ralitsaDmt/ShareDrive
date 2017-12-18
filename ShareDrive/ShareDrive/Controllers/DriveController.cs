@@ -21,6 +21,19 @@ namespace ShareDrive.Controllers
         {
             this.userId = IdentityHelper.GetUserId(contextAccessor);
         }
+        
+        [HttpGet]
+        public IActionResult Index([FromServices] IDrivesService drivesService)
+        {
+            return this.RedirectToIndex(drivesService);
+        }
+
+        [HttpGet]
+        [AjaxOnly]
+        public IActionResult IndexPartial([FromServices] IDrivesService drivesService)
+        {
+            return this.RedirectToIndexPartial(drivesService);
+        }
 
         [HttpGet]
         [Authorize]
@@ -103,28 +116,6 @@ namespace ShareDrive.Controllers
             return this.PartialView("_EditPartial", model);
         }
 
-        public IActionResult Index([FromServices] IDrivesService drivesService)
-        {
-            return this.RedirectToIndex(drivesService);
-        }
-
-        public IActionResult IndexPartial([FromServices] IDrivesService drivesService)
-        {
-            return this.RedirectToIndexPartial(drivesService);
-        }
-
-        private IActionResult RedirectToIndexPartial(IDrivesService drivesService)
-        {
-            IEnumerable<DriveIndexViewModel> drives = drivesService.GetAll();
-            return this.PartialView("_IndexPartial", drives);
-        }
-
-        private IActionResult RedirectToIndex(IDrivesService drivesService)
-        {
-            IEnumerable<DriveIndexViewModel> drives = drivesService.GetAll();
-            return this.View("Index", drives);
-        }
-
         [HttpGet]
         [Authorize]
         [AjaxOnly]
@@ -150,7 +141,31 @@ namespace ShareDrive.Controllers
             }
         }
 
+        [HttpGet]
+        [AjaxOnly]
+        public IActionResult Details(int id, [FromServices] IDrivesService drivesService)
+        {
+            DriveCollectionsViewModel model = drivesService.GetDetailsModel(id, this.userId);
+            return this.PartialView("_DetailsPartial", model);
+        }
 
+        [HttpPost]
+        [Authorize]
+        [AjaxOnly]
+        public JsonResult Reserve(int id, [FromServices] IDrivesService drivesService)
+        {
+            KeyValuePair<bool, string> result = drivesService.ReserveSeat(id, this.userId);
+            return Json(new { result = result.Key, message = result.Value });
+        }
+
+        [HttpPost]
+        [Authorize]
+        [AjaxOnly]
+        public JsonResult Cancel(int id, [FromServices] IDrivesService drivesService)
+        {
+            KeyValuePair<bool, string> result = drivesService.CancelReservation(id, this.userId);
+            return Json(new { result = result.Key, message = result.Value });
+        }
 
         //[Authorize]
         //[AjaxOnly]
@@ -158,44 +173,19 @@ namespace ShareDrive.Controllers
         //{
         //    var drives = drivesService.GetAll(sort, from, to, date);
         //    return this.PartialView("_Index", drives);
-        //}
+        //}        
 
+        private IActionResult RedirectToIndexPartial(IDrivesService drivesService)
+        {
+            IEnumerable<DriveIndexViewModel> drives = drivesService.GetAll();
+            return this.PartialView("_IndexPartial", drives);
+        }
 
-
-
-
-
-
-
-        //[HttpGet]
-        //[Authorize]
-        //[AjaxOnly]
-        //public IActionResult Details(int id)
-        //{
-        //    DriveCollectionsViewModel model = this.drivesService.GetDetailsModel(id, this.userId);
-        //    return this.PartialView("_Details", model);
-        //}
-
-        //[HttpPost]
-        //[Authorize]
-        //[AjaxOnly]
-        //public JsonResult Reserve(int id)
-        //{
-        //    KeyValuePair<bool, string> result = this.drivesService.ReserveSeat(id, this.userId);
-        //    return Json(new { result = result.Key, message = result.Value });
-        //}
-
-        //[HttpPost]
-        //[Authorize]
-        //[AjaxOnly]
-        //public JsonResult Cancel(int id)
-        //{
-        //    KeyValuePair<bool, string> result = this.drivesService.CancelReservation(id, this.userId);
-        //    return Json(new { result = result.Key, message = result.Value });
-        //}
-
-
-
+        private IActionResult RedirectToIndex(IDrivesService drivesService)
+        {
+            IEnumerable<DriveIndexViewModel> drives = drivesService.GetAll();
+            return this.View("Index", drives);
+        }
 
     }
 }

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using ShareDrive.Models;
+using ShareDrive.ViewModels.Admin.Car;
 using ShareDrive.ViewModels.Car;
 using ShareDrive.ViewModels.CarViewModels;
 using System;
@@ -33,6 +34,8 @@ namespace ShareDrive.Infrastructure.Mapping
             CreateMap<Car, CarDetailsViewModel>()
                 .ForMember(dest => dest.HasAirConditioner, opt => opt.MapFrom(source => source.HasAirConditioner ? "Yes" : "No"))
                 .ForMember(dest => dest.ImageSource, opt => opt.Ignore());
+
+            CreateMap<Car, CarAdminIndexViewModel>();
         }        
     }
 }

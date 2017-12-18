@@ -1,6 +1,6 @@
 ﻿@using ShareDrive.ViewModels.CarViewModels
 
-@model DeleteViewModel
+@model CarDeleteViewModel
 
 <div id="target">
     <div class="modal-header">
@@ -9,15 +9,71 @@
         </button>
         <h4 class="modal-title">Delete Car</h4>
     </div>
-    <form asp-action="DeleteConfirm" asp-controller="Car" asp-route-id="@Model.Id" data-ajax="true" data-ajax-method="POST" data-ajax-mode="REPLACE-WITH" data-ajax-update="#target">
+    <form id="form">
         <div class="modal-body">
             <div class="form-horizontal">
                 Are you sure you want to delete @Model.Brand @Model.CarModel?
             </div>
         </div>
         <div class="modal-footer">
-            <button type="submit" class="btn btn-warning">Delete</button>
+            <a id="submit" asp-action="DeleteConfirm" asp-controller="Car" asp-route-id="@Model.Id"
+               class="btn btn-warning">Delete</a>
             <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
         </div>
     </form>
 </div>
+
+<script>
+    $(function () {
+        $.validator.unobtrusive.parse("#form");
+
+        $('#submit').click(function (event) {
+            event.preventDefault();
+
+            if (!$('#form').valid()) return false;
+
+            _this = this;
+            submitForm(_this);
+        })
+    })
+
+    function submitForm(context) {
+        let url = $(context).attr('href');
+        $.post(url, function (data) {
+            success(data);
+        })
+        
+        function success(data) {
+            debugger
+            if (data.success === "true") {
+                $('#modal-container').modal('toggle');
+                showNotification("success", data.message, 'success');
+                loadDrives();
+            } else if (data.success === "false") {
+                $('#modal-container').modal('toggle');
+                showNotification("danger", data.message, 'error');
+            } else {
+                $('#target').empty();
+                $('#target').html(data);
+            }
+        }
+
+        function showNotification(type, message, selector) {
+            let noty = `<div style="margin-top: 10px" class="alert alert-` + type + ` alert-dismissable">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>` +
+                message + `</div>`;
+            $('#' + selector).empty();
+            $('#' + selector).html(noty);
+        }
+
+        function loadDrives() {
+            url = 'Car/IndexPartial';
+
+            $.get(url, function (data) {
+                debugger
+                $('#data-container').empty();
+                $('#data-container').html(data);
+            })
+        }
+    }
+</script>

@@ -1,5 +1,6 @@
-﻿
-@model ShareDrive.ViewModels.Drive.DetailsViewModel
+﻿@using ShareDrive.ViewModels.Drive
+
+@model DriveCollectionsViewModel
 
 <div id="target">
     <div class="modal-header">
@@ -47,7 +48,7 @@
         let value = $(change).data('change');
 
         if (value) {
-            let url = "Drive/IndexFilter";
+            let url = "Drive/IndexPartial";
 
             $.get(url, function (data) {
                 $("#data-container").empty();

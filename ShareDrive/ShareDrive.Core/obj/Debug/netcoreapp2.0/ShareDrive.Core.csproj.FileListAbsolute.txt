@@ -1,0 +1,11 @@
+D:\Github\ShareDrive\ShareDrive\ShareDrive.Core\bin\Debug\netcoreapp2.0\ShareDrive.Core.deps.json
+D:\Github\ShareDrive\ShareDrive\ShareDrive.Core\bin\Debug\netcoreapp2.0\ShareDrive.Core.dll
+D:\Github\ShareDrive\ShareDrive\ShareDrive.Core\bin\Debug\netcoreapp2.0\ShareDrive.Core.pdb
+D:\Github\ShareDrive\ShareDrive\ShareDrive.Core\bin\Debug\netcoreapp2.0\ShareDrive.Exceptions.dll
+D:\Github\ShareDrive\ShareDrive\ShareDrive.Core\bin\Debug\netcoreapp2.0\ShareDrive.Exceptions.pdb
+D:\Github\ShareDrive\ShareDrive\ShareDrive.Core\obj\Debug\netcoreapp2.0\ShareDrive.Core.csprojResolveAssemblyReference.cache
+D:\Github\ShareDrive\ShareDrive\ShareDrive.Core\obj\Debug\netcoreapp2.0\ShareDrive.Core.csproj.CoreCompileInputs.cache
+D:\Github\ShareDrive\ShareDrive\ShareDrive.Core\obj\Debug\netcoreapp2.0\ShareDrive.Core.AssemblyInfoInputs.cache
+D:\Github\ShareDrive\ShareDrive\ShareDrive.Core\obj\Debug\netcoreapp2.0\ShareDrive.Core.AssemblyInfo.cs
+D:\Github\ShareDrive\ShareDrive\ShareDrive.Core\obj\Debug\netcoreapp2.0\ShareDrive.Core.dll
+D:\Github\ShareDrive\ShareDrive\ShareDrive.Core\obj\Debug\netcoreapp2.0\ShareDrive.Core.pdb

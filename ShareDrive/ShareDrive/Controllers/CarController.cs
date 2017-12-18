@@ -1,37 +1,41 @@
-﻿using AutoMapper.QueryableExtensions;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using ShareDrive.Helpers;
-using ShareDrive.Models;
-using ShareDrive.Services.Contracts;
-using ShareDrive.ViewModels.CarViewModels;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-
-namespace ShareDrive.Controllers
+﻿namespace ShareDrive.Controllers
 {
+    using System.Threading.Tasks;
+
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
+
+    using ShareDrive.Exceptions.Car;
+    using ShareDrive.Infrastructure.Filters;
+    using ShareDrive.Models;
+    using ShareDrive.Services.Contracts;
+    using ShareDrive.ViewModels.CarViewModels;
+
     public class CarController : Controller
     {
-        private readonly ICarsService carsService;
-
-        private int userId;
-
-        public CarController(IHttpContextAccessor contextAccessor, ICarsService carsService)
+        [HttpGet]
+        public IActionResult Index([FromServices] ICarsService carsService,
+            [FromServices] UserManager<ApplicationUser> userManager)
         {
-            this.carsService = carsService;
-            this.SetUserId(contextAccessor);
+            int userId = int.Parse(userManager.GetUserId(User));
+            var cars = carsService.GetAllCarsIndex(userId);
+            return this.View("Index", cars);
         }
 
         [HttpGet]
-        public IActionResult Index()
+        [AjaxOnly]
+        public IActionResult IndexPartial([FromServices] ICarsService carsService,
+            [FromServices] UserManager<ApplicationUser> userManager)
         {
-            return this.RedirectToIndex();
+            int userId = int.Parse(userManager.GetUserId(User));
+            var cars = carsService.GetAllCarsIndex(userId);
+            return this.View("_IndexPartial", cars);
         }
 
         [HttpGet]
         [Authorize]
+        [AjaxOnly]
         public IActionResult Create()
         {
             return this.PartialView("_CreateModal");
@@ -39,69 +43,101 @@ namespace ShareDrive.Controllers
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> Create(CarCreateViewModel model)
+        [AjaxOnly]
+        public async Task<IActionResult> Create(CarCreateViewModel model, 
+            [FromServices] ICarsService carsService,
+            [FromServices] UserManager<ApplicationUser> userManager)
         {
             if (this.ModelState.IsValid)
             {
-                await this.carsService.Create(model, this.userId);
-
-                ViewData["SuccessMessage"] = "Car added successfully";
-                return this.RedirectToIndex();
+                try
+                {
+                    int userId = int.Parse(userManager.GetUserId(User));
+                    await carsService.Create(model, userId);
+                    return Json(new { success = "true", message = "Car successfully created." });
+                }
+                catch(CarCreateException ex)
+                {
+                    return Json(new { success = "false", message = ex.Message });
+                }
             }
 
-            ViewData["ErrorMessage"] = "Please fill all fields properly";
             return this.PartialView("_CreateModal", model);
         }
-
+        
         [HttpGet]
         [Authorize]
-        public IActionResult Edit(int id)
+        [AjaxOnly]
+        public IActionResult Edit(int id, [FromServices] ICarsService carsService)
         {
-            CarEditViewModel model = this.carsService.GetEditViewModel(id);
-            return this.PartialView("_EditModal", model);
+            CarEditViewModel model = carsService.GetEditViewModel(id);
+
+            if (model != null)
+            {
+                return this.PartialView("_EditModal", model);
+            }
+
+            return this.RedirectToAction("Error", "Home");
         }
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> Edit(int id, CarEditViewModel model)
+        [AjaxOnly]
+        public async Task<IActionResult> Edit(int id, CarEditViewModel model,
+            [FromServices] ICarsService carsService)
         {
             if (this.ModelState.IsValid)
             {
-                await this.carsService.Edit(id, model);
-                ViewData["SuccessMessage"] = "Car updated successfully";
-                return this.RedirectToIndex();
+                try
+                {
+                    await carsService.Edit(id, model);
+                    return Json(new { success = "true", message = "Car successfully edited." });
+                }
+                catch (CarEditException ex)
+                {
+                    return Json(new { success = "false", message = ex.Message });
+                }
             }
 
-            ViewData["ErrorMessage"] = "Please fill all fields properly";
             return this.PartialView("_EditModal", model);
         }
 
         [HttpGet]
         [Authorize]
-        public IActionResult Delete(int id)
+        [AjaxOnly]
+        public IActionResult Delete(int id, [FromServices] ICarsService carsService)
         {
-            CarDeleteViewModel model = this.carsService.GetDeleteViewModel(id);
-            return this.PartialView("_DeleteConfirmation", model);
+            CarDeleteViewModel model = carsService.GetDeleteViewModel(id);
+
+            if (model != null)
+            {
+                return this.PartialView("_DeleteConfirmation", model);
+            }
+
+            return this.RedirectToAction("Error", "Home");
         }
 
         [HttpPost]
-        public IActionResult DeleteConfirm(int id)
+        [AjaxOnly]
+        public IActionResult DeleteConfirm(int id, [FromServices] ICarsService carsService)
         {
+            try
+            {
+                bool result = carsService.Delete(id);
 
-            this.carsService.Delete(id);
-            ViewData["SuccessMessage"] = "Car deleted successfully";
-            return this.RedirectToIndex();
-        }
-
-        private void SetUserId(IHttpContextAccessor contextAccessor)
-        {
-            this.userId = IdentityHelper.GetUserId(contextAccessor);
-        }
-
-        private IActionResult RedirectToIndex()
-        {
-            var cars = this.carsService.GetAllCarsIndex(this.userId).ToList();
-            return this.View("Index", cars);
+                if (result)
+                {
+                    return Json(new { success = "true", message = "Car successfully deleted." });
+                }
+                else
+                {
+                    return this.RedirectToAction("Error", "Home");
+                }
+            }
+            catch (CarDeleteException ex)
+            {
+                return Json(new { success = "false", message = ex.Message });
+            }
         }
     }
 }

@@ -17,9 +17,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShareDrive.Services", "Shar
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShareDrive.Common", "ShareDrive.Common\ShareDrive.Common.csproj", "{22362AEE-73FA-4557-8D83-915379203447}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShareDrive.Tests", "ShareDrive.Tests\ShareDrive.Tests.csproj", "{E6C195FA-664C-42D9-BF94-B80447EB12AB}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{9E80CC58-EB7D-4FC0-B2CC-B78E15FB919B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShareDrive.Services.Tests", "ShareDrive.Services.Tests\ShareDrive.Services.Tests.csproj", "{F1D8271E-89A5-40CD-8EDB-2A4E536BBAD8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShareDrive.Services.Tests", "ShareDrive.Services.Tests\ShareDrive.Services.Tests.csproj", "{9A6C8615-81AD-4187-992A-631BEDF61C13}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShareDrive.Core", "ShareDrive.Core\ShareDrive.Core.csproj", "{F5B51076-8FEA-462A-94E9-7FAE5FD81702}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShareDrive.Exceptions", "ShareDrive.Exceptions\ShareDrive.Exceptions.csproj", "{89F6F068-99F3-4056-831A-E7B3E7063C31}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,17 +59,24 @@ Global
 		{22362AEE-73FA-4557-8D83-915379203447}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{22362AEE-73FA-4557-8D83-915379203447}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{22362AEE-73FA-4557-8D83-915379203447}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E6C195FA-664C-42D9-BF94-B80447EB12AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E6C195FA-664C-42D9-BF94-B80447EB12AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E6C195FA-664C-42D9-BF94-B80447EB12AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E6C195FA-664C-42D9-BF94-B80447EB12AB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F1D8271E-89A5-40CD-8EDB-2A4E536BBAD8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F1D8271E-89A5-40CD-8EDB-2A4E536BBAD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F1D8271E-89A5-40CD-8EDB-2A4E536BBAD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F1D8271E-89A5-40CD-8EDB-2A4E536BBAD8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A6C8615-81AD-4187-992A-631BEDF61C13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A6C8615-81AD-4187-992A-631BEDF61C13}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A6C8615-81AD-4187-992A-631BEDF61C13}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A6C8615-81AD-4187-992A-631BEDF61C13}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5B51076-8FEA-462A-94E9-7FAE5FD81702}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5B51076-8FEA-462A-94E9-7FAE5FD81702}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5B51076-8FEA-462A-94E9-7FAE5FD81702}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5B51076-8FEA-462A-94E9-7FAE5FD81702}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89F6F068-99F3-4056-831A-E7B3E7063C31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89F6F068-99F3-4056-831A-E7B3E7063C31}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89F6F068-99F3-4056-831A-E7B3E7063C31}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89F6F068-99F3-4056-831A-E7B3E7063C31}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9A6C8615-81AD-4187-992A-631BEDF61C13} = {9E80CC58-EB7D-4FC0-B2CC-B78E15FB919B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2F40ED72-5203-4620-83B0-BB837FDBEC88}

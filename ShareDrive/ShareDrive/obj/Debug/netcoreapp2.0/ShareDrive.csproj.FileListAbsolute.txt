@@ -22,3 +22,7 @@ D:\Github\ShareDrive\ShareDrive\ShareDrive\bin\Debug\netcoreapp2.0\ShareDrive.Mo
 D:\Github\ShareDrive\ShareDrive\ShareDrive\bin\Debug\netcoreapp2.0\ShareDrive.Services.pdb
 D:\Github\ShareDrive\ShareDrive\ShareDrive\bin\Debug\netcoreapp2.0\ShareDrive.ViewModels.pdb
 D:\Github\ShareDrive\ShareDrive\ShareDrive\obj\Debug\netcoreapp2.0\UserSecretsAssemblyInfo.cs
+D:\Github\ShareDrive\ShareDrive\ShareDrive\bin\Debug\netcoreapp2.0\ShareDrive.Core.dll
+D:\Github\ShareDrive\ShareDrive\ShareDrive\bin\Debug\netcoreapp2.0\ShareDrive.Exceptions.dll
+D:\Github\ShareDrive\ShareDrive\ShareDrive\bin\Debug\netcoreapp2.0\ShareDrive.Core.pdb
+D:\Github\ShareDrive\ShareDrive\ShareDrive\bin\Debug\netcoreapp2.0\ShareDrive.Exceptions.pdb

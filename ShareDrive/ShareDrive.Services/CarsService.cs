@@ -11,6 +11,9 @@ using System;
 using ShareDrive.ViewModels.Car;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using ShareDrive.Core;
+using ShareDrive.Exceptions.Car;
+using ShareDrive.ViewModels.Admin.Car;
 
 namespace ShareDrive.Services
 {
@@ -25,16 +28,11 @@ namespace ShareDrive.Services
             this.mapper = mapper;
         }
 
-        public IEnumerable<ShareDrive.ViewModels.Admin.Car.CarAdminIndexViewModel> GetAllAdmin()
-        {
-            return this.cars.GetAll()
-                .Include(c => c.Drives)
-                .ProjectTo<ShareDrive.ViewModels.Admin.Car.CarAdminIndexViewModel>()
-                .ToList();
-        }
-
         public async Task Create(CarCreateViewModel model, int ownerId)
         {
+            Require.ThatObjectIsNotNull(model);
+            Require.ThatIntIsPositive(ownerId);
+
             try
             {
                 Car car = this.mapper.Map<Car>(model);
@@ -51,38 +49,30 @@ namespace ShareDrive.Services
             }
             catch (Exception ex)
             {
-                // log
-                throw;
+                // TODO: Log exception
+                throw new CarCreateException("Failed has car creating.");
             }
         }
 
         public CarEditViewModel GetEditViewModel(int id)
         {
+            Require.ThatIntIsPositive(id);
+
             Car car = this.cars.GetById(id);
-            CarEditViewModel model = this.mapper.Map<CarEditViewModel>(car);
 
-            return model;
-        }
-
-        public IQueryable<CarIndexViewModel> GetAllCarsIndex(int? userId)
-        {
-            IQueryable<Car> cars = this.cars.GetAll();
-
-            if (userId != null)
+            if (car != null)
             {
-                cars = cars.Where(c => c.OwnerId == userId);
+                return this.mapper.Map<CarEditViewModel>(car);
             }
 
-            return cars.ProjectTo<CarIndexViewModel>();
-        }
-
-        public Car GetById(int id)
-        {
-            return this.cars.GetAll().FirstOrDefault(x => x.Id == id);
+            return null;
         }
 
         public async Task<bool> Edit(int id, CarEditViewModel model)
         {
+            Require.ThatIntIsPositive(id);
+            Require.ThatObjectIsNotNull(model);
+
             Car car = this.cars.GetById(id);
 
             if (car != null)
@@ -94,8 +84,6 @@ namespace ShareDrive.Services
 
                 if (model.NewImage != null)
                 {
-                    var tempPath = Path.GetTempPath();
-
                     using (var ms = new MemoryStream())
                     {
                         await model.NewImage.CopyToAsync(ms);
@@ -103,51 +91,104 @@ namespace ShareDrive.Services
                     }
                 }
 
-                bool result = this.cars.Update(car);
-
-                return result;
+                return this.cars.Update(car);
             }
 
             return false;
         }
 
-        public bool Delete(int id)
+        public CarDeleteViewModel GetDeleteViewModel(int id)
         {
+            Require.ThatIntIsPositive(id);
+
             Car car = this.cars.GetById(id);
 
             if (car != null)
             {
-                bool result = this.cars.Delete(car);
-                return result;
+                return this.mapper.Map<CarDeleteViewModel>(car);
             }
-            else
+
+            return null;
+        }
+
+        public bool Delete(int id)
+        {
+            Require.ThatIntIsPositive(id);
+
+            Car car = this.cars.GetById(id);
+
+            if (car != null)
             {
-                return false;
+                return this.cars.Delete(car);
             }
+
+            return false;
         }
 
         public List<CarSelectViewModel> GetSelectionListByDriver(int id)
         {
-            var carsList = this.cars.GetAll()
+            Require.ThatIntIsPositive(id);
+
+            var cars = this.cars.GetAll()
                 .Where(x => x.OwnerId == id)
-                .ProjectTo<CarSelectViewModel>().ToList();
-            return carsList;
+                .ToList();
+
+            List<CarSelectViewModel> selectCars = mapper.Map<List<CarSelectViewModel>>(cars);
+
+            return selectCars;
         }
 
-        public ShareDrive.ViewModels.Admin.Car.CarAdminDetailsViewModel GetDetailsAdmin(int id)
+        public Car GetById(int id)
         {
+            Require.ThatIntIsPositive(id);
+            return this.cars.GetById(id);
+        }
+
+        public IEnumerable<CarIndexViewModel> GetAllCarsIndex(int? userId)
+        {
+            if (userId != null)
+            {
+                Require.ThatIntIsPositive((int)userId);
+
+                List<Car> cars = this.cars.GetAll()
+                    .Where(c => c.OwnerId == userId)
+                    .ToList();
+
+                List<CarIndexViewModel> model = this.mapper.Map<List<CarIndexViewModel>>(cars);
+
+                return model;
+            }
+
+            return null;
+        }
+        
+        public IEnumerable<CarAdminIndexViewModel> GetAllAdmin()
+        {
+            List<Car> cars = this.cars.GetAll()
+                .Include(c => c.Drives)
+                .ToList();
+
+            List<CarAdminIndexViewModel> listCars = this.mapper
+                .Map<List<CarAdminIndexViewModel>>(cars);
+
+            return listCars;
+        }        
+
+        public CarAdminDetailsViewModel GetDetailsAdmin(int id)
+        {
+            Require.ThatIntIsPositive(id);
+
             var car = this.cars.GetByIdQueryable(id)
                 .Include(c => c.Drives)
                 .Include(c => c.Owner)
                 .FirstOrDefault();
-            var model = this.mapper.Map<ViewModels.Admin.Car.CarAdminDetailsViewModel>(car);
-            return model;
-        }
 
-        public CarDeleteViewModel GetDeleteViewModel(int id)
-        {
-            Car car = this.cars.GetById(id);
-            return this.mapper.Map<CarDeleteViewModel>(car);
-        }
+            if (car != null)
+            {
+                return this.mapper.Map<CarAdminDetailsViewModel>(car);
+            }
+
+            return null;
+        }        
     }
 }
