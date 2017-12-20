@@ -8,6 +8,15 @@ namespace ShareDrive.Infrastructure.Mapping
     {
         public DriveAutoMapperProfile()
         {
+            CreateMap<Drive, DriveIndexViewModel>()
+                .ForMember(dest => dest.From, opt => opt.MapFrom(source => source.From.Name))
+                .ForMember(dest => dest.To, opt => opt.MapFrom(source => source.To.Name))
+                .ForMember(dest => dest.AvailableSeats, 
+                    opt => opt.MapFrom(source => source.DeclaredSeats - source.DrivesPassengers.Count))
+                .ForMember(dest => dest.Date,
+                    opt => opt.MapFrom(source => source.DateTime.ToString("dd/MM/yyyy")))
+                .ForMember(dest => dest.Time, opt => opt.MapFrom(source => source.DateTime.ToString("HH:mm")));
+
             CreateMap<DriveCreateEditViewModel, Drive>()
                 .ForMember(dest => dest.From, opt => opt.Ignore())
                 .ForMember(dest => dest.To, opt => opt.Ignore())
@@ -27,14 +36,6 @@ namespace ShareDrive.Infrastructure.Mapping
                 .ForMember(dest => dest.DateTime, opt => opt.MapFrom(source => source.DateTime.ToString("o")))
                 .ForMember(dest => dest.Car, opt => opt.MapFrom(source => source.Car.Brand + " " + source.Car.CarModel + " (" + source.Car.Year + ")"));
 
-            CreateMap<Drive, DriveIndexViewModel>()
-                .ForMember(dest => dest.From, opt => opt.MapFrom(source => source.From.Name))
-                .ForMember(dest => dest.To, opt => opt.MapFrom(source => source.To.Name))
-                .ForMember(dest => dest.AvailableSeats, 
-                    opt => opt.MapFrom(source => source.DeclaredSeats - source.DrivesPassengers.Count))
-                .ForMember(dest => dest.Date,
-                    opt => opt.MapFrom(source => source.DateTime.ToString("dd/MM/yyyy")))
-                .ForMember(dest => dest.Time, opt => opt.MapFrom(source => source.DateTime.ToString("HH:mm")));
 
             CreateMap<Drive, DriveCollectionsViewModel>();
 

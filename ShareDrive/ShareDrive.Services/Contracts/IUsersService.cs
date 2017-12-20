@@ -1,19 +1,20 @@
-﻿using ShareDrive.Models;
-using ShareDrive.ViewModels.Admin.User;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ShareDrive.Services.Contracts
+﻿namespace ShareDrive.Services.Contracts
 {
+    using System.Collections.Generic;
+
+    using ShareDrive.Models;
+    using ShareDrive.ViewModels.Admin.User;
+
     public interface IUsersService
     {
+        bool CheckIfUserExists(int userId);
+
+        ApplicationUser GetById(int id);
+
         IEnumerable<UserAdminIndexViewModel> GetAllAdmin();
 
         UserAdminDetailsViewModel GetDetailsModel(int id);
 
         bool Delete(int id);
-
-        ApplicationUser GetById(int id);
     }
 }

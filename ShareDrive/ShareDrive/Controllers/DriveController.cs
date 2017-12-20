@@ -38,7 +38,7 @@ namespace ShareDrive.Controllers
         [HttpGet]
         [Authorize]
         [AjaxOnly]
-        public IActionResult Create([FromServices] IDriveCarsHelperService driveCarsHelperService,
+        public IActionResult Create([FromServices] IDriveHelperService driveCarsHelperService,
             [FromServices] UserManager<ApplicationUser> userManager)
         {
             int userId = int.Parse(userManager.GetUserId(User));
@@ -78,7 +78,7 @@ namespace ShareDrive.Controllers
         [HttpGet]
         [Authorize]
         [AjaxOnly]
-        public IActionResult Edit(int id, [FromServices] IDriveCarsHelperService driveCarsHelperService,
+        public IActionResult Edit(int id, [FromServices] IDriveHelperService driveCarsHelperService,
             [FromServices] UserManager<ApplicationUser> userManager)
         {
             int userId = int.Parse(userManager.GetUserId(User));

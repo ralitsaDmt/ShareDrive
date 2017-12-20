@@ -8,21 +8,29 @@ using System.Linq;
 using ShareDrive.ViewModels.City;
 using AutoMapper.QueryableExtensions;
 using System.Threading.Tasks;
+using ShareDrive.Core;
+using AutoMapper;
 
 namespace ShareDrive.Services
 {
     public class CitiesService : ICitiesService
     {
         private readonly IDbRepository<City> cities;
+        //private readonly IMapper mapper;
 
         public CitiesService(IDbRepository<City> cities)
         {
             this.cities = cities;
+            //this.mapper = mapper;
         }
         
         public async Task<City> GetOrCreateAsync(string name)
         {
-            City city = this.cities.GetAll().Where(c => c.Name == name).FirstOrDefault();
+            Require.ThatStringIsNotNullOrEmpty(name);
+
+            City city = this.cities.GetAll()
+                .Where(c => c.Name == name)
+                .FirstOrDefault();
 
             if (city == null)
             {
@@ -32,10 +40,10 @@ namespace ShareDrive.Services
             return city;
         }
 
-        public List<CitySelectViewModel> GetAll()
-        {
-            return this.cities.GetAll().ProjectTo<CitySelectViewModel>().ToList();
-        }
+        //public List<CitySelectViewModel> GetAll()
+        //{
+        //    return this.cities.GetAll().ProjectTo<CitySelectViewModel>().ToList();
+        //}
 
         private async Task<City> CreateAsync(string name)
         {
@@ -43,6 +51,7 @@ namespace ShareDrive.Services
             {
                 Name = name
             };
+
             return await this.cities.CreateAsync(city);
         }
     }

@@ -15,7 +15,7 @@ namespace ShareDrive.Common
 
         Task<T> CreateAsync(T entity);
 
-        bool Update(T entity);
+        Task<T> UpdateAsync(T entity);
 
         bool Delete(T entity);
     }

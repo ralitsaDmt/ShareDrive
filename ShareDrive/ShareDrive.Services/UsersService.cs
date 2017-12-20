@@ -1,18 +1,18 @@
-﻿using ShareDrive.Services.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using ShareDrive.ViewModels.Admin.User;
-using ShareDrive.Common;
-using ShareDrive.Models;
-using Microsoft.EntityFrameworkCore;
-using AutoMapper.QueryableExtensions;
-using System.Linq;
-using AutoMapper;
-using ShareDrive.Infrastructure;
-
-namespace ShareDrive.Services
+﻿namespace ShareDrive.Services
 {
+    using System.Collections.Generic;
+    using System.Linq;
+
+    using Microsoft.EntityFrameworkCore;
+    using AutoMapper.QueryableExtensions;
+    using AutoMapper;
+
+    using ShareDrive.Services.Contracts;
+    using ShareDrive.ViewModels.Admin.User;
+    using ShareDrive.Common;
+    using ShareDrive.Models;    
+    using ShareDrive.Infrastructure;
+
     public class UsersService : IUsersService
     {
         private readonly IDbRepository<ApplicationUser> users;
@@ -24,16 +24,14 @@ namespace ShareDrive.Services
             this.mapper = mapper;
         }
 
-        public bool Delete(int id)
+        public bool CheckIfUserExists(int userId)
         {
-            var user = this.users.GetById(id);
+            return this.users.GetById(userId) != null;
+        }
 
-            if (user != null && user.Email != GlobalConstants.AdminMail)
-            {
-                return this.users.Delete(user);
-            }
-
-            return false;
+        public ApplicationUser GetById(int id)
+        {
+            return this.users.GetById(id);
         }
 
         public IEnumerable<UserAdminIndexViewModel> GetAllAdmin()
@@ -47,11 +45,6 @@ namespace ShareDrive.Services
                 .ToList();
         }
 
-        public ApplicationUser GetById(int id)
-        {
-            return this.users.GetById(id);
-        }
-
         public UserAdminDetailsViewModel GetDetailsModel(int id)
         {
             ApplicationUser user = this.users.GetByIdQueryable(id)
@@ -62,6 +55,18 @@ namespace ShareDrive.Services
 
             UserAdminDetailsViewModel model = this.mapper.Map<UserAdminDetailsViewModel>(user);
             return model;
+        }
+
+        public bool Delete(int id)
+        {
+            var user = this.users.GetById(id);
+
+            if (user != null && user.Email != GlobalConstants.AdminMail)
+            {
+                return this.users.Delete(user);
+            }
+
+            return false;
         }
     }
 }

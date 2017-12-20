@@ -24,7 +24,7 @@
     {
         // Create
         [Fact]
-        public async Task Create_GivenValidModelAndOwnerId_ShouldReturnCompletedTask()
+        public void Create_GivenValidModelAndOwnerId_ShouldReturnCompletedTask()
         {
             // arrange
             int ownerId = 1;
@@ -58,7 +58,7 @@
         }
 
         [Fact]
-        public async Task Create_GivenNullModel_ShouldThrowNullObjectException()
+        public void Create_GivenNullModel_ShouldThrowNullObjectException()
         {
             // arange
             int ownerId = 1;
@@ -73,7 +73,7 @@
         }
 
         [Fact]
-        public async Task Create_GivenNegativeOwnerId_ShouldThrowNegativeIntException()
+        public void Create_GivenNegativeOwnerId_ShouldThrowNegativeIntException()
         {
             // arrange
             int ownerId = -1;
@@ -89,7 +89,7 @@
         }
 
         [Fact]
-        public async Task Create_GivenModelWithNullImage_ShouldThrowException()
+        public void Create_GivenModelWithNullImage_ShouldThrowException()
         {
             // arrange
             int ownerId = 1;
@@ -105,7 +105,7 @@
         }
 
         [Fact]
-        public async Task Create_GivenInvalidData_ShouldThrowException()
+        public void Create_GivenInvalidData_ShouldThrowException()
         {
             // arrange
             int ownerId = 1;
@@ -141,7 +141,7 @@
 
         // GetEditViewModel
         [Fact]
-        public async Task GetEditViewModel_GivenNgativeId_ShouldThrowNegativeIntException()
+        public void GetEditViewModel_GivenNgativeId_ShouldThrowNegativeIntException()
         {
             // arrange
             int carId = -1;
@@ -156,7 +156,7 @@
         }
 
         [Fact]
-        public async Task GetEditViewModel_GivenValidCarId_ShouldReturnCarEditViewModel()
+        public void GetEditViewModel_GivenValidCarId_ShouldReturnCarEditViewModel()
         {
             int carId = 1;
 
@@ -198,7 +198,7 @@
         }
 
         [Fact]
-        public async Task GetEditViewModel_GivenNonExistingId_ShouldReturnNull()
+        public void GetEditViewModel_GivenNonExistingId_ShouldReturnNull()
         {
             // arrange
             int carId = 1;
@@ -220,7 +220,7 @@
 
         // Edit
         [Fact]
-        public async Task Edit_GivenNegativeId_ShouldThrowNegativeIntException()
+        public void Edit_GivenNegativeId_ShouldThrowNegativeIntException()
         {
             // arrange
             int carId = -1;
@@ -234,7 +234,7 @@
         }
 
         [Fact]
-        public async Task Edit_GivenNullViewModel_ShouldThrowNullObjectException()
+        public void Edit_GivenNullViewModel_ShouldThrowNullObjectException()
         {
             // arrange
             int carId = 1;
@@ -295,12 +295,12 @@
                 });
 
             mockRepository
-                .Setup(x => x.Update(It.Is<Car>(car =>
+                .Setup(x => x.UpdateAsync(It.Is<Car>(car =>
                     car.Brand == "BrandUpdate"
                     && car.CarModel == "ModelUpdate"
                     && car.Year == 1234 
                     && !car.HasAirConditioner)))
-                .Returns(true);
+                .Returns(Task.FromResult(new Car()));
 
             CarsService service = new CarsService(mockRepository.Object, null);
 
@@ -313,7 +313,7 @@
 
         // GetDeleteViewModel
         [Fact]
-        public async Task GetDeleteViewModel_GivenNegativeId_ShouldThrowNegativeIntException()
+        public void GetDeleteViewModel_GivenNegativeId_ShouldThrowNegativeIntException()
         {
             // arrange
             int carId = -1;
@@ -327,7 +327,7 @@
         }
 
         [Fact]
-        public async Task GetDeleteViewModel_GivenValidCarId_ShouldReturnCarDeleteViewModel()
+        public void GetDeleteViewModel_GivenValidCarId_ShouldReturnCarDeleteViewModel()
         {
             int carId = 1;
 
@@ -364,7 +364,7 @@
         }
 
         [Fact]
-        public async Task GetDeleteViewModel_GivenNonExistingId_ShouldReturnNull()
+        public void GetDeleteViewModel_GivenNonExistingId_ShouldReturnNull()
         {
             // arrange
             int carId = 1;
@@ -386,7 +386,7 @@
 
         // Delete
         [Fact]
-        public async Task Delete_GivenNegativeId_ShouldThrowNegativeIntException()
+        public void Delete_GivenNegativeId_ShouldThrowNegativeIntException()
         {
             // arrange
             int carId = -1;
@@ -400,7 +400,7 @@
         }
 
         [Fact]
-        public async Task Delete_GivenNotExistingId_ShouldReturnFalse()
+        public void Delete_GivenNotExistingId_ShouldReturnFalse()
         {
             // arrange
             int carId = 1;
@@ -420,7 +420,7 @@
         }
 
         [Fact]
-        public async Task Delete_GivenValidId_ShouldRetrnTrue()
+        public void Delete_GivenValidId_ShouldRetrnTrue()
         {
             // arrange
             int carId = 1;
@@ -457,7 +457,7 @@
 
         // GetSelectionListByDriver
         [Fact]
-        public async Task GetSelectionListByDriver_GivenNegativeOwnerId_ShouldThrowNegativeIntException()
+        public void GetSelectionListByDriver_GivenNegativeOwnerId_ShouldThrowNegativeIntException()
         {
             // arrange
             int carId = -1;
@@ -471,7 +471,7 @@
         }
 
         [Fact]
-        public async Task GetSelectionListByDriver_GivenValidId_ShouldReturnListOfCarSelectViewModel()
+        public void GetSelectionListByDriver_GivenValidId_ShouldReturnListOfCarSelectViewModel()
         {
             // arrange
             int ownerId = 1;
@@ -513,7 +513,7 @@
 
         // GetById
         [Fact]
-        public async Task GetById_GivenNegativeCarId_ShouldThrowNegativeIntException()
+        public void GetById_GivenNegativeCarId_ShouldThrowNegativeIntException()
         {
             // arrange
             int carId = -1;
@@ -527,7 +527,7 @@
         }
 
         [Fact]
-        public async Task GetById_GivenNotExistingId_ShouldReturnNull()
+        public void GetById_GivenNotExistingId_ShouldReturnNull()
         {
             // arrange
             int carId = 1;
@@ -545,7 +545,7 @@
         }
 
         [Fact]
-        public async Task GetById_GivenValidId_ShouldReturnCar()
+        public void GetById_GivenValidId_ShouldReturnCar()
         {
             // arrange
             int carId = 1;
@@ -565,7 +565,7 @@
 
         // GetAllCarsIndex
         [Fact]
-        public async Task GetAllCarsIndex_GivenNullUserId_ShouldReturnNull()
+        public void GetAllCarsIndex_GivenNullUserId_ShouldReturnNull()
         {
             // arrange
             CarsService service = new CarsService(null, null);
@@ -578,7 +578,7 @@
         }
 
         [Fact]
-        public async Task GetAllCarsIndex_GivenNegativeUserId_ShouldThrowNegativeIntException()
+        public void GetAllCarsIndex_GivenNegativeUserId_ShouldThrowNegativeIntException()
         {
             // arrange
             int userId = -1;
@@ -591,7 +591,7 @@
         }
 
         [Fact]
-        public async Task GetAllCarsIndex_GivenValidUserId_ShouldReturnListOfCarIndexViewModel()
+        public void GetAllCarsIndex_GivenValidUserId_ShouldReturnListOfCarIndexViewModel()
         {
             // arrange
             int userId = 1;
@@ -618,7 +618,7 @@
 
         // GetAllAdmin
         [Fact]
-        public async Task GetAllAdmin_ShouldReturnListOfCarAdminIndexViewModel()
+        public void GetAllAdmin_ShouldReturnListOfCarAdminIndexViewModel()
         {
             // arrange
             Mock<IDbRepository<Car>> mockRepository = new Mock<IDbRepository<Car>>();
@@ -645,7 +645,7 @@
 
         // CarAdminDetailsViewModel
         [Fact]
-        public async Task GetDetailsAdmin_GivenNegativeId_ShouldThrowNegativeInException()
+        public void GetDetailsAdmin_GivenNegativeId_ShouldThrowNegativeInException()
         {
             // arrange
             int id = -1;
@@ -658,7 +658,7 @@
         }
 
         [Fact]
-        public async Task GetDetailsAdmin_GivenNotExisingId_ShouldReturnNull()
+        public void GetDetailsAdmin_GivenNotExisingId_ShouldReturnNull()
         {
             // arrange
             int id = 3;
@@ -677,7 +677,7 @@
         }
 
         [Fact]
-        public async Task GetDetailsAdmin_GivenValidId_ShouldReturnCarAdminDetailsViewModel()
+        public void GetDetailsAdmin_GivenValidId_ShouldReturnCarAdminDetailsViewModel()
         {
             // arrange
             int id = 1;

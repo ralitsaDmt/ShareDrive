@@ -53,10 +53,9 @@ namespace ShareDrive
             services.AddTransient<IEmailSender, EmailSender>();
             
             services.AddScoped<ICarsService, CarsService>();
-            services.AddScoped<IDrivesService, DrivesService>();
-            services.AddScoped<IDriveHelperService, DriveHelperService>();
-            services.AddScoped<IDriveCarsHelperService, DriveCarsHelperService>();
             services.AddScoped<ICitiesService, CitiesService>();
+            services.AddScoped<IDriveHelperService, DriveHelperService>();
+            services.AddScoped<IDrivesService, DrivesService>();
             services.AddScoped<IUsersService, UsersService>();
 
             services.AddScoped(typeof(IDbRepository<>), typeof(DbRepository<>));

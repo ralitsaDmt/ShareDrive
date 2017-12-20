@@ -1,5 +1,6 @@
 ﻿using ShareDrive.Models;
 using ShareDrive.Services.Models;
+using ShareDrive.ViewModels.Admin.Drive;
 using ShareDrive.ViewModels.Drive;
 using System;
 using System.Collections.Generic;
@@ -10,29 +11,36 @@ namespace ShareDrive.Services.Contracts
 {
     public interface IDrivesService
     {
-        void Update(DriveCreateEditViewModel model, ParsedDriveUpdateData data, int id);
-
-        Task Create(DriveCreateEditViewModel model, ParsedDriveCreateData data);
-
         IEnumerable<DriveIndexViewModel> GetAll();
 
-        // List<DriveIndexViewModel> GetAll(string sort, string from = null, string to = null, string date = null);
-
-        IEnumerable<ShareDrive.ViewModels.Admin.Drive.DriveAdminIndexViewModel> GetAllAdmin();
-
-        ShareDrive.ViewModels.Admin.Drive.DriveAdminDetailsViewModel GetDetailsAdminModel(int id);
-
-        Task CreateAsync(DriveCreateEditViewModel model, City cityFrom, City cityTo, int userId);
-
-        
-
-        DriveCreateEditViewModel GetEditModelById(int id);
-
-        DriveDeleteViewModel GetDeleteModelById(int id);
+        IEnumerable<DriveAdminIndexViewModel> GetAllAdmin();
 
         Drive GetById(int id);
 
+        Task CreateAsync(DriveCreateEditViewModel model, ParsedDriveCreateData data);
+
+        DriveCreateEditViewModel GetEditModelById(int id);
+        
+        Task<bool> UpdateAsync(DriveCreateEditViewModel model, ParsedDriveUpdateData data, int id);
+
+        DriveDeleteViewModel GetDeleteModelById(int id);
+
         bool Delete(int id);
+
+        // List<DriveIndexViewModel> GetAll(string sort, string from = null, string to = null, string date = null);
+
+
+        ShareDrive.ViewModels.Admin.Drive.DriveAdminDetailsViewModel GetDetailsAdminModel(int id);
+        
+        
+
+        
+
+        
+
+        
+
+        
 
         DriveCollectionsViewModel GetDetailsModel(int id, int userId);
 

@@ -56,21 +56,14 @@ namespace ShareDrive.Common
             return this.entities.Where(x => x.Id == id);
         }
 
-        public bool Update(T entity)
+        public Task<T> UpdateAsync(T entity)
         {
-            try
-            {
-                this.entities.Attach(entity);
-                var entry = this.context.Entry(entity);
-                entry.State = EntityState.Modified;
+            this.entities.Attach(entity);
+            var entry = this.context.Entry(entity);
+            entry.State = EntityState.Modified;
+            this.Save();
 
-                this.Save();
-                return true;
-            }
-            catch (Exception ex)
-            {
-                return false;
-            }
+            return Task.FromResult(entity);
         }
 
         private void Save()

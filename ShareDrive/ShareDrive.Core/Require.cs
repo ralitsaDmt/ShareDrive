@@ -20,5 +20,13 @@ namespace ShareDrive.Core
                 throw new NegativeIntException("The given number is not positive.");
             }
         }
+
+        public static void ThatStringIsNotNullOrEmpty(string str)
+        {
+            if (string.IsNullOrEmpty(str))
+            {
+                throw new StringNullOrEmptyException("Null or empty the given string is.");
+            }
+        }
     }
 }

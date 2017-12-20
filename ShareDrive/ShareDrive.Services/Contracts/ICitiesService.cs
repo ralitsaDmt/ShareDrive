@@ -11,6 +11,6 @@ namespace ShareDrive.Services.Contracts
     {
         Task<City> GetOrCreateAsync(string name);
 
-        List<CitySelectViewModel> GetAll();
+        // List<CitySelectViewModel> GetAll();
     }
 }

@@ -91,7 +91,8 @@ namespace ShareDrive.Services
                     }
                 }
 
-                return this.cars.Update(car);
+                await this.cars.UpdateAsync(car);
+                return true;
             }
 
             return false;
